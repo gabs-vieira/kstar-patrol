@@ -67,6 +67,9 @@ PRINT_TITLE_MENU proc
     ; mov ah, 9H
     ; int 21h
 
+    mov AX, DS 
+    mov ES, AX
+
     mov BP, OFFSET string
     mov CX, string_length ; tamanho
     mov BL, 0AH ; cor
@@ -86,12 +89,20 @@ print_string PROC
     push SI
     push BP
 
-    mov AH, 13h
-    mov AL, 01h
-    xor BH, BH
-    int 10h
+    ; Configura os parâmetros para a função 13h
+    mov AH, 13h         ; Função para escrever string com atributos de cor
+    mov AL, 1           ; Modo: atualiza cursor após a escrita
+                         ; AL = 1 -> modo de atualização de cursor
+    mov BL, 02h         ; Cor verde (se bit 1 de AL estiver limpo, usamos BL)
+    mov BH, 0           ; Página de vídeo 0
+    mov CX, string_length ; Tamanho da string
+    mov DL, 2           ; Coluna inicial
+    mov DH, 2           ; Linha inicial
+    mov BP, OFFSET string ; Ponteiro para a string
 
-    pop Bp
+    int 10h             ; Chamada de interrupção para exibir a string
+
+    pop BP
     pop SI
     pop DX
     pop CX
@@ -99,6 +110,7 @@ print_string PROC
     pop AX
     ret
 print_string ENDP
+
 
 
 ; Procedimento para exibir os botões INICIAR e SAIR

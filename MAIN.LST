@@ -1,4 +1,4 @@
-Turbo Assembler	 Version 4.1	    11/12/24 21:34:37	    Page 1
+Turbo Assembler	 Version 4.1	    11/13/24 11:22:14	    Page 1
 MAIN.ASM
 
 
@@ -60,7 +60,7 @@ MAIN.ASM
      55	      20 7C 20 20 2F 20	5F+
      56	      5F 20 5C 7C 20 20	7C+
      57	      20 5C 2F 20 0D 0A
-Turbo Assembler	 Version 4.1	    11/12/24 21:34:37	    Page 2
+Turbo Assembler	 Version 4.1	    11/13/24 11:22:14	    Page 2
 MAIN.ASM
 
 
@@ -122,7 +122,7 @@ MAIN.ASM
     112	      5F 5F 5F 5F 20 20	2F+
     113	      5F 5F 7C 20 20 7C	5F+
     114	      5F 7C 20 20 20 5C	5F+
-Turbo Assembler	 Version 4.1	    11/12/24 21:34:37	    Page 3
+Turbo Assembler	 Version 4.1	    11/13/24 11:22:14	    Page 3
 MAIN.ASM
 
 
@@ -184,7 +184,7 @@ MAIN.ASM
     169	      C4 C4 C4 C4 C4 C4	C4+
     170	      C4 C4 BF 0A 0D
     171	043F  20 20 20 20 20 20	20+		   db "					 ",179,"  SAIR	 ",179,10,13
-Turbo Assembler	 Version 4.1	    11/12/24 21:34:37	    Page 4
+Turbo Assembler	 Version 4.1	    11/13/24 11:22:14	    Page 4
 MAIN.ASM
 
 
@@ -240,113 +240,125 @@ MAIN.ASM
     220					 ; mov ah, 9H
     221					 ; int 21h
     222
-    223	0014  BD 0001r			 mov BP, OFFSET	string
-    224	0017  B9 0381			 mov CX, string_length ; tamanho
-    225	001A  B3 0A			 mov BL, 0AH ; cor
-    226	001C  B2 02			 mov DL, 2 ;coluna
-    227	001E  B6 02			 mov DH, 2 ; linha
-    228
-Turbo Assembler	 Version 4.1	    11/12/24 21:34:37	    Page 5
+    223	0014  8C D8			 mov AX, DS
+    224	0016  8E C0			 mov ES, AX
+    225
+    226	0018  BD 0001r			 mov BP, OFFSET	string
+    227	001B  B9 0381			 mov CX, string_length ; tamanho
+    228	001E  B3 0A			 mov BL, 0AH ; cor
+Turbo Assembler	 Version 4.1	    11/13/24 11:22:14	    Page 5
 MAIN.ASM
 
 
 
-    229	0020  E8 0001			 call print_string
-    230
-    231	0023  C3			 ret
-    232	0024			     PRINT_TITLE_MENU endp
+    229	0020  B2 02			 mov DL, 2 ;coluna
+    230	0022  B6 02			 mov DH, 2 ; linha
+    231
+    232	0024  E8 0001			 call print_string
     233
-    234	0024			     print_string PROC
-    235	0024  50			 push AX
-    236	0025  53			 push BX
-    237	0026  51			 push CX
-    238	0027  52			 push DX
-    239	0028  56			 push SI
-    240	0029  55			 push BP
-    241
-    242	002A  B4 13			 mov AH, 13h
-    243	002C  B0 01			 mov AL, 01h
-    244	002E  32 FF			 xor BH, BH
-    245	0030  CD 10			 int 10h
-    246
-    247	0032  5D			 pop Bp
-    248	0033  5E			 pop SI
-    249	0034  5A			 pop DX
-    250	0035  59			 pop CX
-    251	0036  5B			 pop BX
-    252	0037  58			 pop AX
-    253	0038  C3			 ret
-    254	0039			     print_string ENDP
+    234	0027  C3			 ret
+    235	0028			     PRINT_TITLE_MENU endp
+    236
+    237	0028			     print_string PROC
+    238	0028  50			 push AX
+    239	0029  53			 push BX
+    240	002A  51			 push CX
+    241	002B  52			 push DX
+    242	002C  56			 push SI
+    243	002D  55			 push BP
+    244
+    245					 ; Configura os	parâmetros para a função 13h
+    246	002E  B4 13			 mov AH, 13h	     ; Função	para escrever string com atributos de cor
+    247	0030  B0 01			 mov AL, 1	     ; Modo: atualiza cursor após a escrita
+    248							      ;	AL = 1 -> modo de atualização	de cursor
+    249	0032  B3 02			 mov BL, 02h	     ; Cor verde (se bit 1 de AL estiver limpo,	usamos BL)
+    250	0034  B7 00			 mov BH, 0	     ; Página de vídeo 0
+    251	0036  B9 0381			 mov CX, string_length ; Tamanho da string
+    252	0039  B2 02			 mov DL, 2	     ; Coluna inicial
+    253	003B  B6 02			 mov DH, 2	     ; Linha inicial
+    254	003D  BD 0001r			 mov BP, OFFSET	string ; Ponteiro para a string
     255
-    256
-    257				     ; Procedimento para exibir	os botões INICIAR e SAIR
-    258	0039			     PRINT_BUTTONS proc
-    259					 ; Exibe o botão INICIAR
-    260	0039  B2 00			 mov dl, 0
-    261	003B  B6 10			 mov dh, 16
-    262	003D  B4 02			 mov ah, 2h
-    263	003F  CD 10			 int 10h
-    264	0041  BA 0382r			 mov dx, offset	botao_iniciar
-    265	0044  B4 09			 mov ah, 9H
-    266	0046  CD 21			 int 21h
+    256	0040  CD 10			 int 10h	     ; Chamada de interrupção	para exibir a string
+    257
+    258	0042  5D			 pop BP
+    259	0043  5E			 pop SI
+    260	0044  5A			 pop DX
+    261	0045  59			 pop CX
+    262	0046  5B			 pop BX
+    263	0047  58			 pop AX
+    264	0048  C3			 ret
+    265	0049			     print_string ENDP
+    266
     267
-    268					 ; Exibe o botão SAIR
-    269	0048  B6 12			 mov dh, 18
-    270	004A  BA 0410r			 mov dx, offset	botao_sair
-    271	004D  B4 09			 mov ah, 9H
-    272	004F  CD 21			 int 21h
-    273	0051  C3			 ret
-    274	0052			     PRINT_BUTTONS endp
-    275
-    276				     ; Procedimento principal
-    277	0052			     main proc
-    278	0052  B8 0000s			 mov AX, @data
-    279	0055  8E D8			 mov DS, AX
-    280
-    281					 ; Define o modo texto
-    282	0057  B0 03			 mov al, 3h
-    283	0059  B4 00			 mov ah, 0h
-    284	005B  CD 10			 int 10h
-    285
-Turbo Assembler	 Version 4.1	    11/12/24 21:34:37	    Page 6
+    268
+    269				     ; Procedimento para exibir	os botões INICIAR e SAIR
+    270	0049			     PRINT_BUTTONS proc
+    271					 ; Exibe o botão INICIAR
+    272	0049  B2 00			 mov dl, 0
+    273	004B  B6 10			 mov dh, 16
+    274	004D  B4 02			 mov ah, 2h
+    275	004F  CD 10			 int 10h
+    276	0051  BA 0382r			 mov dx, offset	botao_iniciar
+    277	0054  B4 09			 mov ah, 9H
+    278	0056  CD 21			 int 21h
+    279
+    280					 ; Exibe o botão SAIR
+    281	0058  B6 12			 mov dh, 18
+    282	005A  BA 0410r			 mov dx, offset	botao_sair
+    283	005D  B4 09			 mov ah, 9H
+    284	005F  CD 21			 int 21h
+    285	0061  C3			 ret
+Turbo Assembler	 Version 4.1	    11/13/24 11:22:14	    Page 6
 MAIN.ASM
 
 
 
-    286					 ; Exibe título e botões do menu
-    287	005D  E8 FFB4			 call PRINT_TITLE_MENU
-    288	0060  E8 FFD6			 call PRINT_BUTTONS
-    289
-    290	0063			     LACO_MENU:
-    291					 ; Espera por entrada do usuário
-    292	0063  B4 01			 mov ah, 1H
-    293	0065  CD 16			 int 16H
-    294	0067  74 FA			 jz LACO_MENU
-    295
-    296					 ; Chama a função de navegação
-    297	0069  E8 FF94			 call NAVIGATE
-    298
-    299					 ; Condição para iniciar o jogo
-    300	006C  3C 71			 cmp al, 'q'
-    301	006E  74 06			 je INICIA_JOGO
-    302
-    303					 ; Retorno ao loop do menu
-    304	0070  B4 00			 mov ah, 0H
-    305	0072  CD 16			 int 16H
-    306	0074  EB ED			 jmp LACO_MENU
+    286	0062			     PRINT_BUTTONS endp
+    287
+    288				     ; Procedimento principal
+    289	0062			     main proc
+    290	0062  B8 0000s			 mov AX, @data
+    291	0065  8E D8			 mov DS, AX
+    292
+    293					 ; Define o modo texto
+    294	0067  B0 03			 mov al, 3h
+    295	0069  B4 00			 mov ah, 0h
+    296	006B  CD 10			 int 10h
+    297
+    298					 ; Exibe título e botões do menu
+    299	006D  E8 FFA4			 call PRINT_TITLE_MENU
+    300	0070  E8 FFD6			 call PRINT_BUTTONS
+    301
+    302	0073			     LACO_MENU:
+    303					 ; Espera por entrada do usuário
+    304	0073  B4 01			 mov ah, 1H
+    305	0075  CD 16			 int 16H
+    306	0077  74 FA			 jz LACO_MENU
     307
-    308	0076			     INICIA_JOGO:
-    309					 ; Código para	iniciar	o jogo
+    308					 ; Chama a função de navegação
+    309	0079  E8 FF84			 call NAVIGATE
     310
-    311					 ; Encerra o programa
-    312	0076  B4 4C			 mov ah, 4ch
-    313	0078  B0 00			 mov al, 0
-    314	007A  CD 21			 int 21h
-    315	007C  C3			 ret
-    316	007D			     main endp
-    317
-    318				     end main
-Turbo Assembler	 Version 4.1	    11/12/24 21:34:37	    Page 7
+    311					 ; Condição para iniciar o jogo
+    312	007C  3C 71			 cmp al, 'q'
+    313	007E  74 06			 je INICIA_JOGO
+    314
+    315					 ; Retorno ao loop do menu
+    316	0080  B4 00			 mov ah, 0H
+    317	0082  CD 16			 int 16H
+    318	0084  EB ED			 jmp LACO_MENU
+    319
+    320	0086			     INICIA_JOGO:
+    321					 ; Código para	iniciar	o jogo
+    322
+    323					 ; Encerra o programa
+    324	0086  B4 4C			 mov ah, 4ch
+    325	0088  B0 00			 mov al, 0
+    326	008A  CD 21			 int 21h
+    327	008C  C3			 ret
+    328	008D			     main endp
+    329
+    330				     end main
+Turbo Assembler	 Version 4.1	    11/13/24 11:22:14	    Page 7
 Symbol Table
 
 
@@ -354,9 +366,9 @@ Symbol Table
 
 Symbol Name			  Type	 Value
 
-??DATE				  Text	 "11/12/24"
+??DATE				  Text	 "11/13/24"
 ??FILENAME			  Text	 "MAIN	  "
-??TIME				  Text	 "21:34:37"
+??TIME				  Text	 "11:22:13"
 ??VERSION			  Number 040A
 @32BIT				  Text	 0
 @CODE				  Text	 _TEXT
@@ -375,13 +387,13 @@ ARROW_UP			  Near	 _TEXT:000D
 BOTAO_INICIAR			  Byte	 DGROUP:0382
 BOTAO_SAIR			  Byte	 DGROUP:0410
 FIM_NAVIGATE			  Near	 _TEXT:0013
-INICIA_JOGO			  Near	 _TEXT:0076
-LACO_MENU			  Near	 _TEXT:0063
-MAIN				  Near	 _TEXT:0052
+INICIA_JOGO			  Near	 _TEXT:0086
+LACO_MENU			  Near	 _TEXT:0073
+MAIN				  Near	 _TEXT:0062
 MENU				  Byte	 DGROUP:0000
 NAVIGATE			  Near	 _TEXT:0000
-PRINT_BUTTONS			  Near	 _TEXT:0039
-PRINT_STRING			  Near	 _TEXT:0024
+PRINT_BUTTONS			  Near	 _TEXT:0049
+PRINT_STRING			  Near	 _TEXT:0028
 PRINT_TITLE_MENU		  Near	 _TEXT:0014
 STRING				  Byte	 DGROUP:0001
 STRING_LENGTH			  Number 0381
@@ -391,5 +403,5 @@ Groups & Segments		  Bit Size Align  Combine Class
 DGROUP				  Group
   STACK				  16  0400 Para	  Stack	  STACK
   _DATA				  16  049E Word	  Public  DATA
-_TEXT				  16  007D Word	  Public  CODE
+_TEXT				  16  008D Word	  Public  CODE
 
