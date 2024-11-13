@@ -1,0 +1,395 @@
+Turbo Assembler	 Version 4.1	    11/12/24 21:34:37	    Page 1
+MAIN.ASM
+
+
+
+      1	0000			     .model small
+      2	0000			     .stack
+      3
+      4	0000			     .data
+      5	0000  00			 menu db 0H
+      6
+      7					 ; Strings para	o título e botões
+      8	0001  20 20 20 20 20 20	20+	 string	db "								       ",13,10
+      9	      20 20 20 20 20 20	20+
+     10	      20 20 20 20 20 20	20+
+     11	      20 20 20 20 20 20	20+
+     12	      20 20 20 20 20 20	20+
+     13	      20 20 20 20 20 20	20+
+     14	      20 20 20 20 20 20	20+
+     15	      20 20 20 20 20 20	20+
+     16	      20 20 20 20 20 20	20+
+     17	      20 20 20 20 0D 0A
+     18	0046  20 20 20 20 20 20	20+		db "		      ____  __.		  _________ __		       ",13,10
+     19	      20 20 20 20 20 20	20+
+     20	      20 20 20 20 5F 5F	5F+
+     21	      5F 20 20 5F 5F 2E	20+
+     22	      20 20 20 20 20 20	20+
+     23	      20 20 20 5F 5F 5F	5F+
+     24	      5F 5F 5F 5F 5F 20	5F+
+     25	      5F 20 20 20 20 20	20+
+     26	      20 20 20 20 20 20	20+
+     27	      20 20 20 20 0D 0A
+     28	008B  20 20 20 20 20 20	20+		db "		     |	  |/ _|		 /   _____//  |______ _______  ",13,10
+     29	      20 20 20 20 20 20	20+
+     30	      20 20 20 7C 20 20	20+
+     31	      20 7C 2F 20 5F 7C	20+
+     32	      20 20 20 20 20 20	20+
+     33	      20 20 2F 20 20 20	5F+
+     34	      5F 5F 5F 5F 2F 2F	20+
+     35	      20 7C 5F 5F 5F 5F	5F+
+     36	      5F 20 5F 5F 5F 5F	5F+
+     37	      5F 5F 20 20 0D 0A
+     38	00D0  20 20 20 20 20 20	20+		db "		     |	    <	 ______	 \_____	 \\   __\__  \\_  __ \ ",13,10
+     39	      20 20 20 20 20 20	20+
+     40	      20 20 20 7C 20 20	20+
+     41	      20 20 20 3C 20 20	20+
+     42	      20 5F 5F 5F 5F 5F	5F+
+     43	      20 20 5C 5F 5F 5F	5F+
+     44	      5F 20 20 5C 5C 20	20+
+     45	      20 5F 5F 5C 5F 5F	20+
+     46	      20 5C 5C 5F 20 20	5F+
+     47	      5F 20 5C 20 0D 0A
+     48	0115  20 20 20 20 20 20	20+		db "		     |	  |  \	/_____/	 /	  \|  |	 / __ \|  | \/ ",13,10
+     49	      20 20 20 20 20 20	20+
+     50	      20 20 20 7C 20 20	20+
+     51	      20 7C 20 20 5C 20	20+
+     52	      2F 5F 5F 5F 5F 5F	2F+
+     53	      20 20 2F 20 20 20	20+
+     54	      20 20 20 20 5C 7C	20+
+     55	      20 7C 20 20 2F 20	5F+
+     56	      5F 20 5C 7C 20 20	7C+
+     57	      20 5C 2F 20 0D 0A
+Turbo Assembler	 Version 4.1	    11/12/24 21:34:37	    Page 2
+MAIN.ASM
+
+
+
+     58	015A  20 20 20 20 20 20	20+		db "		     |____|__ \		/_______  /|__|	(____  /__|    ",13,10
+     59	      20 20 20 20 20 20	20+
+     60	      20 20 20 7C 5F 5F	5F+
+     61	      5F 7C 5F 5F 20 5C	20+
+     62	      20 20 20 20 20 20	20+
+     63	      20 2F 5F 5F 5F 5F	5F+
+     64	      5F 5F 20 20 2F 7C	5F+
+     65	      5F 7C 20 28 5F 5F	5F+
+     66	      5F 20 20 2F 5F 5F	7C+
+     67	      20 20 20 20 0D 0A
+     68	019F  20 20 20 20 20 20	20+		db "		     __________	       __	\/	 .__ \/	       ",13,10
+     69	      20 20 20 20 20 20	20+
+     70	      20 20 20 5F 5F 5F	5F+
+     71	      5F 5F 5F 5F 5F 5F	20+
+     72	      20 20 20 20 20 20	20+
+     73	      5F 5F 20 20 20 20	20+
+     74	      20 20 5C 2F 20 20	20+
+     75	      20 20 20 20 2E 5F	5F+
+     76	      20 5C 2F 20 20 20	20+
+     77	      20 20 20 20 0D 0A
+     78	01E4  20 20 20 20 20 20	20+		db "		     \______   \____ _/	 |________  ____ |  |	       ",13,10
+     79	      20 20 20 20 20 20	20+
+     80	      20 20 20 5C 5F 5F	5F+
+     81	      5F 5F 5F 20 20 20	5C+
+     82	      5F 5F 5F 5F 20 5F	2F+
+     83	      20 20 7C 5F 5F 5F	5F+
+     84	      5F 5F 5F 5F 20 20	5F+
+     85	      5F 5F 5F 20 7C 20	20+
+     86	      7C 20 20 20 20 20	20+
+     87	      20 20 20 20 0D 0A
+     88	0229  20 20 20 20 20 20	20+		db "		      |	    ___|__  \\	 __\_  __ \/  _	\|  |	       ",13,10
+     89	      20 20 20 20 20 20	20+
+     90	      20 20 20 20 7C 20	20+
+     91	      20 20 20 5F 5F 5F	7C+
+     92	      5F 5F 20 20 5C 5C	20+
+     93	      20 20 5F 5F 5C 5F	20+
+     94	      20 5F 5F 20 5C 2F	20+
+     95	      20 5F 20 5C 7C 20	20+
+     96	      7C 20 20 20 20 20	20+
+     97	      20 20 20 20 0D 0A
+     98	026E  20 20 20 20 20 20	20+		db "		      |	   |	/ __ \|	 |  |  | \(  <_> )  |__	       ",13,10
+     99	      20 20 20 20 20 20	20+
+    100	      20 20 20 20 7C 20	20+
+    101	      20 20 7C 20 20 20	20+
+    102	      2F 20 5F 5F 20 5C	7C+
+    103	      20 20 7C 20 20 7C	20+
+    104	      20 7C 20 5C 28 20	20+
+    105	      3C 5F 3E 20 29 20	20+
+    106	      7C 5F 5F 20 20 20	20+
+    107	      20 20 20 20 0D 0A
+    108	02B3  20 20 20 20 20 20	20+		db "		      |____|   (____  /__|  |__|   \____/|____/	       ",13,10
+    109	      20 20 20 20 20 20	20+
+    110	      20 20 20 20 7C 5F	5F+
+    111	      5F 5F 7C 20 20 20	28+
+    112	      5F 5F 5F 5F 20 20	2F+
+    113	      5F 5F 7C 20 20 7C	5F+
+    114	      5F 7C 20 20 20 5C	5F+
+Turbo Assembler	 Version 4.1	    11/12/24 21:34:37	    Page 3
+MAIN.ASM
+
+
+
+    115	      5F 5F 5F 2F 7C 5F	5F+
+    116	      5F 5F 2F 20 20 20	20+
+    117	      20 20 20 20 0D 0A
+    118	02F8  20 20 20 20 20 20	20+		db "				    \/				       ",13,10
+    119	      20 20 20 20 20 20	20+
+    120	      20 20 20 20 20 20	20+
+    121	      20 20 20 20 20 20	20+
+    122	      20 20 20 20 5C 2F	20+
+    123	      20 20 20 20 20 20	20+
+    124	      20 20 20 20 20 20	20+
+    125	      20 20 20 20 20 20	20+
+    126	      20 20 20 20 20 20	20+
+    127	      20 20 20 20 0D 0A
+    128	033D  20 20 20 20 20 20	20+		db "								       ",13,10
+    129	      20 20 20 20 20 20	20+
+    130	      20 20 20 20 20 20	20+
+    131	      20 20 20 20 20 20	20+
+    132	      20 20 20 20 20 20	20+
+    133	      20 20 20 20 20 20	20+
+    134	      20 20 20 20 20 20	20+
+    135	      20 20 20 20 20 20	20+
+    136	      20 20 20 20 20 20	20+
+    137	      20 20 20 20 0D 0A
+    138
+    139
+    140	      =0381				string_length equ $-string
+    141
+    142	0382  20 20 20 20 20 20	20+	 botao_iniciar db "				     ",218,196,196,196,196,196,196,196,196, +
+    143	      20 20 20 20 20 20	20+  196,191,10,13
+    144	      20 20 20 20 20 20	20+
+    145	      20 20 20 20 20 20	20+
+    146	      20 20 20 20 20 20	DA+
+    147	      C4 C4 C4 C4 C4 C4	C4+
+    148	      C4 C4 BF 0A 0D
+    149	03B1  20 20 20 20 20 20	20+		      db "				    ",179," INICIAR ",179,10,13
+    150	      20 20 20 20 20 20	20+
+    151	      20 20 20 20 20 20	20+
+    152	      20 20 20 20 20 20	20+
+    153	      20 20 20 20 20 20	B3+
+    154	      20 49 4E 49 43 49	41+
+    155	      52 20 B3 0A 0D
+    156	03E0  20 20 20 20 20 20	20+		      db "				    ",192,196,196,196,196,196,196,196,196,  +
+    157	      20 20 20 20 20 20	20+  196,217,10,13,"$"
+    158	      20 20 20 20 20 20	20+
+    159	      20 20 20 20 20 20	20+
+    160	      20 20 20 20 20 20	C0+
+    161	      C4 C4 C4 C4 C4 C4	C4+
+    162	      C4 C4 D9 0A 0D 24
+    163
+    164	0410  20 20 20 20 20 20	20+	 botao_sair db "				  ",218,196,196,196,196,196,196,196,196,196,+
+    165	      20 20 20 20 20 20	20+  191,10,13
+    166	      20 20 20 20 20 20	20+
+    167	      20 20 20 20 20 20	20+
+    168	      20 20 20 20 20 20	DA+
+    169	      C4 C4 C4 C4 C4 C4	C4+
+    170	      C4 C4 BF 0A 0D
+    171	043F  20 20 20 20 20 20	20+		   db "					 ",179,"  SAIR	 ",179,10,13
+Turbo Assembler	 Version 4.1	    11/12/24 21:34:37	    Page 4
+MAIN.ASM
+
+
+
+    172	      20 20 20 20 20 20	20+
+    173	      20 20 20 20 20 20	20+
+    174	      20 20 20 20 20 20	20+
+    175	      20 20 20 20 20 20	B3+
+    176	      20 20 53 41 49 52	20+
+    177	      20 20 B3 0A 0D
+    178	046E  20 20 20 20 20 20	20+		   db "					 ",192,196,196,196,196,196,196,196,196,196, +
+    179	      20 20 20 20 20 20	20+  217,10,13,"$"
+    180	      20 20 20 20 20 20	20+
+    181	      20 20 20 20 20 20	20+
+    182	      20 20 20 20 20 20	C0+
+    183	      C4 C4 C4 C4 C4 C4	C4+
+    184	      C4 C4 D9 0A 0D 24
+    185
+    186	049E			     .code
+    187
+    188				     ; Procedimento para navegação no	menu usando as setas
+    189	0000			     NAVIGATE proc
+    190	0000  80 FC 72			 cmp ah, 72H	; Código para seta para cima
+    191	0003  74 08			 je ARROW_UP
+    192	0005  80 FC 80			 cmp ah, 80H	; Código para seta para baixo
+    193	0008  74 06			 je ARROW_DOWN
+    194	000A  EB 07 90			 jmp FIM_NAVIGATE
+    195
+    196	000D			     ARROW_UP:
+    197					 ; Código para	navegar	para cima
+    198	000D  EB 04 90			 jmp FIM_NAVIGATE
+    199
+    200	0010			     ARROW_DOWN:
+    201					 ; Código para	navegar	para baixo
+    202	0010  EB 01 90			 jmp FIM_NAVIGATE
+    203
+    204	0013			     FIM_NAVIGATE:
+    205	0013  C3			 ret
+    206	0014			     NAVIGATE endp
+    207
+    208	0014			     PRINT_TITLE_MENU proc
+    209					 ; Posiciona o cursor e	exibe o	título
+    210					 ; mov dl, 0	  ; Coluna
+    211					 ; mov dh, 2	  ; Linha
+    212					 ; mov ah, 2h
+    213					 ; int 10h
+    214
+    215
+    216					 ; mov bl,0ah
+    217
+    218					 ; ; Exibe o título na	tela
+    219					 ; mov dx, offset string
+    220					 ; mov ah, 9H
+    221					 ; int 21h
+    222
+    223	0014  BD 0001r			 mov BP, OFFSET	string
+    224	0017  B9 0381			 mov CX, string_length ; tamanho
+    225	001A  B3 0A			 mov BL, 0AH ; cor
+    226	001C  B2 02			 mov DL, 2 ;coluna
+    227	001E  B6 02			 mov DH, 2 ; linha
+    228
+Turbo Assembler	 Version 4.1	    11/12/24 21:34:37	    Page 5
+MAIN.ASM
+
+
+
+    229	0020  E8 0001			 call print_string
+    230
+    231	0023  C3			 ret
+    232	0024			     PRINT_TITLE_MENU endp
+    233
+    234	0024			     print_string PROC
+    235	0024  50			 push AX
+    236	0025  53			 push BX
+    237	0026  51			 push CX
+    238	0027  52			 push DX
+    239	0028  56			 push SI
+    240	0029  55			 push BP
+    241
+    242	002A  B4 13			 mov AH, 13h
+    243	002C  B0 01			 mov AL, 01h
+    244	002E  32 FF			 xor BH, BH
+    245	0030  CD 10			 int 10h
+    246
+    247	0032  5D			 pop Bp
+    248	0033  5E			 pop SI
+    249	0034  5A			 pop DX
+    250	0035  59			 pop CX
+    251	0036  5B			 pop BX
+    252	0037  58			 pop AX
+    253	0038  C3			 ret
+    254	0039			     print_string ENDP
+    255
+    256
+    257				     ; Procedimento para exibir	os botões INICIAR e SAIR
+    258	0039			     PRINT_BUTTONS proc
+    259					 ; Exibe o botão INICIAR
+    260	0039  B2 00			 mov dl, 0
+    261	003B  B6 10			 mov dh, 16
+    262	003D  B4 02			 mov ah, 2h
+    263	003F  CD 10			 int 10h
+    264	0041  BA 0382r			 mov dx, offset	botao_iniciar
+    265	0044  B4 09			 mov ah, 9H
+    266	0046  CD 21			 int 21h
+    267
+    268					 ; Exibe o botão SAIR
+    269	0048  B6 12			 mov dh, 18
+    270	004A  BA 0410r			 mov dx, offset	botao_sair
+    271	004D  B4 09			 mov ah, 9H
+    272	004F  CD 21			 int 21h
+    273	0051  C3			 ret
+    274	0052			     PRINT_BUTTONS endp
+    275
+    276				     ; Procedimento principal
+    277	0052			     main proc
+    278	0052  B8 0000s			 mov AX, @data
+    279	0055  8E D8			 mov DS, AX
+    280
+    281					 ; Define o modo texto
+    282	0057  B0 03			 mov al, 3h
+    283	0059  B4 00			 mov ah, 0h
+    284	005B  CD 10			 int 10h
+    285
+Turbo Assembler	 Version 4.1	    11/12/24 21:34:37	    Page 6
+MAIN.ASM
+
+
+
+    286					 ; Exibe título e botões do menu
+    287	005D  E8 FFB4			 call PRINT_TITLE_MENU
+    288	0060  E8 FFD6			 call PRINT_BUTTONS
+    289
+    290	0063			     LACO_MENU:
+    291					 ; Espera por entrada do usuário
+    292	0063  B4 01			 mov ah, 1H
+    293	0065  CD 16			 int 16H
+    294	0067  74 FA			 jz LACO_MENU
+    295
+    296					 ; Chama a função de navegação
+    297	0069  E8 FF94			 call NAVIGATE
+    298
+    299					 ; Condição para iniciar o jogo
+    300	006C  3C 71			 cmp al, 'q'
+    301	006E  74 06			 je INICIA_JOGO
+    302
+    303					 ; Retorno ao loop do menu
+    304	0070  B4 00			 mov ah, 0H
+    305	0072  CD 16			 int 16H
+    306	0074  EB ED			 jmp LACO_MENU
+    307
+    308	0076			     INICIA_JOGO:
+    309					 ; Código para	iniciar	o jogo
+    310
+    311					 ; Encerra o programa
+    312	0076  B4 4C			 mov ah, 4ch
+    313	0078  B0 00			 mov al, 0
+    314	007A  CD 21			 int 21h
+    315	007C  C3			 ret
+    316	007D			     main endp
+    317
+    318				     end main
+Turbo Assembler	 Version 4.1	    11/12/24 21:34:37	    Page 7
+Symbol Table
+
+
+
+
+Symbol Name			  Type	 Value
+
+??DATE				  Text	 "11/12/24"
+??FILENAME			  Text	 "MAIN	  "
+??TIME				  Text	 "21:34:37"
+??VERSION			  Number 040A
+@32BIT				  Text	 0
+@CODE				  Text	 _TEXT
+@CODESIZE			  Text	 0
+@CPU				  Text	 0101H
+@CURSEG				  Text	 _TEXT
+@DATA				  Text	 DGROUP
+@DATASIZE			  Text	 0
+@FILENAME			  Text	 MAIN
+@INTERFACE			  Text	 000H
+@MODEL				  Text	 2
+@STACK				  Text	 DGROUP
+@WORDSIZE			  Text	 2
+ARROW_DOWN			  Near	 _TEXT:0010
+ARROW_UP			  Near	 _TEXT:000D
+BOTAO_INICIAR			  Byte	 DGROUP:0382
+BOTAO_SAIR			  Byte	 DGROUP:0410
+FIM_NAVIGATE			  Near	 _TEXT:0013
+INICIA_JOGO			  Near	 _TEXT:0076
+LACO_MENU			  Near	 _TEXT:0063
+MAIN				  Near	 _TEXT:0052
+MENU				  Byte	 DGROUP:0000
+NAVIGATE			  Near	 _TEXT:0000
+PRINT_BUTTONS			  Near	 _TEXT:0039
+PRINT_STRING			  Near	 _TEXT:0024
+PRINT_TITLE_MENU		  Near	 _TEXT:0014
+STRING				  Byte	 DGROUP:0001
+STRING_LENGTH			  Number 0381
+
+Groups & Segments		  Bit Size Align  Combine Class
+
+DGROUP				  Group
+  STACK				  16  0400 Para	  Stack	  STACK
+  _DATA				  16  049E Word	  Public  DATA
+_TEXT				  16  007D Word	  Public  CODE
+
