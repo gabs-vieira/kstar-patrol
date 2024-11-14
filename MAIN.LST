@@ -1,4 +1,4 @@
-Turbo Assembler	 Version 4.1	    11/13/24 11:22:14	    Page 1
+Turbo Assembler	 Version 4.1	    11/13/24 22:40:21	    Page 1
 MAIN.ASM
 
 
@@ -60,7 +60,7 @@ MAIN.ASM
      55	      20 7C 20 20 2F 20	5F+
      56	      5F 20 5C 7C 20 20	7C+
      57	      20 5C 2F 20 0D 0A
-Turbo Assembler	 Version 4.1	    11/13/24 11:22:14	    Page 2
+Turbo Assembler	 Version 4.1	    11/13/24 22:40:21	    Page 2
 MAIN.ASM
 
 
@@ -122,7 +122,7 @@ MAIN.ASM
     112	      5F 5F 5F 5F 20 20	2F+
     113	      5F 5F 7C 20 20 7C	5F+
     114	      5F 7C 20 20 20 5C	5F+
-Turbo Assembler	 Version 4.1	    11/13/24 11:22:14	    Page 3
+Turbo Assembler	 Version 4.1	    11/13/24 22:40:21	    Page 3
 MAIN.ASM
 
 
@@ -151,214 +151,264 @@ MAIN.ASM
     136	      20 20 20 20 20 20	20+
     137	      20 20 20 20 0D 0A
     138
-    139
-    140	      =0381				string_length equ $-string
-    141
-    142	0382  20 20 20 20 20 20	20+	 botao_iniciar db "				     ",218,196,196,196,196,196,196,196,196, +
-    143	      20 20 20 20 20 20	20+  196,191,10,13
+    139	      =0381			 string_length equ $-string
+    140
+    141	0382  20 20 20 20 20 20	20+	 btn_iniciar db	"				   ",218,196,196,196,196,196,196,196,196,   +
+    142	      20 20 20 20 20 20	20+  196,191,13,10
+    143	      20 20 20 20 20 20	20+
     144	      20 20 20 20 20 20	20+
-    145	      20 20 20 20 20 20	20+
-    146	      20 20 20 20 20 20	DA+
-    147	      C4 C4 C4 C4 C4 C4	C4+
-    148	      C4 C4 BF 0A 0D
-    149	03B1  20 20 20 20 20 20	20+		      db "				    ",179," INICIAR ",179,10,13
+    145	      20 20 20 20 20 20	DA+
+    146	      C4 C4 C4 C4 C4 C4	C4+
+    147	      C4 C4 BF 0D 0A
+    148	03B1  20 20 20 20 20 20	20+		      db "				    ",179," INICIAR ",179,10,13
+    149	      20 20 20 20 20 20	20+
     150	      20 20 20 20 20 20	20+
     151	      20 20 20 20 20 20	20+
-    152	      20 20 20 20 20 20	20+
-    153	      20 20 20 20 20 20	B3+
-    154	      20 49 4E 49 43 49	41+
-    155	      52 20 B3 0A 0D
-    156	03E0  20 20 20 20 20 20	20+		      db "				    ",192,196,196,196,196,196,196,196,196,  +
-    157	      20 20 20 20 20 20	20+  196,217,10,13,"$"
+    152	      20 20 20 20 20 20	B3+
+    153	      20 49 4E 49 43 49	41+
+    154	      52 20 B3 0A 0D
+    155	03E0  20 20 20 20 20 20	20+		      db "				    ",192,196,196,196,196,196,196,196,196,  +
+    156	      20 20 20 20 20 20	20+  196,217,13,10
+    157	      20 20 20 20 20 20	20+
     158	      20 20 20 20 20 20	20+
-    159	      20 20 20 20 20 20	20+
-    160	      20 20 20 20 20 20	C0+
-    161	      C4 C4 C4 C4 C4 C4	C4+
-    162	      C4 C4 D9 0A 0D 24
-    163
-    164	0410  20 20 20 20 20 20	20+	 botao_sair db "				  ",218,196,196,196,196,196,196,196,196,196,+
-    165	      20 20 20 20 20 20	20+  191,10,13
-    166	      20 20 20 20 20 20	20+
+    159	      20 20 20 20 20 20	C0+
+    160	      C4 C4 C4 C4 C4 C4	C4+
+    161	      C4 C4 D9 0D 0A
+    162
+    163	      =008D			 btn_iniciar_length equ	$-btn_iniciar
+    164
+    165	040F  20 20 20 20 20 20	20+	 btn_sair db "					",218,196,196,196,196,196,196,196,196,196,  +
+    166	      20 20 20 20 20 20	20+  191,13,10
     167	      20 20 20 20 20 20	20+
-    168	      20 20 20 20 20 20	DA+
-    169	      C4 C4 C4 C4 C4 C4	C4+
-    170	      C4 C4 BF 0A 0D
-    171	043F  20 20 20 20 20 20	20+		   db "					 ",179,"  SAIR	 ",179,10,13
-Turbo Assembler	 Version 4.1	    11/13/24 11:22:14	    Page 4
+    168	      20 20 20 20 20 20	20+
+    169	      20 20 20 20 20 20	DA+
+    170	      C4 C4 C4 C4 C4 C4	C4+
+    171	      C4 C4 BF 0D 0A
+Turbo Assembler	 Version 4.1	    11/13/24 22:40:21	    Page 4
 MAIN.ASM
 
 
 
-    172	      20 20 20 20 20 20	20+
+    172	043E  20 20 20 20 20 20	20+		   db "					 ",179,"  SAIR	 ",179,10,13
     173	      20 20 20 20 20 20	20+
     174	      20 20 20 20 20 20	20+
-    175	      20 20 20 20 20 20	B3+
-    176	      20 20 53 41 49 52	20+
-    177	      20 20 B3 0A 0D
-    178	046E  20 20 20 20 20 20	20+		   db "					 ",192,196,196,196,196,196,196,196,196,196, +
-    179	      20 20 20 20 20 20	20+  217,10,13,"$"
-    180	      20 20 20 20 20 20	20+
+    175	      20 20 20 20 20 20	20+
+    176	      20 20 20 20 20 20	B3+
+    177	      20 20 53 41 49 52	20+
+    178	      20 20 B3 0A 0D
+    179	046D  20 20 20 20 20 20	20+		   db "					 ",192,196,196,196,196,196,196,196,196,196, +
+    180	      20 20 20 20 20 20	20+  217,13,10
     181	      20 20 20 20 20 20	20+
-    182	      20 20 20 20 20 20	C0+
-    183	      C4 C4 C4 C4 C4 C4	C4+
-    184	      C4 C4 D9 0A 0D 24
-    185
-    186	049E			     .code
-    187
-    188				     ; Procedimento para navegação no	menu usando as setas
-    189	0000			     NAVIGATE proc
-    190	0000  80 FC 72			 cmp ah, 72H	; Código para seta para cima
-    191	0003  74 08			 je ARROW_UP
-    192	0005  80 FC 80			 cmp ah, 80H	; Código para seta para baixo
-    193	0008  74 06			 je ARROW_DOWN
-    194	000A  EB 07 90			 jmp FIM_NAVIGATE
-    195
-    196	000D			     ARROW_UP:
-    197					 ; Código para	navegar	para cima
-    198	000D  EB 04 90			 jmp FIM_NAVIGATE
-    199
-    200	0010			     ARROW_DOWN:
-    201					 ; Código para	navegar	para baixo
-    202	0010  EB 01 90			 jmp FIM_NAVIGATE
-    203
-    204	0013			     FIM_NAVIGATE:
-    205	0013  C3			 ret
-    206	0014			     NAVIGATE endp
-    207
-    208	0014			     PRINT_TITLE_MENU proc
-    209					 ; Posiciona o cursor e	exibe o	título
-    210					 ; mov dl, 0	  ; Coluna
-    211					 ; mov dh, 2	  ; Linha
-    212					 ; mov ah, 2h
-    213					 ; int 10h
-    214
+    182	      20 20 20 20 20 20	20+
+    183	      20 20 20 20 20 20	C0+
+    184	      C4 C4 C4 C4 C4 C4	C4+
+    185	      C4 C4 D9 0D 0A
+    186
+    187	      =008D			 btn_sair_length equ $-btn_sair
+    188
+    189
+    190	049C  0F 0F 0F 0F 0F 0F	0F+	 Nave	     db	15,15,15,15,15,15,15,15,15,15,15,15,0,0,0,0
+    191	      0F 0F 0F 0F 0F 00	00+
+    192	      00 00
+    193	04AC  00 00 0F 0F 00 00	00+		     db	0,0,15,15,0,0,0,0,0,0,0,0,0,0,0,0
+    194	      00 00 00 00 00 00	00+
+    195	      00 00
+    196	04BC  00 00 0F 0F 0F 0F	00+		     db	0,0,15,15,15,15,0,0,0,0,0,0,0,0,0
+    197	      00 00 00 00 00 00	00+
+    198	      00
+    199	04CB  00 00 0F 0F 0F 0F	0F+		     db	0,0,15,15,15,15,15,15,0,0,0,0,0,0
+    200	      0F 00 00 00 00 00	00
+    201	04D9  00 00 0F 0F 0F 0F	0F+		     db	0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15
+    202	      0F 0F 0F 0F 0F 0F	0F+
+    203	      0F 0F
+    204	04E9  00 00 0F 0F 0F 0F	0F+		     db	0,0,15,15,15,15,15,15,0,0,0,0,0,0
+    205	      0F 00 00 00 00 00	00
+    206	04F7  00 00 0F 0F 0F 0F	00+		     db	0,0,15,15,15,15,0,0,0,0,0,0,0,0,0
+    207	      00 00 00 00 00 00	00+
+    208	      00
+    209	0506  00 00 0F 0F 00 00	00+		     db	0,0,15,15,0,0,0,0,0,0,0,0,0,0,0,0
+    210	      00 00 00 00 00 00	00+
+    211	      00 00
+    212	0516  0F 0F 0F 0F 0F 0F	0F+		     db	15,15,15,15,15,15,15,15,15,15,15,15,0,0,0,0
+    213	      0F 0F 0F 0F 0F 00	00+
+    214	      00 00
     215
-    216					 ; mov bl,0ah
-    217
-    218					 ; ; Exibe o título na	tela
-    219					 ; mov dx, offset string
-    220					 ; mov ah, 9H
-    221					 ; int 21h
-    222
-    223	0014  8C D8			 mov AX, DS
-    224	0016  8E C0			 mov ES, AX
-    225
-    226	0018  BD 0001r			 mov BP, OFFSET	string
-    227	001B  B9 0381			 mov CX, string_length ; tamanho
-    228	001E  B3 0A			 mov BL, 0AH ; cor
-Turbo Assembler	 Version 4.1	    11/13/24 11:22:14	    Page 5
+    216
+    217	0526  0F 0F 0F 0F 0F 0F	0F+	 ShotNave  db 15,15,15,15,15,15,15,15,15,0,0,0,0,0,0
+    218	      0F 0F 00 00 00 00	00+
+    219	      00
+    220	0535  0F*(00)				     db	15 dup (0)
+    221	0544  0F*(00)				     db	15 dup (0)
+    222	0553  0F*(00)				     db	15 dup (0)
+    223	0562  00 00 00 00 00 00	0F+		     db	0,0,0,0,0,0,15,15,15,15,15,15,15,15,15
+    224	      0F 0F 0F 0F 0F 0F	0F+
+    225	      0F
+    226	0571  0F*(00)				     db	15 dup (0)
+    227	0580  0F*(00)				     db	15 dup (0)
+    228	058F  0F*(00)				     db	15 dup (0)
+Turbo Assembler	 Version 4.1	    11/13/24 22:40:21	    Page 5
 MAIN.ASM
 
 
 
-    229	0020  B2 02			 mov DL, 2 ;coluna
-    230	0022  B6 02			 mov DH, 2 ; linha
-    231
-    232	0024  E8 0001			 call print_string
-    233
-    234	0027  C3			 ret
-    235	0028			     PRINT_TITLE_MENU endp
-    236
-    237	0028			     print_string PROC
-    238	0028  50			 push AX
-    239	0029  53			 push BX
-    240	002A  51			 push CX
-    241	002B  52			 push DX
-    242	002C  56			 push SI
-    243	002D  55			 push BP
-    244
-    245					 ; Configura os	parâmetros para a função 13h
-    246	002E  B4 13			 mov AH, 13h	     ; Função	para escrever string com atributos de cor
-    247	0030  B0 01			 mov AL, 1	     ; Modo: atualiza cursor após a escrita
-    248							      ;	AL = 1 -> modo de atualização	de cursor
-    249	0032  B3 02			 mov BL, 02h	     ; Cor verde (se bit 1 de AL estiver limpo,	usamos BL)
-    250	0034  B7 00			 mov BH, 0	     ; Página de vídeo 0
-    251	0036  B9 0381			 mov CX, string_length ; Tamanho da string
-    252	0039  B2 02			 mov DL, 2	     ; Coluna inicial
-    253	003B  B6 02			 mov DH, 2	     ; Linha inicial
-    254	003D  BD 0001r			 mov BP, OFFSET	string ; Ponteiro para a string
-    255
-    256	0040  CD 10			 int 10h	     ; Chamada de interrupção	para exibir a string
+    229	059E  0F 0F 0F 0F 0F 0F	0F+		     db	15,15,15,15,15,15,15,15,15,0,0,0,0,0,0
+    230	      0F 0F 00 00 00 00	00+
+    231	      00
+    232
+    233	05AD			     .code
+    234
+    235				     ; Procedimento para navegação no	menu usando as setas
+    236	0000			     NAVIGATE PROC
+    237	0000  80 FC 48			 cmp ah, 48H	; Código para seta para cima
+    238	0003  74 08			 je CHANGE_SELECTION
+    239	0005  80 FC 50			 cmp ah, 50H	; Código para seta para baixo
+    240	0008  74 03			 je CHANGE_SELECTION
+    241	000A  EB 14 90			 jmp FIM_NAVIGATE
+    242
+    243	000D			     CHANGE_SELECTION:
+    244	000D  50			 push ax
+    245	000E  53			 push bx
+    246					 ; Código para	navegar
+    247	000F  8A 26 0000r		 mov ah, menu
+    248	0013  80 F4 01			 xor ah, 1
+    249	0016  BB 0000r			 mov bx, offset	menu
+    250	0019  88 27			 mov byte ptr [bx], ah
+    251	001B  5B			 pop bx
+    252	001C  58			 pop ax
+    253	001D  E8 002A			 call PRINT_BUTTONS
+    254	0020			     FIM_NAVIGATE:
+    255	0020  C3			 ret
+    256	0021			     ENDP
     257
-    258	0042  5D			 pop BP
-    259	0043  5E			 pop SI
-    260	0044  5A			 pop DX
-    261	0045  59			 pop CX
-    262	0046  5B			 pop BX
-    263	0047  58			 pop AX
-    264	0048  C3			 ret
-    265	0049			     print_string ENDP
-    266
-    267
+    258	0021			     PRINT_TITLE_MENU proc
+    259	0021  8C D8			 mov AX, DS
+    260	0023  8E C0			 mov ES, AX
+    261
+    262	0025  BD 0001r			 mov BP, OFFSET	string
+    263	0028  B9 0381			 mov CX, string_length ; tamanho
+    264	002B  B3 02			 mov BL, 02H ; Cor verde (se bit 1 de AL estiver limpo,	usamos BL)
+    265	002D  B2 02			 mov DL, 2 ;coluna
+    266	002F  B6 02			 mov DH, 2 ; linha
+    267	0031  E8 0001			 call PRINT_STRING
     268
-    269				     ; Procedimento para exibir	os botões INICIAR e SAIR
-    270	0049			     PRINT_BUTTONS proc
-    271					 ; Exibe o botão INICIAR
-    272	0049  B2 00			 mov dl, 0
-    273	004B  B6 10			 mov dh, 16
-    274	004D  B4 02			 mov ah, 2h
-    275	004F  CD 10			 int 10h
-    276	0051  BA 0382r			 mov dx, offset	botao_iniciar
-    277	0054  B4 09			 mov ah, 9H
-    278	0056  CD 21			 int 21h
+    269	0034  C3			 ret
+    270	0035			     PRINT_TITLE_MENU endp
+    271
+    272	0035			     PRINT_STRING PROC
+    273	0035  50			 push AX
+    274	0036  53			 push BX
+    275	0037  51			 push CX
+    276	0038  52			 push DX
+    277	0039  56			 push SI
+    278	003A  55			 push BP
     279
-    280					 ; Exibe o botão SAIR
-    281	0058  B6 12			 mov dh, 18
-    282	005A  BA 0410r			 mov dx, offset	botao_sair
-    283	005D  B4 09			 mov ah, 9H
-    284	005F  CD 21			 int 21h
-    285	0061  C3			 ret
-Turbo Assembler	 Version 4.1	    11/13/24 11:22:14	    Page 6
+    280					 ; Configura os	parâmetros para a função 13h
+    281	003B  B4 13			 mov AH, 13h	     ; Função	para escrever string com atributos de cor
+    282	003D  B0 01			 mov AL, 1	     ; Modo: atualiza cursor após a escrita
+    283							      ;	AL = 1 -> modo de atualização	de cursor
+    284	003F  B7 00			 mov BH, 0	     ; Página de vídeo 0
+    285	0041  CD 10			 int 10h	     ; Chamada de interrupção	para exibir a string
+Turbo Assembler	 Version 4.1	    11/13/24 22:40:21	    Page 6
 MAIN.ASM
 
 
 
-    286	0062			     PRINT_BUTTONS endp
-    287
-    288				     ; Procedimento principal
-    289	0062			     main proc
-    290	0062  B8 0000s			 mov AX, @data
-    291	0065  8E D8			 mov DS, AX
-    292
-    293					 ; Define o modo texto
-    294	0067  B0 03			 mov al, 3h
-    295	0069  B4 00			 mov ah, 0h
-    296	006B  CD 10			 int 10h
-    297
-    298					 ; Exibe título e botões do menu
-    299	006D  E8 FFA4			 call PRINT_TITLE_MENU
-    300	0070  E8 FFD6			 call PRINT_BUTTONS
-    301
-    302	0073			     LACO_MENU:
-    303					 ; Espera por entrada do usuário
-    304	0073  B4 01			 mov ah, 1H
-    305	0075  CD 16			 int 16H
-    306	0077  74 FA			 jz LACO_MENU
-    307
-    308					 ; Chama a função de navegação
-    309	0079  E8 FF84			 call NAVIGATE
-    310
-    311					 ; Condição para iniciar o jogo
-    312	007C  3C 71			 cmp al, 'q'
-    313	007E  74 06			 je INICIA_JOGO
-    314
-    315					 ; Retorno ao loop do menu
-    316	0080  B4 00			 mov ah, 0H
-    317	0082  CD 16			 int 16H
-    318	0084  EB ED			 jmp LACO_MENU
-    319
-    320	0086			     INICIA_JOGO:
-    321					 ; Código para	iniciar	o jogo
-    322
-    323					 ; Encerra o programa
-    324	0086  B4 4C			 mov ah, 4ch
-    325	0088  B0 00			 mov al, 0
-    326	008A  CD 21			 int 21h
-    327	008C  C3			 ret
-    328	008D			     main endp
-    329
-    330				     end main
-Turbo Assembler	 Version 4.1	    11/13/24 11:22:14	    Page 7
+    286
+    287	0043  5D			 pop BP
+    288	0044  5E			 pop SI
+    289	0045  5A			 pop DX
+    290	0046  59			 pop CX
+    291	0047  5B			 pop BX
+    292	0048  58			 pop AX
+    293	0049  C3			 ret
+    294	004A			     ENDP
+    295
+    296				     ; Procedimento para exibir	os botões INICIAR e SAIR
+    297	004A			     PRINT_BUTTONS proc
+    298	004A  50			 push ax
+    299	004B  B3 0F			 mov bl, 0FH
+    300	004D  8A 26 0000r		 mov ah, menu
+    301	0051  80 FC 00			 cmp ah, 0
+    302	0054  75 02			 jne START_BTN
+    303	0056  B3 0C			 mov bl, 0CH
+    304
+    305	0058			     START_BTN:
+    306					 ; Exibe o botão INICIAR
+    307	0058  BD 0382r			 mov BP, OFFSET	btn_iniciar
+    308	005B  B9 008D			 mov CX, btn_iniciar_length ; tamanho
+    309	005E  B2 00			 mov DL, 0 ; coluna
+    310	0060  B6 10			 mov DH, 16 ; linha
+    311	0062  E8 FFD0			 call PRINT_STRING
+    312
+    313	0065  B3 0F			 mov bl, 0FH
+    314	0067  8A 26 0000r		 mov ah, menu
+    315	006B  80 FC 01			 cmp ah, 1
+    316	006E  75 02			 jne EXIT_BTN
+    317	0070  B3 0C			 mov bl, 0CH
+    318
+    319	0072			     EXIT_BTN:
+    320					 ; Exibe o botão SAIR
+    321	0072  BD 040Fr			 mov BP, OFFSET	btn_sair
+    322	0075  B9 008D			 mov CX, btn_sair_length ; tamanho
+    323	0078  B2 00			 mov DL, 0 ; coluna
+    324	007A  B6 13			 mov DH, 19 ; linha
+    325	007C  E8 FFB6			 call PRINT_STRING
+    326
+    327	007F  58			 pop ax
+    328	0080  C3			 ret
+    329	0081			     endp
+    330
+    331				     ; Procedimento principal
+    332	0081			     main proc
+    333	0081  B8 0000s			 mov AX, @data
+    334	0084  8E D8			 mov DS, AX
+    335
+    336					 ; Define o modo texto
+    337	0086  B0 03			 mov al, 3h
+    338	0088  B4 00			 mov ah, 0h
+    339	008A  CD 10			 int 10h
+    340
+    341					 ; Exibe título e botões do menu
+    342	008C  E8 FF92			 call PRINT_TITLE_MENU
+Turbo Assembler	 Version 4.1	    11/13/24 22:40:21	    Page 7
+MAIN.ASM
+
+
+
+    343	008F  E8 FFB8			 call PRINT_BUTTONS
+    344
+    345	0092			     LACO_MENU:
+    346					 ; Espera por entrada do usuário
+    347	0092  B4 01			 mov ah, 1H
+    348	0094  CD 16			 int 16H
+    349	0096  74 FA			 jz LACO_MENU
+    350
+    351					 ; Chama a função de navegação
+    352	0098  E8 FF65			 call NAVIGATE
+    353
+    354					 ; Condição para iniciar o jogo
+    355	009B  80 FC 1C			 cmp ah, 1CH
+    356	009E  74 06			 je CONFIRMA_SELECAO
+    357
+    358					 ; Retorno ao loop do menu
+    359	00A0  B4 00			 mov ah, 0H
+    360	00A2  CD 16			 int 16H
+    361	00A4  EB EC			 jmp LACO_MENU
+    362
+    363	00A6			     CONFIRMA_SELECAO:
+    364	00A6  B4 00			 mov ah, 0H
+    365	00A8  CD 16			 int 16H
+    366					 ; Código para	iniciar	o jogo
+    367
+    368					 ; Encerra o programa
+    369	00AA  B4 4C			 mov ah, 4ch
+    370	00AC  B0 00			 mov al, 0
+    371	00AE  CD 21			 int 21h
+    372	00B0  C3			 ret
+    373	00B1			     main endp
+    374
+    375				     end main
+Turbo Assembler	 Version 4.1	    11/13/24 22:40:21	    Page 8
 Symbol Table
 
 
@@ -368,7 +418,7 @@ Symbol Name			  Type	 Value
 
 ??DATE				  Text	 "11/13/24"
 ??FILENAME			  Text	 "MAIN	  "
-??TIME				  Text	 "11:22:13"
+??TIME				  Text	 "22:40:21"
 ??VERSION			  Number 040A
 @32BIT				  Text	 0
 @CODE				  Text	 _TEXT
@@ -382,19 +432,24 @@ Symbol Name			  Type	 Value
 @MODEL				  Text	 2
 @STACK				  Text	 DGROUP
 @WORDSIZE			  Text	 2
-ARROW_DOWN			  Near	 _TEXT:0010
-ARROW_UP			  Near	 _TEXT:000D
-BOTAO_INICIAR			  Byte	 DGROUP:0382
-BOTAO_SAIR			  Byte	 DGROUP:0410
-FIM_NAVIGATE			  Near	 _TEXT:0013
-INICIA_JOGO			  Near	 _TEXT:0086
-LACO_MENU			  Near	 _TEXT:0073
-MAIN				  Near	 _TEXT:0062
+BTN_INICIAR			  Byte	 DGROUP:0382
+BTN_INICIAR_LENGTH		  Number 008D
+BTN_SAIR			  Byte	 DGROUP:040F
+BTN_SAIR_LENGTH			  Number 008D
+CHANGE_SELECTION		  Near	 _TEXT:000D
+CONFIRMA_SELECAO		  Near	 _TEXT:00A6
+EXIT_BTN			  Near	 _TEXT:0072
+FIM_NAVIGATE			  Near	 _TEXT:0020
+LACO_MENU			  Near	 _TEXT:0092
+MAIN				  Near	 _TEXT:0081
 MENU				  Byte	 DGROUP:0000
+NAVE				  Byte	 DGROUP:049C
 NAVIGATE			  Near	 _TEXT:0000
-PRINT_BUTTONS			  Near	 _TEXT:0049
-PRINT_STRING			  Near	 _TEXT:0028
-PRINT_TITLE_MENU		  Near	 _TEXT:0014
+PRINT_BUTTONS			  Near	 _TEXT:004A
+PRINT_STRING			  Near	 _TEXT:0035
+PRINT_TITLE_MENU		  Near	 _TEXT:0021
+SHOTNAVE			  Byte	 DGROUP:0526
+START_BTN			  Near	 _TEXT:0058
 STRING				  Byte	 DGROUP:0001
 STRING_LENGTH			  Number 0381
 
@@ -402,6 +457,6 @@ Groups & Segments		  Bit Size Align  Combine Class
 
 DGROUP				  Group
   STACK				  16  0400 Para	  Stack	  STACK
-  _DATA				  16  049E Word	  Public  DATA
-_TEXT				  16  008D Word	  Public  CODE
+  _DATA				  16  05AD Word	  Public  DATA
+_TEXT				  16  00B1 Word	  Public  CODE
 

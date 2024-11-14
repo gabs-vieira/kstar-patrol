@@ -19,69 +19,92 @@
            db "                                \/                                 ",13,10
            db "                                                                   ",13,10
 
+    string_length equ $-string
 
-           string_length equ $-string
-
-    botao_iniciar db "                                  ",218,196,196,196,196,196,196,196,196,196,191,10,13
+    btn_iniciar db "                                  ",218,196,196,196,196,196,196,196,196,196,191,13,10
                  db "                                  ",179," INICIAR ",179,10,13
-                 db "                                  ",192,196,196,196,196,196,196,196,196,196,217,10,13,"$"
+                 db "                                  ",192,196,196,196,196,196,196,196,196,196,217,13,10
 
-    botao_sair db "                                  ",218,196,196,196,196,196,196,196,196,196,191,10,13
+    btn_iniciar_length equ $-btn_iniciar
+
+    btn_sair db "                                  ",218,196,196,196,196,196,196,196,196,196,191,13,10
               db "                                  ",179,"  SAIR   ",179,10,13
-              db "                                  ",192,196,196,196,196,196,196,196,196,196,217,10,13,"$"
+              db "                                  ",192,196,196,196,196,196,196,196,196,196,217,13,10
+
+    btn_sair_length equ $-btn_sair
+
+
+    Ship        db 15,15,15,15,15,15,15,15,15,15,15,15,0,0,0,0
+                db 0,0,15,15,0,0,0,0,0,0,0,0,0,0,0,0
+                db 0,0,15,15,15,15,0,0,0,0,0,0,0,0,0
+                db 0,0,15,15,15,15,15,15,0,0,0,0,0,0
+                db 0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15
+                db 0,0,15,15,15,15,15,15,0,0,0,0,0,0
+                db 0,0,15,15,15,15,0,0,0,0,0,0,0,0,0
+                db 0,0,15,15,0,0,0,0,0,0,0,0,0,0,0,0
+                db 15,15,15,15,15,15,15,15,15,15,15,15,0,0,0,0
+    
+    AlienShip   db 0,0,0,0,0,0,0,0,9,9,9,9,9,9,9,9
+                db 0,0,0,0,0,0,0,0,9,9,0,0,0,0,0,0
+                db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+                db 0,0,0,0,9,9,9,9,0,0,0,0,0,0,0,0
+                db 9,9,9,9,9,9,9,9,9,9,9,9,0,0,0,0
+                db 0,0,0,0,9,9,9,9,0,0,0,0,0,0,0,0
+                db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+                db 0,0,0,0,0,0,0,0,9,9,0,0,0,0,0,0
+                db 0,0,0,0,0,0,0,0,9,9,9,9,9,9,9,9
+
+
+    ShotNave    db 15,15,15,15,15,15,15,15,15,0,0,0,0,0,0
+                db 15 dup (0)
+                db 15 dup (0)
+                db 15 dup (0)
+                db 0,0,0,0,0,0,15,15,15,15,15,15,15,15,15
+                db 15 dup (0)
+                db 15 dup (0)
+                db 15 dup (0)
+                db 15,15,15,15,15,15,15,15,15,0,0,0,0,0,0
 
 .code
 
 ; Procedimento para navegação no menu usando as setas
-NAVIGATE proc
-    cmp ah, 72H    ; Código para seta para cima
-    je ARROW_UP
-    cmp ah, 80H    ; Código para seta para baixo
-    je ARROW_DOWN
+NAVIGATE PROC
+    cmp ah, 48H    ; Código para seta para cima
+    je CHANGE_SELECTION
+    cmp ah, 50H    ; Código para seta para baixo
+    je CHANGE_SELECTION
     jmp FIM_NAVIGATE
 
-ARROW_UP:
-    ; Código para navegar para cima
-    jmp FIM_NAVIGATE
-
-ARROW_DOWN:
-    ; Código para navegar para baixo
-    jmp FIM_NAVIGATE
-
+CHANGE_SELECTION:
+    push ax
+    push bx
+    ; Código para navegar
+    mov ah, menu
+    xor ah, 1
+    mov bx, offset menu
+    mov byte ptr [bx], ah
+    pop bx
+    pop ax
+    call PRINT_BUTTONS
 FIM_NAVIGATE:
     ret
-NAVIGATE endp
+ENDP
 
 PRINT_TITLE_MENU proc
-    ; Posiciona o cursor e exibe o título
-    ; mov dl, 0      ; Coluna
-    ; mov dh, 2      ; Linha
-    ; mov ah, 2h
-    ; int 10h
-
-
-    ; mov bl,0ah
-
-    ; ; Exibe o título na tela
-    ; mov dx, offset string
-    ; mov ah, 9H
-    ; int 21h
-
     mov AX, DS 
     mov ES, AX
 
     mov BP, OFFSET string
     mov CX, string_length ; tamanho
-    mov BL, 0AH ; cor
+    mov BL, 02H ; Cor verde (se bit 1 de AL estiver limpo, usamos BL)
     mov DL, 2 ;coluna
     mov DH, 2 ; linha
-
-    call print_string
+    call PRINT_STRING
 
     ret
 PRINT_TITLE_MENU endp
 
-print_string PROC
+PRINT_STRING PROC
     push AX
     push BX
     push CX
@@ -93,13 +116,7 @@ print_string PROC
     mov AH, 13h         ; Função para escrever string com atributos de cor
     mov AL, 1           ; Modo: atualiza cursor após a escrita
                          ; AL = 1 -> modo de atualização de cursor
-    mov BL, 02h         ; Cor verde (se bit 1 de AL estiver limpo, usamos BL)
     mov BH, 0           ; Página de vídeo 0
-    mov CX, string_length ; Tamanho da string
-    mov DL, 2           ; Coluna inicial
-    mov DH, 2           ; Linha inicial
-    mov BP, OFFSET string ; Ponteiro para a string
-
     int 10h             ; Chamada de interrupção para exibir a string
 
     pop BP
@@ -109,28 +126,42 @@ print_string PROC
     pop BX
     pop AX
     ret
-print_string ENDP
-
-
+ENDP
 
 ; Procedimento para exibir os botões INICIAR e SAIR
 PRINT_BUTTONS proc
-    ; Exibe o botão INICIAR
-    mov dl, 0
-    mov dh, 16
-    mov ah, 2h
-    int 10h
-    mov dx, offset botao_iniciar
-    mov ah, 9H
-    int 21h
+    push ax
+    mov bl, 0FH
+    mov ah, menu
+    cmp ah, 0
+    jne START_BTN
+    mov bl, 0CH
 
+START_BTN:
+    ; Exibe o botão INICIAR
+    mov BP, OFFSET btn_iniciar
+    mov CX, btn_iniciar_length ; tamanho
+    mov DL, 0 ; coluna
+    mov DH, 16 ; linha
+    call PRINT_STRING
+
+    mov bl, 0FH
+    mov ah, menu
+    cmp ah, 1
+    jne EXIT_BTN
+    mov bl, 0CH
+
+EXIT_BTN:
     ; Exibe o botão SAIR
-    mov dh, 18
-    mov dx, offset botao_sair
-    mov ah, 9H
-    int 21h
+    mov BP, OFFSET btn_sair
+    mov CX, btn_sair_length ; tamanho
+    mov DL, 0 ; coluna
+    mov DH, 19 ; linha
+    call PRINT_STRING
+
+    pop ax
     ret
-PRINT_BUTTONS endp
+endp
 
 ; Procedimento principal
 main proc
@@ -156,17 +187,20 @@ LACO_MENU:
     call NAVIGATE
 
     ; Condição para iniciar o jogo
-    cmp al, 'q'
-    je INICIA_JOGO
+    cmp ah, 1CH
+    je CONFIRMA_SELECAO
 
     ; Retorno ao loop do menu
     mov ah, 0H
     int 16H
     jmp LACO_MENU
 
-INICIA_JOGO:
+CONFIRMA_SELECAO:
+    mov ah, 0H
+    int 16H
     ; Código para iniciar o jogo
 
+ENCERRA:
     ; Encerra o programa
     mov ah, 4ch
     mov al, 0
