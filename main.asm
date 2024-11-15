@@ -9,7 +9,6 @@
     ; 3 - Game Over
     screen db 0
     sector db 1
-    ; sprite_pos dw 0
 
     ; Strings para o título e botões
     string  db 7 dup(" ")," _  __   ___ _            ",13,10
@@ -34,27 +33,39 @@
 
     btn_sair_length equ $-btn_sair
 
+    empty_sprite    db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+                    db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+                    db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+                    db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+                    db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+                    db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+                    db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+                    db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+                    db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 
-    ship        db 15,15,15,15,15,15,15,15,15,15,15,15,0,0,0,0
-                db 0,0,15,15,0,0,0,0,0,0,0,0,0,0,0,0
+    ship        db 15,15,15,15,15,15,15,15,15,15,15,15,0,0,0
+                db 0,0,15,15,0,0,0,0,0,0,0,0,0,0,0
                 db 0,0,15,15,15,15,0,0,0,0,0,0,0,0,0
-                db 0,0,15,15,15,15,15,15,0,0,0,0,0,0
-                db 0,0,15,15,15,15,15,15,15,15,15,15,15,15,15,15
-                db 0,0,15,15,15,15,15,15,0,0,0,0,0,0
+                db 0,0,15,15,15,15,15,15,0,0,0,0,0,0,0
+                db 0,0,15,15,15,15,15,15,15,15,15,15,15,15,15
+                db 0,0,15,15,15,15,15,15,0,0,0,0,0,0,0
                 db 0,0,15,15,15,15,0,0,0,0,0,0,0,0,0
-                db 0,0,15,15,0,0,0,0,0,0,0,0,0,0,0,0
-                db 15,15,15,15,15,15,15,15,15,15,15,15,0,0,0,0
+                db 0,0,15,15,0,0,0,0,0,0,0,0,0,0,0
+                db 15,15,15,15,15,15,15,15,15,15,15,15,0,0,0
+
+    ship_pos dw 0
     
-    alien_ship   db 0,0,0,0,0,0,0,0,9,9,9,9,9,9,9,9
-                db 0,0,0,0,0,0,0,0,9,9,0,0,0,0,0,0
-                db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-                db 0,0,0,0,9,9,9,9,0,0,0,0,0,0,0,0
-                db 9,9,9,9,9,9,9,9,9,9,9,9,0,0,0,0
-                db 0,0,0,0,9,9,9,9,0,0,0,0,0,0,0,0
-                db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-                db 0,0,0,0,0,0,0,0,9,9,0,0,0,0,0,0
-                db 0,0,0,0,0,0,0,0,9,9,9,9,9,9,9,9
+    alien_ship  db 0,0,0,0,0,0,0,0,9,9,9,9,9,9,9
+                db 0,0,0,0,0,0,0,0,9,9,0,0,0,0,0
+                db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+                db 0,0,0,0,9,9,9,9,0,0,0,0,0,0,0
+                db 9,9,9,9,9,9,9,9,9,9,9,9,0,0,0
+                db 0,0,0,0,9,9,9,9,0,0,0,0,0,0,0
+                db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+                db 0,0,0,0,0,0,0,0,9,9,0,0,0,0,0
+                db 0,0,0,0,0,0,0,0,9,9,9,9,9,9,9
 
+    alien_ship_pos dw 0
 
     shot_nave    db 15,15,15,15,15,15,15,15,15,0,0,0,0,0,0
                 db 15 dup (0)
@@ -79,15 +90,13 @@ HANDLE_INPUT PROC
 
 ARROW_UP:
     mov ah, 0
-    mov bx, offset menu
-    mov byte ptr [bx], ah
-    
+    mov menu, ah
+
     jmp RENDER_BUTTONS
 
 ARROW_DOWN:
     mov ah, 1
-    mov bx, offset menu
-    mov byte ptr [bx], ah
+    mov menu, ah
 
 RENDER_BUTTONS:
     mov al, screen
@@ -212,6 +221,69 @@ EXIT_BTN:
     ret
 endp
 
+RESET_CROSS_SHIP_POS proc
+    push ax
+
+    mov ax, 100 * 320
+    mov ship_pos, ax
+    add ax, 305
+    mov alien_ship_pos, ax
+
+    pop ax
+    ret
+endp
+
+CROSS_SHIPS proc
+    mov ax, ship_pos
+    mov si, offset empty_sprite
+    
+    push ax
+    call RENDER_SPRITE
+    pop ax
+
+    cmp ax, 101*320-15
+    je MOVE_ALIEN_SHIP
+
+    inc ship_pos
+    inc ax
+    mov si, offset ship
+    call RENDER_SPRITE
+
+    xor cx, cx
+    mov dx, 4000H
+    mov ah, 86H
+    int 15h
+    jmp END_POS_UPDATE
+
+MOVE_ALIEN_SHIP:
+    mov ax, alien_ship_pos
+    mov si, offset empty_sprite
+
+    push ax
+    cmp ax, 100*320
+    pop ax
+
+    je RESET_POS
+    call RENDER_SPRITE
+
+    dec alien_ship_pos
+    dec ax
+    mov si, offset alien_ship
+    call RENDER_SPRITE
+    
+    xor cx, cx
+    mov dx, 4000H
+    mov ah, 86H
+    int 15h
+    jmp END_POS_UPDATE
+
+RESET_POS:
+    call RESET_CROSS_SHIP_POS
+
+END_POS_UPDATE:
+    ret
+endp
+
 ; Procedimento principal
 main proc; Muda modo grafico
     mov AX, @data
@@ -226,9 +298,12 @@ main proc; Muda modo grafico
     ; Exibe título e botões do menu
     call PRINT_TITLE_MENU
     call PRINT_BUTTONS
+    call RESET_CROSS_SHIP_POS
 
 MENU_LOOP:
-    ; Espera por entrada do usuário
+    call CROSS_SHIPS
+    
+    ; Recebe entrada do usuário
     mov ah, 1H
     int 16H
     jz MENU_LOOP
@@ -257,12 +332,16 @@ GAME_LOOP:
     ; call PRINT_SECTOR
     mov ax, 6562
     mov si, offset ship
-    call RENDER_SPRITE
 
     ; jmp MENU_LOOP
 
 
 ENCERRA:
+    ; Volta para modo texto
+    mov ah, 0h
+    mov al, 3h
+    int 10h
+
     ; Encerra o programa
     mov ah, 4ch
     mov al, 0
