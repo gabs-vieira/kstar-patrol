@@ -2,39 +2,40 @@
 .stack
 
 .data
-    menu db 0H
+    menu db 0
+    ; 0 - Menu
+    ; 1 - Setor
+    ; 2 - Jogo
+    ; 3 - Game Over
+    screen db 0
+    sector db 1
+    ; sprite_pos dw 0
 
     ; Strings para o título e botões
-    string db "                                                                   ",13,10
-           db "                  ____  __.           _________ __                 ",13,10
-           db "                 |    |/ _|          /   _____//  |______ _______  ",13,10
-           db "                 |      <    ______  \_____  \\   __\__  \\_  __ \ ",13,10
-           db "                 |    |  \  /_____/  /        \|  |  / __ \|  | \/ ",13,10
-           db "                 |____|__ \         /_______  /|__| (____  /__|    ",13,10
-           db "                 __________        __       \/       .__ \/        ",13,10
-           db "                 \______   \____ _/  |________  ____ |  |          ",13,10
-           db "                  |     ___|__  \\   __\_  __ \/  _ \|  |          ",13,10
-           db "                  |    |    / __ \|  |  |  | \(  <_> )  |__        ",13,10
-           db "                  |____|   (____  /__|  |__|   \____/|____/        ",13,10
-           db "                                \/                                 ",13,10
-           db "                                                                   ",13,10
+    string  db 7 dup(" ")," _  __   ___ _            ",13,10
+            db 7 dup(" "),"| |/ /__/ __| |_ __ _ _ _ ",13,10
+            db 7 dup(" "),"| ' <___\__ \  _/ _` | '_|",13,10
+            db 7 dup(" "),"|_|\_\  |___/\__\__,_|_|  ",13,10
+            db 7 dup(" "),"| _ \__ _| |_ _ _ ___| |  ",13,10
+            db 7 dup(" "),"|  _/ _` |  _| '_/ _ \ |  ",13,10
+            db 7 dup(" "),"|_| \__,_|\__|_| \___/_|  ",13,10
 
     string_length equ $-string
 
-    btn_iniciar db "                                  ",218,196,196,196,196,196,196,196,196,196,191,13,10
-                 db "                                  ",179," INICIAR ",179,10,13
-                 db "                                  ",192,196,196,196,196,196,196,196,196,196,217,13,10
+    btn_iniciar db  14 dup(" "),218,196,196,196,196,196,196,196,196,196,191,13,10
+                 db 14 dup(" "),179," INICIAR ",179,10,13
+                 db 14 dup(" "),192,196,196,196,196,196,196,196,196,196,217,13,10
 
     btn_iniciar_length equ $-btn_iniciar
 
-    btn_sair db "                                  ",218,196,196,196,196,196,196,196,196,196,191,13,10
-              db "                                  ",179,"  SAIR   ",179,10,13
-              db "                                  ",192,196,196,196,196,196,196,196,196,196,217,13,10
+    btn_sair db  14 dup(" "),218,196,196,196,196,196,196,196,196,196,191,13,10
+              db 14 dup(" "),179,"  SAIR   ",179,10,13
+              db 14 dup(" "),192,196,196,196,196,196,196,196,196,196,217,13,10
 
     btn_sair_length equ $-btn_sair
 
 
-    Ship        db 15,15,15,15,15,15,15,15,15,15,15,15,0,0,0,0
+    ship        db 15,15,15,15,15,15,15,15,15,15,15,15,0,0,0,0
                 db 0,0,15,15,0,0,0,0,0,0,0,0,0,0,0,0
                 db 0,0,15,15,15,15,0,0,0,0,0,0,0,0,0
                 db 0,0,15,15,15,15,15,15,0,0,0,0,0,0
@@ -44,7 +45,7 @@
                 db 0,0,15,15,0,0,0,0,0,0,0,0,0,0,0,0
                 db 15,15,15,15,15,15,15,15,15,15,15,15,0,0,0,0
     
-    AlienShip   db 0,0,0,0,0,0,0,0,9,9,9,9,9,9,9,9
+    alien_ship   db 0,0,0,0,0,0,0,0,9,9,9,9,9,9,9,9
                 db 0,0,0,0,0,0,0,0,9,9,0,0,0,0,0,0
                 db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
                 db 0,0,0,0,9,9,9,9,0,0,0,0,0,0,0,0
@@ -55,7 +56,7 @@
                 db 0,0,0,0,0,0,0,0,9,9,9,9,9,9,9,9
 
 
-    ShotNave    db 15,15,15,15,15,15,15,15,15,0,0,0,0,0,0
+    shot_nave    db 15,15,15,15,15,15,15,15,15,0,0,0,0,0,0
                 db 15 dup (0)
                 db 15 dup (0)
                 db 15 dup (0)
@@ -66,27 +67,35 @@
                 db 15,15,15,15,15,15,15,15,15,0,0,0,0,0,0
 
 .code
-
 ; Procedimento para navegação no menu usando as setas
-NAVIGATE PROC
-    cmp ah, 48H    ; Código para seta para cima
-    je CHANGE_SELECTION
-    cmp ah, 50H    ; Código para seta para baixo
-    je CHANGE_SELECTION
-    jmp FIM_NAVIGATE
+HANDLE_INPUT PROC
+    cmp ah, 48H
+    je ARROW_UP
 
-CHANGE_SELECTION:
-    push ax
-    push bx
-    ; Código para navegar
-    mov ah, menu
-    xor ah, 1
+    cmp ah, 50H
+    je ARROW_DOWN
+
+    jmp END_HANDLE
+
+ARROW_UP:
+    mov ah, 0
     mov bx, offset menu
     mov byte ptr [bx], ah
-    pop bx
-    pop ax
+    
+    jmp RENDER_BUTTONS
+
+ARROW_DOWN:
+    mov ah, 1
+    mov bx, offset menu
+    mov byte ptr [bx], ah
+
+RENDER_BUTTONS:
+    mov al, screen
+    cmp al, 0H
+    jne END_HANDLE
     call PRINT_BUTTONS
-FIM_NAVIGATE:
+
+END_HANDLE:
     ret
 ENDP
 
@@ -97,8 +106,7 @@ PRINT_TITLE_MENU proc
     mov BP, OFFSET string
     mov CX, string_length ; tamanho
     mov BL, 02H ; Cor verde (se bit 1 de AL estiver limpo, usamos BL)
-    mov DL, 2 ;coluna
-    mov DH, 2 ; linha
+    mov DX, 0 ;linha / coluna
     call PRINT_STRING
 
     ret
@@ -115,7 +123,7 @@ PRINT_STRING PROC
     ; Configura os parâmetros para a função 13h
     mov AH, 13h         ; Função para escrever string com atributos de cor
     mov AL, 1           ; Modo: atualiza cursor após a escrita
-                         ; AL = 1 -> modo de atualização de cursor
+                        ; AL = 1 -> modo de atualização de cursor
     mov BH, 0           ; Página de vídeo 0
     int 10h             ; Chamada de interrupção para exibir a string
 
@@ -127,6 +135,47 @@ PRINT_STRING PROC
     pop AX
     ret
 ENDP
+
+; AX = sprite position
+; SI = sprite pointer
+RENDER_SPRITE proc
+    push bx
+    push cx
+    push dx
+    push di
+    push es
+    push ds
+    push ax
+
+
+        
+    mov ax, @data
+    mov ds, ax
+
+    mov ax, 0A000h
+    mov es, ax
+
+    pop ax
+    mov di, ax
+    mov dx, 9
+    push ax
+
+DRAW_LINE:
+    mov cx, 15
+    rep movsb
+    add di, 320 - 15
+    dec dx
+    jnz DRAW_LINE
+
+    pop ax
+    pop ds  
+    pop es
+    pop di
+    pop dx
+    pop cx
+    pop bx
+ret
+endp
 
 ; Procedimento para exibir os botões INICIAR e SAIR
 PRINT_BUTTONS proc
@@ -142,7 +191,7 @@ START_BTN:
     mov BP, OFFSET btn_iniciar
     mov CX, btn_iniciar_length ; tamanho
     mov DL, 0 ; coluna
-    mov DH, 16 ; linha
+    mov DH, 18 ; linha
     call PRINT_STRING
 
     mov bl, 0FH
@@ -156,7 +205,7 @@ EXIT_BTN:
     mov BP, OFFSET btn_sair
     mov CX, btn_sair_length ; tamanho
     mov DL, 0 ; coluna
-    mov DH, 19 ; linha
+    mov DH, 21 ; linha
     call PRINT_STRING
 
     pop ax
@@ -164,41 +213,54 @@ EXIT_BTN:
 endp
 
 ; Procedimento principal
-main proc
+main proc; Muda modo grafico
     mov AX, @data
     mov DS, AX
+    mov ES, AX
 
-    ; Define o modo texto
-    mov al, 3h
+    ; Define o modo de video
     mov ah, 0h
+    mov al, 13h
     int 10h
 
     ; Exibe título e botões do menu
     call PRINT_TITLE_MENU
     call PRINT_BUTTONS
 
-LACO_MENU:
+MENU_LOOP:
     ; Espera por entrada do usuário
     mov ah, 1H
     int 16H
-    jz LACO_MENU
+    jz MENU_LOOP
 
     ; Chama a função de navegação
-    call NAVIGATE
+    call HANDLE_INPUT
 
     ; Condição para iniciar o jogo
     cmp ah, 1CH
-    je CONFIRMA_SELECAO
+    je SELECT_OPTION
 
     ; Retorno ao loop do menu
     mov ah, 0H
     int 16H
-    jmp LACO_MENU
+    jmp MENU_LOOP
 
-CONFIRMA_SELECAO:
+SELECT_OPTION:
     mov ah, 0H
     int 16H
-    ; Código para iniciar o jogo
+    
+    mov ah, menu
+    cmp ah, 1
+    je ENCERRA
+
+GAME_LOOP:
+    ; call PRINT_SECTOR
+    mov ax, 6562
+    mov si, offset ship
+    call RENDER_SPRITE
+
+    ; jmp MENU_LOOP
+
 
 ENCERRA:
     ; Encerra o programa
