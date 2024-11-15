@@ -428,19 +428,47 @@ RENDER_SECTOR proc
     ret
 endp
 
-RESET proc ; Contains all procedures for reseting values
+RESET_SHIP proc
+    mov ship_pos, 320 * 95 + 47 ; Ship stating position
+    ret
+endp
 
+UPDATE_SHIP proc
+    ret
+endp
+
+RENDER_SHIP proc
+    push ax
+    push bx
+    push si
+
+    mov ax, ship_pos
+    mov si, offset ship
+    mov bl, 0FH ; white
+
+    call CHANGE_SPRITE_COLOR
+    call RENDER_SPRITE
+
+    pop si
+    pop bx
+    pop ax
+    ret
+endp
+
+RESET proc ; Contains all procedures for reseting values
+    call CLEAR_SCREEN
+    call RESET_SHIP
     ret
 endp
 
 UPDATE proc ; Contains all procedures for updating game state
-    ; call UPDATE_SHIP
+    call UPDATE_SHIP
     ret
 endp
 
 RENDER proc ; Contains all procedures for rendering game objects
-    ; call RENDER_SHIP
     ; call RENDER_SCORE
+    call RENDER_SHIP
     call RENDER_ALLY_SHIPS
 
     ret
@@ -501,7 +529,7 @@ SELECT_OPTION:
     mov ah, 86H
     int 15h
 
-    call CLEAR_SCREEN
+    call RESET
 
 GAME_LOOP:
     call UPDATE

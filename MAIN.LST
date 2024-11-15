@@ -1,4 +1,4 @@
-Turbo Assembler	 Version 4.1	    11/15/24 17:51:48	    Page 1
+Turbo Assembler	 Version 4.1	    11/15/24 17:59:36	    Page 1
 MAIN.ASM
 
 
@@ -60,7 +60,7 @@ MAIN.ASM
      55	      20 20 20 20 20 20	20+
      56	      20 5F 20 20 20 20	0D+
      57	      0A
-Turbo Assembler	 Version 4.1	    11/15/24 17:51:48	    Page 2
+Turbo Assembler	 Version 4.1	    11/15/24 17:59:36	    Page 2
 MAIN.ASM
 
 
@@ -122,7 +122,7 @@ MAIN.ASM
     112	      7C 5F 5F 20 2F 20	0D+
     113	      0A
     114	0274  05*(20) 5C 5F 5F 20 +			 db 5 dup(" "),	"\__ \/	-_)|  _/ _ \ '_|   |_ \	",13,10
-Turbo Assembler	 Version 4.1	    11/15/24 17:51:48	    Page 3
+Turbo Assembler	 Version 4.1	    11/15/24 17:59:36	    Page 3
 MAIN.ASM
 
 
@@ -184,7 +184,7 @@ MAIN.ASM
     169	      00
     170	03B3  00 00 00 00 00 00	00+			 db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
     171	      00 00 00 00 00 00	00+
-Turbo Assembler	 Version 4.1	    11/15/24 17:51:48	    Page 4
+Turbo Assembler	 Version 4.1	    11/15/24 17:59:36	    Page 4
 MAIN.ASM
 
 
@@ -246,7 +246,7 @@ MAIN.ASM
     226	      00
     227	04AE  00 00 00 00 00 00	00+		     db	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
     228	      00 00 00 00 00 00	00+
-Turbo Assembler	 Version 4.1	    11/15/24 17:51:48	    Page 5
+Turbo Assembler	 Version 4.1	    11/15/24 17:59:36	    Page 5
 MAIN.ASM
 
 
@@ -308,7 +308,7 @@ MAIN.ASM
     283
     284	0016			     ARROW_DOWN:
     285	0016  B4 01			 mov ah, 1
-Turbo Assembler	 Version 4.1	    11/15/24 17:51:48	    Page 6
+Turbo Assembler	 Version 4.1	    11/15/24 17:59:36	    Page 6
 MAIN.ASM
 
 
@@ -370,7 +370,7 @@ MAIN.ASM
     340	004F  53			 push bx
     341	0050  51			 push cx
     342	0051  56			 push si
-Turbo Assembler	 Version 4.1	    11/15/24 17:51:48	    Page 7
+Turbo Assembler	 Version 4.1	    11/15/24 17:59:36	    Page 7
 MAIN.ASM
 
 
@@ -432,7 +432,7 @@ MAIN.ASM
     397	008E  59			 pop cx
     398	008F  5B			 pop bx
     399	0090  C3		     ret
-Turbo Assembler	 Version 4.1	    11/15/24 17:51:48	    Page 8
+Turbo Assembler	 Version 4.1	    11/15/24 17:59:36	    Page 8
 MAIN.ASM
 
 
@@ -494,7 +494,7 @@ MAIN.ASM
     454	00E1  58			 pop ax
     455
     456	00E2  3D 7E31			 cmp ax, 101*320-15
-Turbo Assembler	 Version 4.1	    11/15/24 17:51:48	    Page 9
+Turbo Assembler	 Version 4.1	    11/15/24 17:59:36	    Page 9
 MAIN.ASM
 
 
@@ -556,7 +556,7 @@ MAIN.ASM
     511	0138  BE 03EFr			 mov si, offset	ship
     512
     513	013B  53			 push bx
-Turbo Assembler	 Version 4.1	    11/15/24 17:51:48	    Page 10
+Turbo Assembler	 Version 4.1	    11/15/24 17:59:36	    Page 10
 MAIN.ASM
 
 
@@ -618,7 +618,7 @@ MAIN.ASM
     568
     569	017D  E8 FFE0			 call CLEAR_SCREEN
     570
-Turbo Assembler	 Version 4.1	    11/15/24 17:51:48	    Page 11
+Turbo Assembler	 Version 4.1	    11/15/24 17:59:36	    Page 11
 MAIN.ASM
 
 
@@ -646,113 +646,141 @@ MAIN.ASM
     591	01A1  C3			 ret
     592	01A2			     endp
     593
-    594	01A2			     RESET proc	; Contains all procedures for reseting values
-    595
-    596	01A2  C3			 ret
-    597	01A3			     endp
+    594	01A2			     RESET_SHIP	proc
+    595	01A2  C7 06 0476r 76EF		 mov ship_pos, 320 * 95	+ 47 ; Ship stating position
+    596	01A8  C3			 ret
+    597	01A9			     endp
     598
-    599	01A3			     UPDATE proc ; Contains all	procedures for updating	game state
-    600					 ; call	UPDATE_SHIP
-    601	01A3  C3			 ret
-    602	01A4			     endp
-    603
-    604	01A4			     RENDER proc ; Contains all	procedures for rendering game objects
-    605					 ; call	RENDER_SHIP
-    606					 ; call	RENDER_SCORE
-    607	01A4  E8 FF82			 call RENDER_ALLY_SHIPS
-    608
-    609	01A7  C3			 ret
-    610	01A8			     endp
+    599	01A9			     UPDATE_SHIP proc
+    600	01A9  C3			 ret
+    601	01AA			     endp
+    602
+    603	01AA			     RENDER_SHIP proc
+    604	01AA  50			 push ax
+    605	01AB  53			 push bx
+    606	01AC  56			 push si
+    607
+    608	01AD  A1 0476r			 mov ax, ship_pos
+    609	01B0  BE 03EFr			 mov si, offset	ship
+    610	01B3  B3 0F			 mov bl, 0FH ; white
     611
-    612
-    613	01A8			     MAIN proc
-    614	01A8  B8 0000s			 mov AX, @data
-    615	01AB  8E D8			 mov DS, AX
-    616	01AD  B8 A000			 mov AX, 0A000H
-    617	01B0  8E C0			 mov ES, AX
-    618	01B2  33 FF			 xor DI, DI
-    619
-    620					 ; Define o modo de video
-    621	01B4  32 E4			 xor ah, ah
-    622	01B6  32 FF			 xor bh, bh
-    623	01B8  B0 13			 mov al, 13h
-    624	01BA  CD 10			 int 10h
-    625
-    626					 ; Exibe título e botões do menu
-    627	01BC  E8 FE68			 call PRINT_TITLE_MENU
-Turbo Assembler	 Version 4.1	    11/15/24 17:51:48	    Page 12
+    612	01B5  E8 FE96			 call CHANGE_SPRITE_COLOR
+    613	01B8  E8 FEAA			 call RENDER_SPRITE
+    614
+    615	01BB  5E			 pop si
+    616	01BC  5B			 pop bx
+    617	01BD  58			 pop ax
+    618	01BE  C3			 ret
+    619	01BF			     endp
+    620
+    621	01BF			     RESET proc	; Contains all procedures for reseting values
+    622	01BF  E8 FF9E			 call CLEAR_SCREEN
+    623	01C2  E8 FFDD			 call RESET_SHIP
+    624	01C5  C3			 ret
+    625	01C6			     endp
+    626
+    627	01C6			     UPDATE proc ; Contains all	procedures for updating	game state
+Turbo Assembler	 Version 4.1	    11/15/24 17:59:36	    Page 12
 MAIN.ASM
 
 
 
-    628	01BF  E8 FECF			 call PRINT_BUTTONS
-    629	01C2  E8 FF03			 call RESET_CROSS_SHIP_POS
-    630
-    631	01C5			     MENU_LOOP:
-    632	01C5  E8 FF0F			 call CROSS_SHIPS
-    633
-    634					 ; Recebe entrada do usuário
-    635	01C8  B4 01			 mov ah, 1H
-    636	01CA  CD 16			 int 16H
-    637	01CC  74 F7			 jz MENU_LOOP
-    638
-    639					 ; Chama a função de navegação
-    640	01CE  E8 FE2F			 call HANDLE_INPUT
-    641
-    642					 ; Condição para iniciar o jogo
-    643	01D1  80 FC 1C			 cmp ah, 1CH
-    644	01D4  74 06			 je SELECT_OPTION
-    645
-    646					 ; Retorno ao loop do menu
-    647	01D6  32 E4			 xor ah, ah
-    648	01D8  CD 16			 int 16H
-    649	01DA  EB E9			 jmp MENU_LOOP
-    650
-    651	01DC			     SELECT_OPTION:
-    652	01DC  32 E4			 xor ah, ah
-    653	01DE  CD 16			 int 16H
-    654
-    655	01E0  8A 26 0000r		 mov ah, menu
-    656	01E4  80 FC 01			 cmp ah, 1
-    657	01E7  74 18			 je FINISH
+    628	01C6  E8 FFE0			 call UPDATE_SHIP
+    629	01C9  C3			 ret
+    630	01CA			     endp
+    631
+    632	01CA			     RENDER proc ; Contains all	procedures for rendering game objects
+    633					 ; call	RENDER_SCORE
+    634	01CA  E8 FFDD			 call RENDER_SHIP
+    635	01CD  E8 FF59			 call RENDER_ALLY_SHIPS
+    636
+    637	01D0  C3			 ret
+    638	01D1			     endp
+    639
+    640
+    641	01D1			     MAIN proc
+    642	01D1  B8 0000s			 mov AX, @data
+    643	01D4  8E D8			 mov DS, AX
+    644	01D6  B8 A000			 mov AX, 0A000H
+    645	01D9  8E C0			 mov ES, AX
+    646	01DB  33 FF			 xor DI, DI
+    647
+    648					 ; Define o modo de video
+    649	01DD  32 E4			 xor ah, ah
+    650	01DF  32 FF			 xor bh, bh
+    651	01E1  B0 13			 mov al, 13h
+    652	01E3  CD 10			 int 10h
+    653
+    654					 ; Exibe título e botões do menu
+    655	01E5  E8 FE3F			 call PRINT_TITLE_MENU
+    656	01E8  E8 FEA6			 call PRINT_BUTTONS
+    657	01EB  E8 FEDA			 call RESET_CROSS_SHIP_POS
     658
-    659	01E9  E8 FF8C			 call RENDER_SECTOR
-    660
-    661					 ; Wait	4s
-    662	01EC  B9 003D			 mov cx, 3DH
-    663	01EF  BA 0900			 mov dx, 900H
-    664	01F2  B4 86			 mov ah, 86H
-    665	01F4  CD 15			 int 15h
+    659	01EE			     MENU_LOOP:
+    660	01EE  E8 FEE6			 call CROSS_SHIPS
+    661
+    662					 ; Recebe entrada do usuário
+    663	01F1  B4 01			 mov ah, 1H
+    664	01F3  CD 16			 int 16H
+    665	01F5  74 F7			 jz MENU_LOOP
     666
-    667	01F6  E8 FF67			 call CLEAR_SCREEN
-    668
-    669	01F9			     GAME_LOOP:
-    670	01F9  E8 FFA7			 call UPDATE
-    671	01FC  E8 FFA5			 call RENDER
-    672
-    673	01FF  EB F8			 jmp GAME_LOOP
-    674
-    675
-    676	0201			     FINISH:
-    677					 ; Volta para modo texto
-    678	0201  32 E4			 xor ah, ah
-    679	0203  B0 03			 mov al, 3h
-    680	0205  CD 10			 int 10h
-    681
-    682					 ; Encerra o programa
-    683	0207  B4 4C			 mov ah, 4ch
-    684	0209  32 C0			 xor al, al
-Turbo Assembler	 Version 4.1	    11/15/24 17:51:48	    Page 13
+    667					 ; Chama a função de navegação
+    668	01F7  E8 FE06			 call HANDLE_INPUT
+    669
+    670					 ; Condição para iniciar o jogo
+    671	01FA  80 FC 1C			 cmp ah, 1CH
+    672	01FD  74 06			 je SELECT_OPTION
+    673
+    674					 ; Retorno ao loop do menu
+    675	01FF  32 E4			 xor ah, ah
+    676	0201  CD 16			 int 16H
+    677	0203  EB E9			 jmp MENU_LOOP
+    678
+    679	0205			     SELECT_OPTION:
+    680	0205  32 E4			 xor ah, ah
+    681	0207  CD 16			 int 16H
+    682
+    683	0209  8A 26 0000r		 mov ah, menu
+    684	020D  80 FC 01			 cmp ah, 1
+Turbo Assembler	 Version 4.1	    11/15/24 17:59:36	    Page 13
 MAIN.ASM
 
 
 
-    685	020B  CD 21			 int 21h
-    686	020D  C3			 ret
-    687	020E			     endp
+    685	0210  74 18			 je FINISH
+    686
+    687	0212  E8 FF63			 call RENDER_SECTOR
     688
-    689				     end MAIN
-Turbo Assembler	 Version 4.1	    11/15/24 17:51:48	    Page 14
+    689					 ; Wait	4s
+    690	0215  B9 003D			 mov cx, 3DH
+    691	0218  BA 0900			 mov dx, 900H
+    692	021B  B4 86			 mov ah, 86H
+    693	021D  CD 15			 int 15h
+    694
+    695	021F  E8 FF9D			 call RESET
+    696
+    697	0222			     GAME_LOOP:
+    698	0222  E8 FFA1			 call UPDATE
+    699	0225  E8 FFA2			 call RENDER
+    700
+    701	0228  EB F8			 jmp GAME_LOOP
+    702
+    703
+    704	022A			     FINISH:
+    705					 ; Volta para modo texto
+    706	022A  32 E4			 xor ah, ah
+    707	022C  B0 03			 mov al, 3h
+    708	022E  CD 10			 int 10h
+    709
+    710					 ; Encerra o programa
+    711	0230  B4 4C			 mov ah, 4ch
+    712	0232  32 C0			 xor al, al
+    713	0234  CD 21			 int 21h
+    714	0236  C3			 ret
+    715	0237			     endp
+    716
+    717				     end MAIN
+Turbo Assembler	 Version 4.1	    11/15/24 17:59:36	    Page 14
 Symbol Table
 
 
@@ -762,7 +790,7 @@ Symbol Name			  Type	 Value
 
 ??DATE				  Text	 "11/15/24"
 ??FILENAME			  Text	 "MAIN	  "
-??TIME				  Text	 "17:51:47"
+??TIME				  Text	 "17:59:35"
 ??VERSION			  Number 040A
 @32BIT				  Text	 0
 @CODE				  Text	 _TEXT
@@ -794,32 +822,34 @@ EMPTY_SPRITE			  Byte	 DGROUP:0368
 END_HANDLE			  Near	 _TEXT:0026
 END_POS_UPDATE			  Near	 _TEXT:0128
 EXIT_BTN			  Near	 _TEXT:00B9
-FINISH				  Near	 _TEXT:0201
-GAME_LOOP			  Near	 _TEXT:01F9
+FINISH				  Near	 _TEXT:022A
+GAME_LOOP			  Near	 _TEXT:0222
 HANDLE_INPUT			  Near	 _TEXT:0000
-MAIN				  Near	 _TEXT:01A8
+MAIN				  Near	 _TEXT:01D1
 MENU				  Byte	 DGROUP:0000
-MENU_LOOP			  Near	 _TEXT:01C5
+MENU_LOOP			  Near	 _TEXT:01EE
 MOVE_ALIEN_SHIP			  Near	 _TEXT:00FE
 NO_CLEAR			  Near	 _TEXT:014D
 PIXEL_LOOP			  Near	 _TEXT:0055
 PRINT_BUTTONS			  Near	 _TEXT:0091
 PRINT_STRING			  Near	 _TEXT:0039
 PRINT_TITLE_MENU		  Near	 _TEXT:0027
-RENDER				  Near	 _TEXT:01A4
+RENDER				  Near	 _TEXT:01CA
 RENDER_ALLY_SHIPS		  Near	 _TEXT:0129
 RENDER_BUTTONS			  Near	 _TEXT:001C
 RENDER_SECTOR			  Near	 _TEXT:0178
+RENDER_SHIP			  Near	 _TEXT:01AA
 RENDER_SINGLE			  Near	 _TEXT:0136
 RENDER_SPRITE			  Near	 _TEXT:0065
-RESET				  Near	 _TEXT:01A2
-RESET_CROSS_SHIP_POS		  Near	 _TEXT:00C8
-Turbo Assembler	 Version 4.1	    11/15/24 17:51:48	    Page 15
+RESET				  Near	 _TEXT:01BF
+Turbo Assembler	 Version 4.1	    11/15/24 17:59:36	    Page 15
 Symbol Table
 
 
 
+RESET_CROSS_SHIP_POS		  Near	 _TEXT:00C8
 RESET_POS			  Near	 _TEXT:0125
+RESET_SHIP			  Near	 _TEXT:01A2
 SCREEN				  Byte	 DGROUP:0001
 SECTOR				  Byte	 DGROUP:0002
 SECTOR_LEN			  Number 0098
@@ -827,7 +857,7 @@ SECTOR_ONE			  Byte	 DGROUP:00F8
 SECTOR_THREE			  Byte	 DGROUP:0228
 SECTOR_TWO			  Byte	 DGROUP:0190
 SECTOR_VEC			  Word	 DGROUP:02C0
-SELECT_OPTION			  Near	 _TEXT:01DC
+SELECT_OPTION			  Near	 _TEXT:0205
 SHIP				  Byte	 DGROUP:03EF
 SHIP_POS			  Word	 DGROUP:0476
 SHOT_NAVE			  Byte	 DGROUP:0519
@@ -835,12 +865,13 @@ SKIP_REPLACE			  Near	 _TEXT:005D
 START_BTN			  Near	 _TEXT:009F
 STRING				  Byte	 DGROUP:0003
 STRING_LENGTH			  Number 00F5
-UPDATE				  Near	 _TEXT:01A3
+UPDATE				  Near	 _TEXT:01C6
+UPDATE_SHIP			  Near	 _TEXT:01A9
 
 Groups & Segments		  Bit Size Align  Combine Class
 
 DGROUP				  Group
   STACK				  16  0400 Para	  Stack	  STACK
   _DATA				  16  05A0 Word	  Public  DATA
-_TEXT				  16  020E Word	  Public  CODE
+_TEXT				  16  0237 Word	  Public  CODE
 
