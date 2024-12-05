@@ -9,6 +9,12 @@
     ; 3 - Game Over
     screen db 0
     sector db 1
+    time dw 0
+    score dw 0
+
+    ; Re-renders
+    rerender_allies db 1
+    rerender_score db 1
 
     ; Strings para o título e botões
     string  db 7 dup(" ")," _  __   ___ _            ",13,10
@@ -20,6 +26,12 @@
             db 7 dup(" "),"|_| \__,_|\__|_| \___/_|  ",13,10
 
     string_length equ $-string
+    
+    score_str db "SCORE:"
+    score_str_len equ $-score_str
+    
+    time_str db "TEMPO:"
+    time_str_len equ $-time_str
 
     sector_one  db 5 dup(" "), " ___       _              _    ",13,10
                 db 5 dup(" "), "/ __| ___ | |_ ___ _ _   / |   ",13,10
@@ -132,6 +144,41 @@ END_HANDLE:
     ret
 ENDP
 
+; Proc para controle da nave
+HANDLE_CONTROLS proc
+    push si
+    push ax
+    push bx
+
+    mov al, 1
+    mov si, offset ship_pos
+    mov bx, 5
+
+    cmp ah, 48H
+    je MOVE_UP
+
+    cmp ah, 50H
+    je MOVE_DOWN
+
+    jmp END_CONTROLS
+
+MOVE_UP:
+    mov ah, 1
+    call MOVE_SPRITE
+    jmp END_CONTROLS
+
+MOVE_DOWN:
+    xor ah, ah
+    call MOVE_SPRITE
+
+END_CONTROLS:
+
+    pop bx
+    pop ax
+    pop si
+    ret
+endp
+
 PRINT_TITLE_MENU proc
     mov ax, ds 
     mov es, ax
@@ -143,9 +190,47 @@ PRINT_TITLE_MENU proc
     call PRINT_STRING
 
     ret
-PRINT_TITLE_MENU endp
+endp
 
-; BH = video page
+; AL = axis (0 is X, 1 is Y)
+; AH = direction (0 is positive, 1 is negative)
+; SI = position pointer
+; BX = increment
+MOVE_SPRITE proc
+    push si
+    push ax
+    push bx
+
+    mov cx, [si]
+    cmp al, 0
+    jne MOVE_Y_AXIS
+    jmp CHECK_DIRECTION
+
+MOVE_Y_AXIS:
+    push ax
+    mov ax, 320
+    mul bx
+    mov bx, ax
+    pop ax
+
+CHECK_DIRECTION:
+    cmp ah, 0
+    jne MOVE_NEGATIVE
+    add cx, bx
+    jmp SAVE_POS
+
+MOVE_NEGATIVE:
+    sub cx, bx
+
+SAVE_POS:
+    mov [si], cx
+
+    pop bx
+    pop ax
+    pop si
+    ret
+endp
+
 PRINT_STRING PROC
     push AX
     push BX
@@ -394,7 +479,7 @@ CLEAR_SCREEN proc
     pop cx
     pop ax
     ret
-CLEAR_SCREEN endp
+endp
 
 RENDER_SECTOR proc
     push ax
@@ -434,6 +519,18 @@ RESET_SHIP proc
 endp
 
 UPDATE_SHIP proc
+    push ax
+
+    mov ah, 1H
+    int 16H
+    jz END_SHIP_UPDATE
+
+    call HANDLE_CONTROLS
+    xor ah, ah
+    int 16H
+
+END_SHIP_UPDATE:
+    pop ax
     ret
 endp
 
@@ -443,9 +540,11 @@ RENDER_SHIP proc
     push si
 
     mov ax, ship_pos
+    mov si, offset empty_sprite
+    call RENDER_SPRITE
+
     mov si, offset ship
     mov bl, 0FH ; white
-
     call CHANGE_SPRITE_COLOR
     call RENDER_SPRITE
 
@@ -454,6 +553,52 @@ RENDER_SHIP proc
     pop ax
     ret
 endp
+
+RENDER_SCORE proc
+    push bp
+    push bx
+    push cx
+    push dx
+
+    mov bp, offset score_str
+    mov cx, score_str_len
+    mov bl, 0FH ; white
+    xor dx, dx
+    call PRINT_STRING
+
+    pop dx
+    pop cx
+    pop bx
+    pop bp
+    
+    ; Print value in green
+
+    ret
+endp
+
+RENDER_TIME proc
+    push bp
+    push bx
+    push cx
+    push dx
+
+    mov bp, offset time_str
+    mov cx, time_str_len
+    mov bl, 0FH ; white
+    xor dh, dh
+    mov dl, 25
+    call PRINT_STRING
+
+    pop dx
+    pop cx
+    pop bx
+    pop bp
+    
+    ; Print value in green
+
+    ret
+endp
+
 
 RESET proc ; Contains all procedures for reseting values
     call CLEAR_SCREEN
@@ -467,10 +612,28 @@ UPDATE proc ; Contains all procedures for updating game state
 endp
 
 RENDER proc ; Contains all procedures for rendering game objects
-    ; call RENDER_SCORE
+    push ax
     call RENDER_SHIP
+    call RENDER_TIME
+    
+    ; should re-render allies?
+    mov al, rerender_allies
+    cmp al, 1
+    jne SKIP_2_SCORE
     call RENDER_ALLY_SHIPS
+    mov rerender_allies, 0
 
+SKIP_2_SCORE:
+
+    ; should re-render score?
+    mov al, rerender_score
+    cmp al, 1
+    jne END_RENDER
+    call RENDER_SCORE
+    mov rerender_score, 0
+
+END_RENDER:
+    pop ax
     ret
 endp
 
