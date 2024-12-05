@@ -64,16 +64,6 @@
 
     btn_sair_length equ $-btn_sair
 
-    empty_sprite    db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-                    db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-                    db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-                    db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-                    db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-                    db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-                    db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-                    db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-                    db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-
     ship        db 15,15,15,15,15,15,15,15,15,15,15,15,0,0,0
                 db 0,0,15,15,0,0,0,0,0,0,0,0,0,0,0
                 db 0,0,15,15,15,15,0,0,0,0,0,0,0,0,0
@@ -85,6 +75,7 @@
                 db 15,15,15,15,15,15,15,15,15,15,15,15,0,0,0
 
     ship_pos dw 0
+    ship_color db 0FH
     
     allies_pos_vec dw 320 * 20, 320 * 40, 320 * 60, 320 * 80, 320 * 100, 320 * 120, 320 * 140, 320 * 160
     
@@ -144,6 +135,8 @@ END_HANDLE:
     ret
 ENDP
 
+
+
 ; Proc para controle da nave
 HANDLE_CONTROLS proc
     push si
@@ -152,7 +145,7 @@ HANDLE_CONTROLS proc
 
     mov al, 1
     mov si, offset ship_pos
-    mov bx, 5
+    mov bx, 4
 
     cmp ah, 48H
     je MOVE_UP
@@ -163,16 +156,21 @@ HANDLE_CONTROLS proc
     jmp END_CONTROLS
 
 MOVE_UP:
+    mov di, [si]
+    call CLEAR_SPRITE
+
     mov ah, 1
     call MOVE_SPRITE
     jmp END_CONTROLS
 
 MOVE_DOWN:
+    mov di, [si]
+    call CLEAR_SPRITE
+
     xor ah, ah
     call MOVE_SPRITE
 
 END_CONTROLS:
-
     pop bx
     pop ax
     pop si
@@ -282,6 +280,32 @@ SKIP_REPLACE:
     ret
 endp
 
+CLEAR_SPRITE proc
+    push ax
+    push cx
+    push di
+    push es
+    
+    mov ax, 0A000H
+    mov es, ax
+    mov cx, 9
+
+CLEAR_LINE:
+    push cx
+    mov cx, 15
+    xor ax, ax
+    rep stosb
+    add di, 320-15
+    pop cx
+    loop CLEAR_LINE
+
+    pop es
+    pop di
+    pop cx
+    pop ax
+    ret
+endp
+
 ; AX = sprite position
 ; SI = sprite pointer
 RENDER_SPRITE proc
@@ -369,11 +393,8 @@ endp
 
 CROSS_SHIPS proc
     mov ax, ship_pos
-    mov si, offset empty_sprite
-    
-    push ax
-    call RENDER_SPRITE
-    pop ax
+    mov di, ax
+    call CLEAR_SPRITE
 
     cmp ax, 101*320-15
     je MOVE_ALIEN_SHIP
@@ -391,14 +412,14 @@ CROSS_SHIPS proc
 
 MOVE_ALIEN_SHIP:
     mov ax, alien_ship_pos
-    mov si, offset empty_sprite
+    mov di, ax
 
     push ax
     cmp ax, 100*320
     pop ax
 
     je RESET_POS
-    call RENDER_SPRITE
+    call CLEAR_SPRITE
 
     dec alien_ship_pos
     dec ax
@@ -419,6 +440,7 @@ END_POS_UPDATE:
 endp
 
 RENDER_ALLY_SHIPS proc
+    push di
     push dx
     push cx
     push bx
@@ -440,11 +462,12 @@ RENDER_SINGLE:
     mov bl, al
     and bl, 0FH
     and al, 0F0H
+    pop ax
     jnz NO_CLEAR
-    mov si, offset empty_sprite
+    mov di, ax
+    call CLEAR_SPRITE
 
 NO_CLEAR:
-    pop ax
     call CHANGE_SPRITE_COLOR
     call RENDER_SPRITE
 
@@ -457,6 +480,7 @@ NO_CLEAR:
     pop bx
     pop cx
     pop dx
+    pop di
     ret
 endp
 
@@ -518,8 +542,12 @@ RESET_SHIP proc
     ret
 endp
 
+
 UPDATE_SHIP proc
+    push si
+    push di
     push ax
+    push bx
 
     mov ah, 1H
     int 16H
@@ -529,28 +557,21 @@ UPDATE_SHIP proc
     xor ah, ah
     int 16H
 
-END_SHIP_UPDATE:
-    pop ax
-    ret
-endp
-
-RENDER_SHIP proc
-    push ax
-    push bx
-    push si
-
     mov ax, ship_pos
-    mov si, offset empty_sprite
-    call RENDER_SPRITE
+    mov di, ax
+    call CLEAR_SPRITE
 
     mov si, offset ship
     mov bl, 0FH ; white
     call CHANGE_SPRITE_COLOR
     call RENDER_SPRITE
 
-    pop si
+END_SHIP_UPDATE:
+    
     pop bx
     pop ax
+    pop di
+    pop si
     ret
 endp
 
@@ -613,9 +634,9 @@ endp
 
 RENDER proc ; Contains all procedures for rendering game objects
     push ax
-    call RENDER_SHIP
     call RENDER_TIME
-    
+
+SKIP_2_ALLIES: 
     ; should re-render allies?
     mov al, rerender_allies
     cmp al, 1
@@ -637,6 +658,18 @@ END_RENDER:
     ret
 endp
 
+END_GAME proc
+    ; Back to text mode
+    xor ah, ah
+    mov al, 3h
+    int 10h
+
+    ; Ends program
+    mov ah, 4ch
+    xor al, al
+    int 21h
+    ret
+endp
 
 MAIN proc
     mov AX, @data
@@ -700,17 +733,9 @@ GAME_LOOP:
 
     jmp GAME_LOOP
 
-
 FINISH:
-    ; Volta para modo texto
-    xor ah, ah
-    mov al, 3h
-    int 10h
-
-    ; Encerra o programa
-    mov ah, 4ch
-    xor al, al
-    int 21h
+    CALL END_GAME
+    
     ret
 endp
 
