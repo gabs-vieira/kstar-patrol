@@ -12,6 +12,11 @@
     time dw 0
     score dw 0
 
+    score_buffer db '00000'
+    score_buffer_len equ $-score_buffer
+
+    ship_speed dw 3
+
     ; Re-renders
     rerender_allies db 1
     rerender_score db 1
@@ -140,39 +145,58 @@ ENDP
 ; Proc para controle da nave
 HANDLE_CONTROLS proc
     push si
+    push di
     push ax
     push bx
 
-    mov al, 1
     mov si, offset ship_pos
-    mov bx, 4
+    mov di, [si]
 
     cmp ah, 48H
     je MOVE_UP
 
     cmp ah, 50H
     je MOVE_DOWN
+    
+    cmp al, 'q'
+    jne END_CONTROLS
 
-    jmp END_CONTROLS
+    xor ax, ax
+    int 16h
+    call END_GAME
+
 
 MOVE_UP:
-    mov di, [si]
+    mov al, 1
     call CLEAR_SPRITE
 
+    mov bx, [ship_pos]
+    cmp bx, 320 * 20 + 47
+    jb END_CONTROLS
+    je END_CONTROLS
+
     mov ah, 1
+    mov bx, ship_speed
     call MOVE_SPRITE
     jmp END_CONTROLS
 
 MOVE_DOWN:
-    mov di, [si]
+    mov al, 1
     call CLEAR_SPRITE
 
+    mov bx, [ship_pos]
+    cmp bx, 320 * 160 + 47
+    je END_CONTROLS
+    ja END_CONTROLS
+
     xor ah, ah
+    mov bx, ship_speed
     call MOVE_SPRITE
 
 END_CONTROLS:
     pop bx
     pop ax
+    pop di
     pop si
     ret
 endp
@@ -543,6 +567,28 @@ RESET_SHIP proc
 endp
 
 
+RENDER_SHIP proc
+    push si
+    push di
+    push bx
+    push ax
+    
+    mov ax, ship_pos
+    mov di, ax
+    call CLEAR_SPRITE
+
+    mov si, offset ship
+    mov bl, 0FH ; white
+    call CHANGE_SPRITE_COLOR
+    call RENDER_SPRITE
+
+    pop ax
+    pop bx
+    pop di
+    pop si
+    ret
+endp
+
 UPDATE_SHIP proc
     push si
     push di
@@ -557,14 +603,7 @@ UPDATE_SHIP proc
     xor ah, ah
     int 16H
 
-    mov ax, ship_pos
-    mov di, ax
-    call CLEAR_SPRITE
-
-    mov si, offset ship
-    mov bl, 0FH ; white
-    call CHANGE_SPRITE_COLOR
-    call RENDER_SPRITE
+    call RENDER_SHIP
 
 END_SHIP_UPDATE:
     
@@ -575,8 +614,38 @@ END_SHIP_UPDATE:
     ret
 endp
 
+; AX = uint16 value to output
+; SI = offset of end off string buffer
+CONVERT_UINT16 proc 
+    push si
+    push ax
+    push bx
+    push dx
+
+    mov bx, 10
+
+LOOP_DIV:
+    xor dx, dx
+    div bx
+
+    add dl, '0'
+    mov byte ptr ds:[si], dl
+    dec si
+
+    cmp ax, 0
+    jnz LOOP_DIV
+
+    pop dx
+    pop bx
+    pop ax
+    pop si
+    ret     
+endp
+
 RENDER_SCORE proc
+    push si
     push bp
+    push ax
     push bx
     push cx
     push dx
@@ -587,12 +656,24 @@ RENDER_SCORE proc
     xor dx, dx
     call PRINT_STRING
 
+    mov ax, score
+    mov si, offset score_buffer
+    add si, score_buffer_len - 1
+    call CONVERT_UINT16
+    
+    mov bp, offset score_buffer
+    mov cx, score_buffer_len
+    mov bl, 02H ; green
+    xor dh, dh
+    mov dl, 8
+    call PRINT_STRING
+
     pop dx
     pop cx
     pop bx
+    pop ax
     pop bp
-    
-    ; Print value in green
+    pop si
 
     ret
 endp
@@ -726,6 +807,7 @@ SELECT_OPTION:
     int 15h
 
     call RESET
+    call RENDER_SHIP
 
 GAME_LOOP:
     call UPDATE
