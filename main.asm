@@ -9,15 +9,23 @@
     ; 3 - Game Over
     screen db 0
     sector db 1
-    time dw 0
+    did_shoot db 0
+    timeout db 0
+    time db 60
     score dw 0
 
     score_buffer db '00000'
     score_buffer_len equ $-score_buffer
 
+    time_buffer db '00'
+    time_buffer_len equ $-time_buffer
+
     ship_speed dw 3
+    
+    shot_pos dw 305*30
 
     ; Re-renders
+    rerender_ship db 1
     rerender_allies db 1
     rerender_score db 1
 
@@ -99,7 +107,7 @@
 
     alien_ship_pos dw 0
 
-    shot_nave    db 15,15,15,15,15,15,15,15,15,0,0,0,0,0,0
+    shot        db 15,15,15,15,15,15,15,15,15,0,0,0,0,0,0
                 db 15 dup (0)
                 db 15 dup (0)
                 db 15 dup (0)
@@ -158,13 +166,15 @@ HANDLE_CONTROLS proc
     cmp ah, 50H
     je MOVE_DOWN
     
+    cmp ah, 39H
+    je SHOOT
+    
     cmp al, 'q'
     jne END_CONTROLS
 
     xor ax, ax
     int 16h
     call END_GAME
-
 
 MOVE_UP:
     mov al, 1
@@ -192,6 +202,15 @@ MOVE_DOWN:
     xor ah, ah
     mov bx, ship_speed
     call MOVE_SPRITE
+    jmp END_CONTROLS
+
+SHOOT:
+    mov ah, did_shoot
+    cmp ah, 1
+    je END_CONTROLS
+
+    call RESET_SHOT
+    mov did_shoot, 1
 
 END_CONTROLS:
     pop bx
@@ -319,7 +338,7 @@ CLEAR_LINE:
     mov cx, 15
     xor ax, ax
     rep stosb
-    add di, 320-15
+    add di, 305
     pop cx
     loop CLEAR_LINE
 
@@ -553,6 +572,14 @@ RENDER_SECTOR proc
     mov bl, 0DH
     call PRINT_STRING
 
+    ; Wait 4s
+    mov cx, 3DH
+    mov dx, 900H
+    mov ah, 86H
+    int 15h
+    
+    call CLEAR_SCREEN
+
     pop bp
     pop dx
     pop cx
@@ -620,8 +647,10 @@ CONVERT_UINT16 proc
     push si
     push ax
     push bx
+    push cx
     push dx
 
+    mov cx, 2 ; Ensure both digits get updated
     mov bx, 10
 
 LOOP_DIV:
@@ -633,9 +662,18 @@ LOOP_DIV:
     dec si
 
     cmp ax, 0
+    dec cx
     jnz LOOP_DIV
 
+    cmp cx, 0
+    je END_CONVERSION
+
+    mov dl, '0'
+    mov byte ptr ds:[si], dl
+
+END_CONVERSION:
     pop dx
+    pop cx
     pop bx
     pop ax
     pop si
@@ -691,31 +729,168 @@ RENDER_TIME proc
     mov dl, 25
     call PRINT_STRING
 
+    xor ax, ax
+    mov al, time
+    mov si, offset time_buffer
+    add si, time_buffer_len - 1
+    call CONVERT_UINT16
+    
+    mov bp, offset time_buffer
+    mov cx, time_buffer_len
+    mov bl, 02H ; green
+    xor dh, dh
+    mov dl, 32
+    call PRINT_STRING
+
     pop dx
     pop cx
     pop bx
     pop bp
-    
-    ; Print value in green
 
     ret
 endp
 
+UPDATE_TIME proc
+    push ax
+
+    mov ah, timeout
+    inc ah
+    cmp ah, 100
+    jne SAVE_TIMEOUT
+
+    mov ah, time
+    dec ah
+    jnz SAVE_TIME
+
+    mov ah, sector
+    inc ah
+    mov sector, ah
+    
+    call RENDER_SECTOR
+    call RESET
+    
+    jmp END_TIME
+
+SAVE_TIME:
+    mov time, ah
+    xor ah, ah
+
+SAVE_TIMEOUT:
+    mov timeout, ah
+
+END_TIME:
+    pop ax
+    ret
+endp
+
+RESET_SHOT proc
+    push di
+    push bx
+    
+    mov di, shot_pos
+    call CLEAR_SPRITE
+
+    mov bx, ship_pos
+    add bx, 15
+    mov shot_pos, bx
+    mov did_shoot, 0
+    
+    pop bx
+    pop di
+    ret
+endp
+
+UPDATE_SHOT proc
+    push di
+    push si
+    push ax
+    push bx
+    push dx
+
+    mov bl, did_shoot
+    cmp bl, 1
+    jne END_SHOT
+
+    xor dx, dx
+    mov ax, shot_pos
+    add ax, 15
+    mov bx, 320
+    div bx
+    cmp dx, 0
+    jne MOVE_SHOT
+
+    call RESET_SHOT
+    jmp END_SHOT
+
+MOVE_SHOT:
+    mov di, shot_pos
+    call CLEAR_SPRITE
+
+    mov bx, 3 ; TODO: change to `shot_speed`
+    xor ax, ax
+    mov si, offset shot_pos
+    call MOVE_SPRITE
+
+    mov ax, shot_pos
+    mov si, offset shot
+    call RENDER_SPRITE
+
+END_SHOT:
+    pop dx
+    pop bx
+    pop ax
+    pop si
+    pop di
+    ret
+endp
+
+RESET_TIME proc
+    push ax
+
+    xor ah, ah
+    mov timeout, ah
+    mov ah, 60
+    mov time, ah
+
+    pop ax
+endp
+
+RESET_RERENDERS proc
+    push ax
+    
+    mov ah, 1
+    mov rerender_ship, 1
+    mov rerender_allies, 1
+    mov rerender_score, 1
+
+    pop ax
+    ret
+endp
 
 RESET proc ; Contains all procedures for reseting values
-    call CLEAR_SCREEN
     call RESET_SHIP
+    call RESET_TIME
+    call RESET_RERENDERS
     ret
 endp
 
 UPDATE proc ; Contains all procedures for updating game state
     call UPDATE_SHIP
+    call UPDATE_TIME
+    call UPDATE_SHOT
     ret
 endp
 
 RENDER proc ; Contains all procedures for rendering game objects
     push ax
     call RENDER_TIME
+
+    ; should re-render ship?
+    mov al, rerender_ship
+    cmp al, 0
+    je SKIP_2_ALLIES
+    call RENDER_SHIP
+    mov rerender_ship, 0
 
 SKIP_2_ALLIES: 
     ; should re-render allies?
@@ -726,7 +901,6 @@ SKIP_2_ALLIES:
     mov rerender_allies, 0
 
 SKIP_2_SCORE:
-
     ; should re-render score?
     mov al, rerender_score
     cmp al, 1
@@ -749,6 +923,22 @@ END_GAME proc
     mov ah, 4ch
     xor al, al
     int 21h
+    ret
+endp
+
+THROTTLE proc
+    push ax
+    push cx
+    push dx
+
+    xor cx, cx
+    mov dx, 2710H
+    mov ah, 86H
+    int 15h
+
+    pop dx
+    pop cx
+    pop ax
     ret
 endp
 
@@ -800,16 +990,11 @@ SELECT_OPTION:
 
     call RENDER_SECTOR
 
-    ; Wait 4s
-    mov cx, 3DH
-    mov dx, 900H
-    mov ah, 86H
-    int 15h
-
     call RESET
     call RENDER_SHIP
 
 GAME_LOOP:
+    call THROTTLE
     call UPDATE
     call RENDER
 
