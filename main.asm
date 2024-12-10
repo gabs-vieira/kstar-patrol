@@ -20,9 +20,10 @@
     time_buffer db '00'
     time_buffer_len equ $-time_buffer
 
-    ship_speed dw 3
+    ship_speed dw 5
     
     shot_pos dw 305*30
+    enemy_pos dw 305*30
 
     ; Re-renders
     rerender_ship db 1
@@ -89,11 +90,12 @@
 
     ship_pos dw 0
     ship_color db 0FH
+    is_ship_colliding db 0
     
     allies_pos_vec dw 320 * 20, 320 * 40, 320 * 60, 320 * 80, 320 * 100, 320 * 120, 320 * 140, 320 * 160
     
-    ; Least significant nibble represents the color, most significant nibble represents dead/alive (1/0)
-    allies_attr_vec db 15H, 16H, 19H, 1AH, 1BH, 1CH, 1DH, 1EH
+    ; each bit represents an ally ship
+    allies_db db 0FFH ; 1111_1111b
 
     alien_ship  db 0,0,0,0,0,0,0,0,9,9,9,9,9,9,9
                 db 0,0,0,0,0,0,0,0,9,9,0,0,0,0,0
@@ -323,6 +325,7 @@ SKIP_REPLACE:
     ret
 endp
 
+; DI = sprite position
 CLEAR_SPRITE proc
     push ax
     push cx
@@ -483,6 +486,7 @@ END_POS_UPDATE:
 endp
 
 RENDER_ALLY_SHIPS proc
+    push si
     push di
     push dx
     push cx
@@ -491,32 +495,39 @@ RENDER_ALLY_SHIPS proc
 
     mov cx, 8
     mov bx, offset allies_pos_vec
-    mov dx, offset allies_attr_vec
+    mov dl, allies_db
 
 RENDER_SINGLE:
     mov ax, [bx]
     mov si, offset ship
 
+    push cx
     push bx
     push ax
 
-    mov bx, dx
-    mov al, [bx]
-    mov bl, al
-    and bl, 0FH
-    and al, 0F0H
+    ; get color based on iteration
+    mov bl, cl
+    add bl, 6
+
+    dec cl
+    mov al, 1
+    shl al, cl
+    and al, dl
+
     pop ax
     jnz NO_CLEAR
     mov di, ax
     call CLEAR_SPRITE
+    jmp AFTER_CLEAR
 
 NO_CLEAR:
     call CHANGE_SPRITE_COLOR
     call RENDER_SPRITE
 
+AFTER_CLEAR:
     pop bx
+    pop cx
     add bx, 2
-    inc dx
     loop RENDER_SINGLE
 
     pop ax
@@ -524,6 +535,7 @@ NO_CLEAR:
     pop cx
     pop dx
     pop di
+    pop si
     ret
 endp
 
@@ -545,6 +557,84 @@ CLEAR_SCREEN proc
     pop es
     pop cx
     pop ax
+    ret
+endp
+
+; SI = first position
+; DI = second position
+; return CL = 1 if positions collide
+CHECK_COLLISION proc
+    push bp
+    push ax
+    push bx
+    push dx
+
+    mov bp, sp 
+
+    xor dx, dx
+    xor cl, cl
+    mov bx, 320
+
+    mov ax, si
+    xor dx, dx
+    div bx
+
+    push dx ; value of X1 - [bp-2]
+    push ax ; value of Y1 - [bp-4]
+
+    mov ax, di
+    xor dx, dx
+    div bx
+
+    push dx ; value of X2 - [bp-6]
+
+CHECK_Y_IN_RANGE:
+    add ax, 9
+    jnc SKIP_Y_MAX
+    mov ax, 0FFFFH
+
+SKIP_Y_MAX:
+    mov dx, [bp - 4]
+    cmp dx, ax
+    ja END_COLLISION
+
+    sub ax, 18
+    jnc SKIP_Y_MIN
+    xor ax, ax
+
+SKIP_Y_MIN:
+    cmp dx, ax
+    jb END_COLLISION
+
+CHECK_X_IN_RANGE:
+    mov ax, [bp - 2]
+    add ax, 15
+    jnc SKIP_X_MAX
+    mov ax, 0FFFFH
+
+SKIP_X_MAX:
+    mov dx, [bp - 6]
+    cmp dx, ax
+    ja END_COLLISION
+
+    sub ax, 30
+    jnc SKIP_X_MIN
+    xor ax, ax
+
+SKIP_X_MIN:
+    cmp dx, ax
+    jb END_COLLISION
+
+    mov cl, 1
+
+END_COLLISION:
+
+    mov sp, bp
+
+    pop dx
+    pop bx
+    pop ax
+    pop bp
     ret
 endp
 
@@ -588,11 +678,106 @@ RENDER_SECTOR proc
     ret
 endp
 
-RESET_SHIP proc
-    mov ship_pos, 320 * 95 + 47 ; Ship stating position
+RESET_ENEMY proc
+    push di
+    push ax
+    push bx
+    push dx
+
+    mov di, enemy_pos
+    call CLEAR_SPRITE
+
+    xor dx, dx
+    mov ax, 320
+    mov bx, 95 ; Make this one random
+    mul bx
+    add ax, 200
+    mov enemy_pos, ax
+
+    pop dx
+    pop bx
+    pop ax
+    pop di
     ret
 endp
 
+UPDATE_ENEMY proc
+    push si
+    push di
+    push ax
+    push bx
+
+    mov ax, 0100H
+    mov si, offset enemy_pos
+
+    mov di, [si]
+    call CLEAR_SPRITE
+    mov bx, 1
+    call MOVE_SPRITE
+    call RENDER_ENEMY
+
+    mov bh, did_shoot
+    cmp bh, 1
+    jne CHECK_SHIP_COLLISION
+
+    mov si, shot_pos
+    mov di, enemy_pos
+    call CHECK_COLLISION
+    cmp cl, 1
+    jne CHECK_SHIP_COLLISION
+    mov rerender_score, 1
+    add score, 100
+    call CLEAR_SPRITE
+    call RESET_SHOT
+    call RESET_ENEMY
+
+CHECK_SHIP_COLLISION:
+    mov si, ship_pos
+    call CHECK_COLLISION
+    cmp cl, 1
+    jne RESET_SHIP_COLLISION
+
+    mov ah, is_ship_colliding
+    cmp ah, 1
+    je END_ENEMY_UPDATE
+
+    mov is_ship_colliding, 1
+    mov ah, allies_db
+    shr ah, 1
+    mov allies_db, ah
+    mov rerender_allies, 1
+    mov rerender_ship, 1
+    call RESET_ENEMY
+    jmp END_ENEMY_UPDATE
+
+RESET_SHIP_COLLISION:
+    mov is_ship_colliding, 0
+
+END_ENEMY_UPDATE:
+    pop bx
+    pop ax
+    pop di
+    pop si
+    ret
+endp
+
+RENDER_ENEMY proc
+    push si
+    push ax
+
+    mov ax, enemy_pos
+    mov si, offset alien_ship
+    call RENDER_SPRITE
+
+    pop ax
+    pop si
+    ret
+endp
+
+RESET_SHIP proc
+    mov ship_pos, 320 * 95 + 41 ; Ship stating position
+    ret
+endp
 
 RENDER_SHIP proc
     push si
@@ -643,6 +828,7 @@ endp
 
 ; AX = uint16 value to output
 ; SI = offset of end off string buffer
+; CX = number of digits to write
 CONVERT_UINT16 proc 
     push si
     push ax
@@ -650,7 +836,6 @@ CONVERT_UINT16 proc
     push cx
     push dx
 
-    mov cx, 2 ; Ensure both digits get updated
     mov bx, 10
 
 LOOP_DIV:
@@ -697,10 +882,10 @@ RENDER_SCORE proc
     mov ax, score
     mov si, offset score_buffer
     add si, score_buffer_len - 1
+    mov cx, score_buffer_len
     call CONVERT_UINT16
     
     mov bp, offset score_buffer
-    mov cx, score_buffer_len
     mov bl, 02H ; green
     xor dh, dh
     mov dl, 8
@@ -733,6 +918,7 @@ RENDER_TIME proc
     mov al, time
     mov si, offset time_buffer
     add si, time_buffer_len - 1
+    mov cx, 2
     call CONVERT_UINT16
     
     mov bp, offset time_buffer
@@ -869,6 +1055,7 @@ endp
 
 RESET proc ; Contains all procedures for reseting values
     call RESET_SHIP
+    call RESET_ENEMY
     call RESET_TIME
     call RESET_RERENDERS
     ret
@@ -878,6 +1065,7 @@ UPDATE proc ; Contains all procedures for updating game state
     call UPDATE_SHIP
     call UPDATE_TIME
     call UPDATE_SHOT
+    call UPDATE_ENEMY
     ret
 endp
 
