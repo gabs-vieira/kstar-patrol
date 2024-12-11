@@ -1,4 +1,3 @@
-Superficie (opcional de movimento da superficie)
 Multiplas naves simultâneas
 Multiplos tiros
 Deslocamento diagonal dos inimigos

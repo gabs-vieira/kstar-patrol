@@ -98,6 +98,29 @@
 
     btn_sair_length equ $-btn_sair
 
+    terrain db 320 dup(0)
+        db 320 dup(0)
+        db 168 dup(0),3 dup (6),149 dup(0)
+        db 166 dup(0),6 dup (6),148 dup(0)
+        db 34 dup(0),4 dup (6),7 dup(0),6 dup (6),63 dup(0),2 dup (6),25 dup(0),6 dup (6),18 dup(0),8 dup (6),87 dup(0),9 dup (6),51 dup(0)
+        db 33 dup(0),6 dup (6),5 dup(0),9 dup (6),37 dup(0),9 dup (6),12 dup(0),7 dup (6),20 dup(0),10 dup (6),17 dup(0),9 dup (6),15 dup(0),5 dup (6),40 dup(0),5 dup (6),19 dup(0),11 dup (6),15 dup(0),4 dup (6),32 dup(0)
+        db 12 dup(0),4 dup (6),16 dup(0),7 dup (6),4 dup(0),11 dup (6),17 dup(0),3 dup (6),15 dup(0),11 dup (6),10 dup(0),10 dup (6),15 dup(0),14 dup (6),15 dup(0),11 dup (6),13 dup(0),7 dup (6),8 dup(0),6 dup (6),23 dup(0),9 dup (6),15 dup(0),15 dup (6),12 dup(0),7 dup (6),30 dup(0)
+        db 11 dup(0BH),7 dup (6),14 dup(0BH),23 dup (6),16 dup(0BH),3 dup (6),15 dup(0BH),11 dup (6),9 dup(0BH),11 dup (6),13 dup(0BH),17 dup (6),14 dup(0BH),12 dup (6),11 dup(0BH),9 dup (6),5 dup(0BH),9 dup (6),20 dup(0BH),12 dup (6),13 dup(0BH),17 dup (6),10 dup(0BH),9 dup (6),29 dup(0BH)
+        db 1 dup (6),9 dup(0BH),10 dup (6),10 dup(0BH),26 dup (6),15 dup(0BH),5 dup (6),12 dup(0BH),34 dup (6),8 dup(0BH),21 dup (6),12 dup(0BH),14 dup (6),9 dup(0BH),11 dup (6),2 dup(0BH),13 dup (6),16 dup(0BH),17 dup (6),8 dup(0BH),20 dup (6),8 dup(0BH),11 dup (6),8 dup(0BH),3 dup (6),8 dup(0BH),6 dup (6),2 dup(0BH),1 dup (6)
+        db 2 dup (6),7 dup(0BH),12 dup (6),8 dup(0BH),31 dup (6),10 dup(0BH),6 dup (6),10 dup(0BH),65 dup (6),11 dup(0BH),17 dup (6),7 dup(0BH),28 dup (6),12 dup(0BH),49 dup (6),5 dup(0BH),13 dup (6),5 dup(0BH),7 dup (6),4 dup(0BH),11 dup (6)
+        db 3 dup (6),5 dup(0BH),14 dup (6),4 dup(0BH),36 dup (6),6 dup(0BH),10 dup (6),6 dup(0BH),68 dup (6),9 dup(0BH),19 dup (6),5 dup(0BH),109 dup (6),3 dup(0BH),8 dup (6),3 dup(0BH),12 dup (6)
+        db 63 dup (6),4 dup(0BH),11 dup (6),4 dup(0BH),71 dup (6),7 dup(0BH),23 dup (6),1 dup(0BH),122 dup (6),1 dup(0BH),13 dup (6)
+        db 320 dup (6)
+        db 320 dup (6)
+        db 320 dup (6)
+        db 320 dup (6)
+        db 320 dup (6)
+        db 320 dup (6)
+        db 320 dup (6)
+        db 320 dup (6)
+
+    terrain_pos dw 320 * 180
+
     ship        db 15,15,15,15,15,15,15,15,15,15,15,15,0,0,0
                 db 0,0,15,15,0,0,0,0,0,0,0,0,0,0,0
                 db 0,0,15,15,15,15,0,0,0,0,0,0,0,0,0
@@ -924,6 +947,43 @@ END_ENEMY_UPDATE:
     ret
 endp
 
+RENDER_TERRAIN proc
+    push bx
+    push cx
+    push dx
+    push di
+    push es
+    push ds
+    push ax
+
+    mov ax, @data
+    mov ds, ax
+
+    mov ax, 0A000h
+    mov es, ax
+
+    mov si, offset terrain
+    mov di, terrain_pos
+    dec terrain_pos
+    ; mov bx, terrain_pos
+    cmp terrain_pos, 320*180 - 1
+    jnz SKIP_POS_UPDATE
+    mov terrain_pos, 320*181 - 1 
+
+SKIP_POS_UPDATE:
+    mov cx, 320*20
+    rep movsb
+
+    pop ax
+    pop ds  
+    pop es
+    pop di
+    pop dx
+    pop cx
+    pop bx
+    ret
+endp
+
 RENDER_ENEMY proc
     push si
     push ax
@@ -1235,6 +1295,7 @@ endp
 RENDER proc ; Contains all procedures for rendering game objects
     push ax
     call RENDER_TIME
+    call RENDER_TERRAIN
 
     ; should re-render ship?
     mov al, rerender_ship
