@@ -96,6 +96,7 @@
     
     ; each bit represents an ally ship
     allies_db db 0FFH ; 1111_1111b
+    allies_count db 8
 
     alien_ship  db 0,0,0,0,0,0,0,0,9,9,9,9,9,9,9
                 db 0,0,0,0,0,0,0,0,9,9,0,0,0,0,0
@@ -648,10 +649,20 @@ RENDER_SECTOR proc
     call CLEAR_SCREEN
 
     ; Print Sector
+    xor ax, ax
     mov al, sector
-    xor ah, ah
     dec al ; number vector index
 
+    mov bx, 1000
+    mul bx
+    xor bx, bx
+    mov bl, allies_count
+    mul bx
+    add score, ax
+
+    xor ax, ax
+    mov al, sector
+    dec al ; number vector index
     shl al, 1 ; multiply by 2 (since num_vec values are dw)
     mov bx, offset sector_vec ; get the vector
     add bx, ax ; add the index to the vector ptr
@@ -691,7 +702,7 @@ RESET_ENEMY proc
     mov ax, 320
     mov bx, 95 ; Make this one random
     mul bx
-    add ax, 200
+    add ax, 270
     mov enemy_pos, ax
 
     pop dx
@@ -748,10 +759,30 @@ CHECK_SHIP_COLLISION:
     mov rerender_allies, 1
     mov rerender_ship, 1
     call RESET_ENEMY
+    dec ship_color
+    dec allies_count
     jmp END_ENEMY_UPDATE
 
 RESET_SHIP_COLLISION:
     mov is_ship_colliding, 0
+
+CHECK_EOS: ; end of screen
+    xor dx, dx
+    mov ax, di
+    mov bx, 320
+    div bx
+    cmp dx, 0
+    jne END_ENEMY_UPDATE
+    call RESET_ENEMY
+    mov rerender_allies, 1
+    mov rerender_score, 1
+    xor dx, dx
+    mov ax, 10
+    mov dl, sector
+    mul dx
+    sub score, ax
+    jnc END_ENEMY_UPDATE
+    mov score, 0
 
 END_ENEMY_UPDATE:
     pop bx
@@ -790,7 +821,7 @@ RENDER_SHIP proc
     call CLEAR_SPRITE
 
     mov si, offset ship
-    mov bl, 0FH ; white
+    mov bl, ship_color ; white
     call CHANGE_SPRITE_COLOR
     call RENDER_SPRITE
 
@@ -1035,7 +1066,7 @@ RESET_TIME proc
 
     xor ah, ah
     mov timeout, ah
-    mov ah, 60
+    mov ah, 10
     mov time, ah
 
     pop ax
