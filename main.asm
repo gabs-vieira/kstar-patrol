@@ -64,6 +64,23 @@
 
     sector_len equ $-sector_three
 
+    game_over   db 10 dup(" "), "  ___                ",13,10
+                db 10 dup(" "), " / __|__ _ _ __  ___ ",13,10
+                db 10 dup(" "), "| (_ / _` | '  \/ -_)",13,10
+                db 10 dup(" "), " \___\__,_|_|_|_\___|",13,10
+                db 10 dup(" "), " / _ \__ _____ _ _   ",13,10
+                db 10 dup(" "), "| (_) \ V / -_) '_|  ",13,10
+                db 10 dup(" "), " \___/ \_/\___|_|    ",13,10
+
+    game_over_len equ $-game_over
+
+    you_win db " __   __                  _         _ ",13,10
+            db " \ \ / /__ _ _  __ ___ __| |___ _ _| |",13,10
+            db "  \ V / -_) ' \/ _/ -_) _` / _ \ '_|_|",13,10
+            db "   \_/\___|_||_\__\___\__,_\___/_| (_)",13,10
+
+    you_win_len equ $-you_win
+
     sector_vec dw offset sector_one, offset sector_two, offset sector_three
 
     btn_iniciar db  14 dup(" "),218,196,196,196,196,196,196,196,196,196,191,13,10
@@ -142,8 +159,7 @@ ARROW_DOWN:
     mov menu, ah
 
 RENDER_BUTTONS:
-    mov al, screen
-    cmp al, 0
+    cmp screen, 0
     jne END_HANDLE
     call PRINT_BUTTONS
 
@@ -561,6 +577,53 @@ CLEAR_SCREEN proc
     ret
 endp
 
+SHOW_YOU_WIN proc
+    call CLEAR_SCREEN
+
+    mov bp, offset you_win
+    mov cx, you_win_len
+    mov bl, 0AH
+    xor dl, dl
+    mov dh, 7
+    call PRINT_STRING
+
+    mov bl, 0FH ; color = white
+
+    mov bp, offset score_str
+    mov cx, score_str_len
+    mov dl, 12
+    mov dh, 13
+    call PRINT_STRING
+
+    mov bp, offset score_buffer
+    mov cx, score_buffer_len
+    mov dl, 20
+    mov dh, 13
+    call PRINT_STRING
+
+    xor ax, ax
+    int 16h
+    call END_GAME
+
+    ret
+endp
+
+SHOW_GAME_OVER proc
+    call CLEAR_SCREEN
+
+    mov bp, offset game_over
+    mov cx, game_over_len
+    mov bl, 0CH
+    xor dl, dl ; coluna
+    mov dh, 8 ; linha
+    call PRINT_STRING
+
+    xor ax, ax
+    int 16h
+    call END_GAME
+    ret
+endp
+
 ; SI = first position
 ; DI = second position
 ; return CL = 1 if positions collide
@@ -651,6 +714,12 @@ RENDER_SECTOR proc
     ; Print Sector
     xor ax, ax
     mov al, sector
+
+    cmp al, 4
+    jne SUM_POINTS
+    call SHOW_YOU_WIN
+
+SUM_POINTS:
     dec al ; number vector index
 
     mov bx, 1000
@@ -752,6 +821,11 @@ CHECK_SHIP_COLLISION:
     cmp ah, 1
     je END_ENEMY_UPDATE
 
+    cmp allies_db, 0
+    jne CONTINUE_COLLISION
+    call SHOW_GAME_OVER
+
+CONTINUE_COLLISION:
     mov is_ship_colliding, 1
     mov ah, allies_db
     shr ah, 1
@@ -1066,7 +1140,7 @@ RESET_TIME proc
 
     xor ah, ah
     mov timeout, ah
-    mov ah, 10
+    mov ah, 60
     mov time, ah
 
     pop ax
