@@ -29,6 +29,9 @@
     rerender_ship db 1
     rerender_allies db 1
     rerender_score db 1
+    
+    ; For pseudo random number generation
+    seed dw 0
 
     ; Strings para o título e botões
     string  db 7 dup(" ")," _  __   ___ _            ",13,10
@@ -608,6 +611,47 @@ SHOW_YOU_WIN proc
     ret
 endp
 
+; This proc uses LCG to generate a random number.
+; returns in AX a random 16 bit unsigned integer 
+RANDOM_UINT16 proc
+    push dx
+
+    mov ax, 39541
+    mul seed
+    add ax, 16259
+    mov seed, ax
+
+    pop dx
+    ret
+endp
+
+; AH = range upper boundary (max 255)
+; return random 8 bit unsigned interger to AL, between 0 and 254
+RANDOM_UINT8_RANGE proc
+    push bx
+    push cx
+    push dx
+    push ax
+
+    xor cx, cx
+    mov cl, ah
+
+    call RANDOM_UINT16
+
+    xor dx, dx
+    mov bx, cx
+    div bx
+
+    pop ax
+
+    mov al, dl
+
+    pop dx
+    pop cx
+    pop bx
+    ret
+endp
+
 SHOW_GAME_OVER proc
     call CLEAR_SCREEN
 
@@ -739,7 +783,11 @@ SUM_POINTS:
     mov cx, sector_len
     xor dl, dl; line
     mov dh, 10
-    mov bl, 0DH
+
+    mov ah, 6 ; random value from 0 to 5
+    call RANDOM_UINT8_RANGE
+    mov bl, al
+    add bl, 9H
     call PRINT_STRING
 
     ; Wait 4s
@@ -769,7 +817,17 @@ RESET_ENEMY proc
 
     xor dx, dx
     mov ax, 320
-    mov bx, 95 ; Make this one random
+    
+    push ax
+    
+    mov ah, 140
+    call RANDOM_UINT8_RANGE
+    xor bx, bx
+    mov bl, al
+    add bl, 20
+
+    pop ax
+
     mul bx
     add ax, 270
     mov enemy_pos, ax
@@ -1235,12 +1293,29 @@ THROTTLE proc
     ret
 endp
 
+SYSTIME_SEED proc
+    push ax
+    push cx
+    push dx
+
+    xor ax, ax
+    int 1AH
+    mov seed, dx
+
+    pop dx
+    pop cx
+    pop ax
+    ret
+endp
+
 MAIN proc
     mov AX, @data
     mov DS, AX
     mov AX, 0A000H
     mov ES, AX
     xor DI, DI
+
+    call SYSTIME_SEED
 
     ; Define o modo de video
     xor ah, ah

@@ -1,7 +1,4 @@
-Tela Game Over Vermelho (qualquer tecla para tela inicial)
-Tela "VENCEDOR!" com score em branco (qualquer tecla para inicial)
 Superficie (opcional de movimento da superficie)
-Aleatoriedade de spawn
 Multiplas naves simultâneas
 Multiplos tiros
 Deslocamento diagonal dos inimigos
