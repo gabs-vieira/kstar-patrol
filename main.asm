@@ -24,7 +24,6 @@
     shot_count db 3
     shot_array_pos dw 305*30,305*30,305*30
     shot_array_shoot db 0,0,0
-    enemy_pos dw 305*30
 
     ; Re-renders
     rerender_ship db 1
@@ -153,6 +152,9 @@
                 db 0,0,0,0,0,0,0,0,9,9,9,9,9,9,9
 
     alien_ship_pos dw 0
+
+    enemies_count db 5
+    enemies_pos dw 20 dup(305*30)
 
     shot        db 15,15,15,15,15,15,15,15,15,0,0,0,0,0,0
                 db 15 dup (0)
@@ -827,13 +829,20 @@ SUM_POINTS:
     ret
 endp
 
+; CX = enemy id
 RESET_ENEMY proc
+    push si
     push di
     push ax
     push bx
+    push cx
     push dx
 
-    mov di, enemy_pos
+    mov si, offset enemies_pos
+    dec cx
+    shl cx, 1
+    add si, cx
+    mov di, [si]
     call CLEAR_SPRITE
 
     xor dx, dx
@@ -851,28 +860,43 @@ RESET_ENEMY proc
 
     mul bx
     add ax, 270
-    mov enemy_pos, ax
+    mov [si], ax
 
     pop dx
+    pop cx
     pop bx
     pop ax
     pop di
+    pop si
     ret
 endp
 
+; CX = enemy id
 UPDATE_ENEMY proc
+    push bp
     push si
     push di
     push ax
     push bx
+    push cx
+
+    mov bp, sp
+    push cx ; [bp - 2]
 
     mov ax, 0100H
-    mov si, offset enemy_pos
+    mov si, offset enemies_pos
+    dec cx
+    shl cx, 1
+    add si, cx
+
+    push si ; [bp - 4]
 
     mov di, [si]
     call CLEAR_SPRITE
     mov bx, 1
     call MOVE_SPRITE
+
+    mov cx, [bp - 2]
     call RENDER_ENEMY
 
     xor cx, cx
@@ -894,7 +918,8 @@ CHECK_SHOTS_COLLISION:
     mov si, offset shot_array_pos
     add si, cx
     mov si, [si]
-    mov di, enemy_pos
+    mov bx, [bp - 4]
+    mov di, [bx]
 
     call CHECK_COLLISION
     cmp cl, 1
@@ -905,6 +930,8 @@ CHECK_SHOTS_COLLISION:
     add score, 100
     call CLEAR_SPRITE
     call RESET_SHOT
+
+    mov cx, [bp - 2]
     call RESET_ENEMY
 
 SKIP_SHOT:
@@ -932,6 +959,7 @@ CONTINUE_COLLISION:
     mov allies_db, ah
     mov rerender_allies, 1
     mov rerender_ship, 1
+    mov cx, [bp - 2]
     call RESET_ENEMY
     dec ship_color
     dec allies_count
@@ -947,6 +975,7 @@ CHECK_EOS: ; end of screen
     div bx
     cmp dx, 0
     jne END_ENEMY_UPDATE
+    mov cx, [bp - 2]
     call RESET_ENEMY
     mov rerender_allies, 1
     mov rerender_score, 1
@@ -959,10 +988,15 @@ CHECK_EOS: ; end of screen
     mov score, 0
 
 END_ENEMY_UPDATE:
+
+    mov sp, bp
+
+    pop cx
     pop bx
     pop ax
     pop di
     pop si
+    pop bp
     ret
 endp
 
@@ -1003,14 +1037,23 @@ SKIP_POS_UPDATE:
     ret
 endp
 
+; CX = enemy id
 RENDER_ENEMY proc
     push si
     push ax
+    push bx
+    push cx
 
-    mov ax, enemy_pos
+    mov bx, offset enemies_pos
+    dec cx
+    shl cx, 1
+    add bx, cx
+    mov ax, [bx]
     mov si, offset alien_ship
     call RENDER_SPRITE
 
+    pop cx
+    pop bx
     pop ax
     pop si
     ret
@@ -1367,7 +1410,15 @@ endp
 
 RESET proc ; Contains all procedures for reseting values
     call RESET_SHIP
+
+    push cx
+    xor cx, cx
+    mov cl, enemies_count
+ENEMIES_RESET:
     call RESET_ENEMY
+    loop ENEMIES_RESET
+    pop cx
+
     call RESET_TIME
     call RESET_RERENDERS
     ret
@@ -1377,7 +1428,14 @@ UPDATE proc ; Contains all procedures for updating game state
     call UPDATE_SHIP
     call UPDATE_TIME
     call UPDATE_SHOT
+    push cx
+    xor cx, cx
+    mov cl, enemies_count
+ENEMIES_UPDATE:
     call UPDATE_ENEMY
+    loop ENEMIES_UPDATE
+    pop cx
+
     ret
 endp
 
