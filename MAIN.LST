@@ -1,4 +1,4 @@
-Turbo Assembler	 Version 4.1	    12/12/24 00:48:44	    Page 1
+Turbo Assembler	 Version 4.1	    12/12/24 01:04:49	    Page 1
 MAIN.ASM
 
 
@@ -60,7 +60,7 @@ MAIN.ASM
      55	      5F 2F 5C 5F 5F 5C	5F+
      56	      5F 2C 5F 7C 5F 7C	20+
      57	      20 0D 0A
-Turbo Assembler	 Version 4.1	    12/12/24 00:48:44	    Page 2
+Turbo Assembler	 Version 4.1	    12/12/24 01:04:49	    Page 2
 MAIN.ASM
 
 
@@ -122,7 +122,7 @@ MAIN.ASM
     112	      0A
     113	01E0  05*(20) 2F 20 5F 5F +		     db	5 dup("	"), "/ __| ___ | |_ ___	_ _   |_  ) ",13,10
     114	      7C 20 5F 5F 5F 20	7C+
-Turbo Assembler	 Version 4.1	    12/12/24 00:48:44	    Page 3
+Turbo Assembler	 Version 4.1	    12/12/24 01:04:49	    Page 3
 MAIN.ASM
 
 
@@ -184,7 +184,7 @@ MAIN.ASM
     169	      20 27 20 20 5C 2F	20+
     170	      2D 5F 29 0D 0A
     171	034D  0A*(20) 20 5C 5F 5F +		     db	10 dup(" "), " \___\__,_|_|_|_\___|",13,10
-Turbo Assembler	 Version 4.1	    12/12/24 00:48:44	    Page 4
+Turbo Assembler	 Version 4.1	    12/12/24 01:04:49	    Page 4
 MAIN.ASM
 
 
@@ -246,7 +246,7 @@ MAIN.ASM
     226	      C4 C4 C4 C4 C4 C4	D9+
     227	      0D 0A
     228
-Turbo Assembler	 Version 4.1	    12/12/24 00:48:44	    Page 5
+Turbo Assembler	 Version 4.1	    12/12/24 01:04:49	    Page 5
 MAIN.ASM
 
 
@@ -308,7 +308,7 @@ MAIN.ASM
     283	      0D*(0B) 11*(06) 0A* +
     284	      (0B) 09*(06) 1D*(0B)
     285	0F19  01*(06) 09*(0B) 0A* +	     db	1 dup (6),9 dup(0BH),10	dup (6),10 dup(0BH),26 dup (6),15 dup(0BH),5 dup (6),12	dup +
-Turbo Assembler	 Version 4.1	    12/12/24 00:48:44	    Page 6
+Turbo Assembler	 Version 4.1	    12/12/24 01:04:49	    Page 6
 MAIN.ASM
 
 
@@ -370,7 +370,7 @@ MAIN.ASM
     340	      00
     341	1E57  00 00 0F 0F 0F 0F	0F+		     db	0,0,15,15,15,15,15,15,15,15,15,15,15,15,15
     342	      0F 0F 0F 0F 0F 0F	0F+
-Turbo Assembler	 Version 4.1	    12/12/24 00:48:44	    Page 7
+Turbo Assembler	 Version 4.1	    12/12/24 01:04:49	    Page 7
 MAIN.ASM
 
 
@@ -432,7 +432,7 @@ MAIN.ASM
     397
     398	1F41  0F 0F 0F 0F 0F 0F	0F+	 shot	     db	15,15,15,15,15,15,15,15,15,0,0,0,0,0,0
     399	      0F 0F 00 00 00 00	00+
-Turbo Assembler	 Version 4.1	    12/12/24 00:48:44	    Page 8
+Turbo Assembler	 Version 4.1	    12/12/24 01:04:49	    Page 8
 MAIN.ASM
 
 
@@ -494,7 +494,7 @@ MAIN.ASM
     454	002C  BE 1EA2r			 mov si, offset	ship_pos
     455	002F  8B 3C			 mov di, [si]
     456
-Turbo Assembler	 Version 4.1	    12/12/24 00:48:44	    Page 9
+Turbo Assembler	 Version 4.1	    12/12/24 01:04:49	    Page 9
 MAIN.ASM
 
 
@@ -513,7 +513,7 @@ MAIN.ASM
     468
     469	0044  33 C0			 xor ax, ax
     470	0046  CD 16			 int 16h
-    471	0048  E8 0672			 call END_GAME
+    471	0048  E8 0686			 call END_GAME
     472
     473	004B			     MOVE_UP:
     474	004B  B0 01			 mov al, 1
@@ -544,7 +544,7 @@ MAIN.ASM
     499	0082  EB 04 90			 jmp END_CONTROLS
     500
     501	0085			     FIRE:
-    502	0085  E8 0516			 call SHOOT
+    502	0085  E8 052A			 call SHOOT
     503
     504	0088			     END_CONTROLS:
     505	0088  59			 pop cx
@@ -556,7 +556,7 @@ MAIN.ASM
     511	008E			     endp
     512
     513	008E			     PRINT_TITLE_MENU proc
-Turbo Assembler	 Version 4.1	    12/12/24 00:48:44	    Page 10
+Turbo Assembler	 Version 4.1	    12/12/24 01:04:49	    Page 10
 MAIN.ASM
 
 
@@ -618,7 +618,7 @@ MAIN.ASM
     568	00C9  1E			 push DS
     569	00CA  06			 push ES
     570	00CB  56			 push SI
-Turbo Assembler	 Version 4.1	    12/12/24 00:48:44	    Page 11
+Turbo Assembler	 Version 4.1	    12/12/24 01:04:49	    Page 11
 MAIN.ASM
 
 
@@ -680,7 +680,7 @@ MAIN.ASM
     625	00FC  B9 0009			 mov cx, 9
     626
     627	00FF			     CLEAR_LINE:
-Turbo Assembler	 Version 4.1	    12/12/24 00:48:44	    Page 12
+Turbo Assembler	 Version 4.1	    12/12/24 01:04:49	    Page 12
 MAIN.ASM
 
 
@@ -742,7 +742,7 @@ MAIN.ASM
     682				     ; Procedimento para exibir	os botões INICIAR e SAIR
     683	013F			     PRINT_BUTTONS proc
     684	013F  50			 push ax
-Turbo Assembler	 Version 4.1	    12/12/24 00:48:44	    Page 13
+Turbo Assembler	 Version 4.1	    12/12/24 01:04:49	    Page 13
 MAIN.ASM
 
 
@@ -804,7 +804,7 @@ MAIN.ASM
     739	019A  E8 FF76			 call RENDER_SPRITE
     740
     741	019D  33 C9			 xor cx, cx
-Turbo Assembler	 Version 4.1	    12/12/24 00:48:44	    Page 14
+Turbo Assembler	 Version 4.1	    12/12/24 01:04:49	    Page 14
 MAIN.ASM
 
 
@@ -866,7 +866,7 @@ MAIN.ASM
     796					 ; get color based on iteration
     797	01EB  8A D9			 mov bl, cl
     798	01ED  80 C3 06			 add bl, 6
-Turbo Assembler	 Version 4.1	    12/12/24 00:48:44	    Page 15
+Turbo Assembler	 Version 4.1	    12/12/24 01:04:49	    Page 15
 MAIN.ASM
 
 
@@ -928,7 +928,7 @@ MAIN.ASM
     853
     854	0232  BD 03D1r			 mov bp, offset	you_win
     855	0235  B9 00A0			 mov cx, you_win_len
-Turbo Assembler	 Version 4.1	    12/12/24 00:48:44	    Page 16
+Turbo Assembler	 Version 4.1	    12/12/24 01:04:49	    Page 16
 MAIN.ASM
 
 
@@ -954,7 +954,7 @@ MAIN.ASM
     874
     875	025D  33 C0			 xor ax, ax
     876	025F  CD 16			 int 16h
-    877	0261  E8 0459			 call END_GAME
+    877	0261  E8 046D			 call END_GAME
     878
     879	0264  C3			 ret
     880	0265			     endp
@@ -990,7 +990,7 @@ MAIN.ASM
     910	0282  8B D9			 mov bx, cx
     911	0284  F7 F3			 div bx
     912
-Turbo Assembler	 Version 4.1	    12/12/24 00:48:44	    Page 17
+Turbo Assembler	 Version 4.1	    12/12/24 01:04:49	    Page 17
 MAIN.ASM
 
 
@@ -1017,7 +1017,7 @@ MAIN.ASM
     932
     933	029F  33 C0			 xor ax, ax
     934	02A1  CD 16			 int 16h
-    935	02A3  E8 0417			 call END_GAME
+    935	02A3  E8 042B			 call END_GAME
     936	02A6  C3			 ret
     937	02A7			     endp
     938
@@ -1052,7 +1052,7 @@ MAIN.ASM
     967	02C3			     CHECK_Y_IN_RANGE:
     968	02C3  05 0009			 add ax, 9
     969	02C6  73 03			 jnc SKIP_Y_MAX
-Turbo Assembler	 Version 4.1	    12/12/24 00:48:44	    Page 18
+Turbo Assembler	 Version 4.1	    12/12/24 01:04:49	    Page 18
 MAIN.ASM
 
 
@@ -1114,7 +1114,7 @@ MAIN.ASM
    1024	0308  E8 FF0C			 call CLEAR_SCREEN
    1025
    1026					 ; Print Sector
-Turbo Assembler	 Version 4.1	    12/12/24 00:48:44	    Page 19
+Turbo Assembler	 Version 4.1	    12/12/24 01:04:49	    Page 19
 MAIN.ASM
 
 
@@ -1176,7 +1176,7 @@ MAIN.ASM
    1081	0364  52			 push dx
    1082
    1083	0365  8B 3E 001Ar		 mov di, enemy_pos
-Turbo Assembler	 Version 4.1	    12/12/24 00:48:44	    Page 20
+Turbo Assembler	 Version 4.1	    12/12/24 01:04:49	    Page 20
 MAIN.ASM
 
 
@@ -1220,704 +1220,719 @@ MAIN.ASM
    1120	0398  E8 FD58			 call CLEAR_SPRITE
    1121	039B  BB 0001			 mov bx, 1
    1122	039E  E8 FCFF			 call MOVE_SPRITE
-   1123	03A1  E8 00E7			 call RENDER_ENEMY
+   1123	03A1  E8 00FB			 call RENDER_ENEMY
    1124
-   1125					 ; cmp shot_count, 0
-   1126	03A4  74 2C			 je CHECK_SHIP_COLLISION
+   1125	03A4  33 C9			 xor cx, cx
+   1126	03A6  8A 0E 0010r		 mov cl, shot_count
    1127
-   1128	03A6  33 C9			 xor cx, cx
-   1129					 ; mov cl, shot_count
-   1130
-   1131	03A8			     CHECK_SHOTS_COLLISION:
-   1132	03A8  BE 0011r			 mov si, offset	shot_array_pos
-   1133	03AB  03 F1			 add si, cx
-   1134	03AD  8B 34			 mov si, [si]
-   1135	03AF  8B 3E 001Ar		 mov di, enemy_pos
-   1136	03B3  51			 push cx
-   1137	03B4  E8 FEF0			 call CHECK_COLLISION
-   1138	03B7  80 F9 01			 cmp cl, 1
-   1139	03BA  59			 pop cx
-   1140	03BB  75 13			 jne SKIP_SHOT
-Turbo Assembler	 Version 4.1	    12/12/24 00:48:44	    Page 21
+   1128	03AA			     CHECK_SHOTS_COLLISION:
+   1129	03AA  51			 push cx
+   1130	03AB  49			 dec cx
+   1131	03AC  BE 0017r			 mov si, offset	shot_array_shoot
+   1132	03AF  03 F1			 add si, cx
+   1133	03B1  8A 3C			 mov bh, [si]
+   1134	03B3  80 FF 00			 cmp bh, 0
+   1135	03B6  59			 pop cx
+   1136	03B7  74 2B			 je SKIP_SHOT
+   1137
+   1138	03B9  51			 push cx
+   1139	03BA  49			 dec cx
+   1140	03BB  D1 E1			 shl cx, 1
+Turbo Assembler	 Version 4.1	    12/12/24 01:04:49	    Page 21
 MAIN.ASM
 
 
 
-   1141	03BD  C6 06 001Er 01		 mov rerender_score, 1
-   1142	03C2  83 06 0005r 64		 add score, 100
-   1143	03C7  E8 FD29			 call CLEAR_SPRITE
-   1144	03CA  E8 01F9			 call RESET_SHOT
-   1145	03CD  E8 FF91			 call RESET_ENEMY
-   1146
-   1147	03D0			     SKIP_SHOT:
-   1148	03D0  E2 D6			 loop CHECK_SHOTS_COLLISION
+   1141	03BD  BE 0011r			 mov si, offset	shot_array_pos
+   1142	03C0  03 F1			 add si, cx
+   1143	03C2  8B 34			 mov si, [si]
+   1144	03C4  8B 3E 001Ar		 mov di, enemy_pos
+   1145
+   1146	03C8  E8 FEDC			 call CHECK_COLLISION
+   1147	03CB  80 F9 01			 cmp cl, 1
+   1148	03CE  59			 pop cx
    1149
-   1150
-   1151	03D2			     CHECK_SHIP_COLLISION:
-   1152	03D2  8B 36 1EA2r		 mov si, ship_pos
-   1153	03D6  E8 FECE			 call CHECK_COLLISION
-   1154	03D9  80 F9 01			 cmp cl, 1
-   1155	03DC  75 3A			 jne RESET_SHIP_COLLISION
+   1150	03CF  75 13			 jne SKIP_SHOT
+   1151	03D1  C6 06 001Er 01		 mov rerender_score, 1
+   1152	03D6  83 06 0005r 64		 add score, 100
+   1153	03DB  E8 FD15			 call CLEAR_SPRITE
+   1154	03DE  E8 01F9			 call RESET_SHOT
+   1155	03E1  E8 FF7D			 call RESET_ENEMY
    1156
-   1157	03DE  8A 26 1EA5r		 mov ah, is_ship_colliding
-   1158	03E2  80 FC 01			 cmp ah, 1
-   1159	03E5  74 68			 je END_ENEMY_UPDATE
+   1157	03E4			     SKIP_SHOT:
+   1158	03E4  E2 C4			 loop CHECK_SHOTS_COLLISION
+   1159
    1160
-   1161	03E7  80 3E 1EB6r 00		 cmp allies_db,	0
-   1162	03EC  75 03			 jne CONTINUE_COLLISION
-   1163	03EE  E8 FE9C			 call SHOW_GAME_OVER
-   1164
-   1165	03F1			     CONTINUE_COLLISION:
-   1166	03F1  C6 06 1EA5r 01		 mov is_ship_colliding,	1
-   1167	03F6  8A 26 1EB6r		 mov ah, allies_db
-   1168	03FA  D0 EC			 shr ah, 1
-   1169	03FC  88 26 1EB6r		 mov allies_db,	ah
-   1170	0400  C6 06 001Dr 01		 mov rerender_allies, 1
-   1171	0405  C6 06 001Cr 01		 mov rerender_ship, 1
-   1172	040A  E8 FF54			 call RESET_ENEMY
-   1173	040D  FE 0E 1EA4r		 dec ship_color
-   1174	0411  FE 0E 1EB7r		 dec allies_count
-   1175	0415  EB 38 90			 jmp END_ENEMY_UPDATE
-   1176
-   1177	0418			     RESET_SHIP_COLLISION:
-   1178	0418  C6 06 1EA5r 00		 mov is_ship_colliding,	0
-   1179
-   1180	041D			     CHECK_EOS:	; end of screen
-   1181	041D  33 D2			 xor dx, dx
-   1182	041F  8B C7			 mov ax, di
-   1183	0421  BB 0140			 mov bx, 320
-   1184	0424  F7 F3			 div bx
-   1185	0426  83 FA 00			 cmp dx, 0
-   1186	0429  75 24			 jne END_ENEMY_UPDATE
-   1187	042B  E8 FF33			 call RESET_ENEMY
-   1188	042E  C6 06 001Dr 01		 mov rerender_allies, 1
-   1189	0433  C6 06 001Er 01		 mov rerender_score, 1
-   1190	0438  33 D2			 xor dx, dx
-   1191	043A  B8 000A			 mov ax, 10
-   1192	043D  8A 16 0002r		 mov dl, sector
-   1193	0441  F7 E2			 mul dx
-   1194	0443  29 06 0005r		 sub score, ax
-   1195	0447  73 06			 jnc END_ENEMY_UPDATE
-   1196	0449  C7 06 0005r 0000		 mov score, 0
-   1197
-Turbo Assembler	 Version 4.1	    12/12/24 00:48:44	    Page 22
+   1161	03E6			     CHECK_SHIP_COLLISION:
+   1162	03E6  8B 36 1EA2r		 mov si, ship_pos
+   1163	03EA  E8 FEBA			 call CHECK_COLLISION
+   1164	03ED  80 F9 01			 cmp cl, 1
+   1165	03F0  75 3A			 jne RESET_SHIP_COLLISION
+   1166
+   1167	03F2  8A 26 1EA5r		 mov ah, is_ship_colliding
+   1168	03F6  80 FC 01			 cmp ah, 1
+   1169	03F9  74 68			 je END_ENEMY_UPDATE
+   1170
+   1171	03FB  80 3E 1EB6r 00		 cmp allies_db,	0
+   1172	0400  75 03			 jne CONTINUE_COLLISION
+   1173	0402  E8 FE88			 call SHOW_GAME_OVER
+   1174
+   1175	0405			     CONTINUE_COLLISION:
+   1176	0405  C6 06 1EA5r 01		 mov is_ship_colliding,	1
+   1177	040A  8A 26 1EB6r		 mov ah, allies_db
+   1178	040E  D0 EC			 shr ah, 1
+   1179	0410  88 26 1EB6r		 mov allies_db,	ah
+   1180	0414  C6 06 001Dr 01		 mov rerender_allies, 1
+   1181	0419  C6 06 001Cr 01		 mov rerender_ship, 1
+   1182	041E  E8 FF40			 call RESET_ENEMY
+   1183	0421  FE 0E 1EA4r		 dec ship_color
+   1184	0425  FE 0E 1EB7r		 dec allies_count
+   1185	0429  EB 38 90			 jmp END_ENEMY_UPDATE
+   1186
+   1187	042C			     RESET_SHIP_COLLISION:
+   1188	042C  C6 06 1EA5r 00		 mov is_ship_colliding,	0
+   1189
+   1190	0431			     CHECK_EOS:	; end of screen
+   1191	0431  33 D2			 xor dx, dx
+   1192	0433  8B C7			 mov ax, di
+   1193	0435  BB 0140			 mov bx, 320
+   1194	0438  F7 F3			 div bx
+   1195	043A  83 FA 00			 cmp dx, 0
+   1196	043D  75 24			 jne END_ENEMY_UPDATE
+   1197	043F  E8 FF1F			 call RESET_ENEMY
+Turbo Assembler	 Version 4.1	    12/12/24 01:04:49	    Page 22
 MAIN.ASM
 
 
 
-   1198	044F			     END_ENEMY_UPDATE:
-   1199	044F  5B			 pop bx
-   1200	0450  58			 pop ax
-   1201	0451  5F			 pop di
-   1202	0452  5E			 pop si
-   1203	0453  C3			 ret
-   1204	0454			     endp
-   1205
-   1206	0454			     RENDER_TERRAIN proc
-   1207	0454  53			 push bx
-   1208	0455  51			 push cx
-   1209	0456  52			 push dx
-   1210	0457  57			 push di
-   1211	0458  06			 push es
-   1212	0459  1E			 push ds
-   1213	045A  50			 push ax
-   1214
-   1215	045B  B8 0000s			 mov ax, @data
-   1216	045E  8E D8			 mov ds, ax
-   1217
-   1218	0460  B8 A000			 mov ax, 0A000h
-   1219	0463  8E C0			 mov es, ax
-   1220
-   1221	0465  BE 0519r			 mov si, offset	terrain
-   1222	0468  8B 3E 1E19r		 mov di, terrain_pos
-   1223	046C  FF 0E 1E19r		 dec terrain_pos
-   1224					 ; mov bx, terrain_pos
-   1225	0470  81 3E 1E19r E0FF		 cmp terrain_pos, 320*180 - 1
-   1226	0476  75 06			 jnz SKIP_POS_UPDATE
-   1227	0478  C7 06 1E19r E23F		 mov terrain_pos, 320*181 - 1
-   1228
-   1229	047E			     SKIP_POS_UPDATE:
-   1230	047E  B9 1900			 mov cx, 320*20
-   1231	0481  F3> A4			 rep movsb
-   1232
-   1233	0483  58			 pop ax
-   1234	0484  1F			 pop ds
-   1235	0485  07			 pop es
-   1236	0486  5F			 pop di
-   1237	0487  5A			 pop dx
-   1238	0488  59			 pop cx
-   1239	0489  5B			 pop bx
-   1240	048A  C3			 ret
-   1241	048B			     endp
+   1198	0442  C6 06 001Dr 01		 mov rerender_allies, 1
+   1199	0447  C6 06 001Er 01		 mov rerender_score, 1
+   1200	044C  33 D2			 xor dx, dx
+   1201	044E  B8 000A			 mov ax, 10
+   1202	0451  8A 16 0002r		 mov dl, sector
+   1203	0455  F7 E2			 mul dx
+   1204	0457  29 06 0005r		 sub score, ax
+   1205	045B  73 06			 jnc END_ENEMY_UPDATE
+   1206	045D  C7 06 0005r 0000		 mov score, 0
+   1207
+   1208	0463			     END_ENEMY_UPDATE:
+   1209	0463  5B			 pop bx
+   1210	0464  58			 pop ax
+   1211	0465  5F			 pop di
+   1212	0466  5E			 pop si
+   1213	0467  C3			 ret
+   1214	0468			     endp
+   1215
+   1216	0468			     RENDER_TERRAIN proc
+   1217	0468  53			 push bx
+   1218	0469  51			 push cx
+   1219	046A  52			 push dx
+   1220	046B  57			 push di
+   1221	046C  06			 push es
+   1222	046D  1E			 push ds
+   1223	046E  50			 push ax
+   1224
+   1225	046F  B8 0000s			 mov ax, @data
+   1226	0472  8E D8			 mov ds, ax
+   1227
+   1228	0474  B8 A000			 mov ax, 0A000h
+   1229	0477  8E C0			 mov es, ax
+   1230
+   1231	0479  BE 0519r			 mov si, offset	terrain
+   1232	047C  8B 3E 1E19r		 mov di, terrain_pos
+   1233	0480  FF 0E 1E19r		 dec terrain_pos
+   1234					 ; mov bx, terrain_pos
+   1235	0484  81 3E 1E19r E0FF		 cmp terrain_pos, 320*180 - 1
+   1236	048A  75 06			 jnz SKIP_POS_UPDATE
+   1237	048C  C7 06 1E19r E23F		 mov terrain_pos, 320*181 - 1
+   1238
+   1239	0492			     SKIP_POS_UPDATE:
+   1240	0492  B9 1900			 mov cx, 320*20
+   1241	0495  F3> A4			 rep movsb
    1242
-   1243	048B			     RENDER_ENEMY proc
-   1244	048B  56			 push si
-   1245	048C  50			 push ax
-   1246
-   1247	048D  A1 001Ar			 mov ax, enemy_pos
-   1248	0490  BE 1EB8r			 mov si, offset	alien_ship
-   1249	0493  E8 FC7D			 call RENDER_SPRITE
-   1250
-   1251	0496  58			 pop ax
-   1252	0497  5E			 pop si
-   1253	0498  C3			 ret
-   1254	0499			     endp
-Turbo Assembler	 Version 4.1	    12/12/24 00:48:44	    Page 23
+   1243	0497  58			 pop ax
+   1244	0498  1F			 pop ds
+   1245	0499  07			 pop es
+   1246	049A  5F			 pop di
+   1247	049B  5A			 pop dx
+   1248	049C  59			 pop cx
+   1249	049D  5B			 pop bx
+   1250	049E  C3			 ret
+   1251	049F			     endp
+   1252
+   1253	049F			     RENDER_ENEMY proc
+   1254	049F  56			 push si
+Turbo Assembler	 Version 4.1	    12/12/24 01:04:49	    Page 23
 MAIN.ASM
 
 
 
-   1255
-   1256	0499			     RESET_SHIP	proc
-   1257	0499  C7 06 1EA2r 76E9		 mov ship_pos, 320 * 95	+ 41 ; Ship stating position
-   1258	049F  C3			 ret
-   1259	04A0			     endp
+   1255	04A0  50			 push ax
+   1256
+   1257	04A1  A1 001Ar			 mov ax, enemy_pos
+   1258	04A4  BE 1EB8r			 mov si, offset	alien_ship
+   1259	04A7  E8 FC69			 call RENDER_SPRITE
    1260
-   1261	04A0			     RENDER_SHIP proc
-   1262	04A0  56			 push si
-   1263	04A1  57			 push di
-   1264	04A2  53			 push bx
-   1265	04A3  50			 push ax
-   1266
-   1267	04A4  A1 1EA2r			 mov ax, ship_pos
-   1268	04A7  8B F8			 mov di, ax
-   1269	04A9  E8 FC47			 call CLEAR_SPRITE
+   1261	04AA  58			 pop ax
+   1262	04AB  5E			 pop si
+   1263	04AC  C3			 ret
+   1264	04AD			     endp
+   1265
+   1266	04AD			     RESET_SHIP	proc
+   1267	04AD  C7 06 1EA2r 76E9		 mov ship_pos, 320 * 95	+ 41 ; Ship stating position
+   1268	04B3  C3			 ret
+   1269	04B4			     endp
    1270
-   1271	04AC  BE 1E1Br			 mov si, offset	ship
-   1272	04AF  8A 1E 1EA4r		 mov bl, ship_color ; white
-   1273	04B3  E8 FC26			 call CHANGE_SPRITE_COLOR
-   1274	04B6  E8 FC5A			 call RENDER_SPRITE
-   1275
-   1276	04B9  58			 pop ax
-   1277	04BA  5B			 pop bx
-   1278	04BB  5F			 pop di
-   1279	04BC  5E			 pop si
-   1280	04BD  C3			 ret
-   1281	04BE			     endp
-   1282
-   1283	04BE			     UPDATE_SHIP proc
-   1284	04BE  56			 push si
-   1285	04BF  57			 push di
-   1286	04C0  50			 push ax
-   1287	04C1  53			 push bx
-   1288
-   1289	04C2  B4 01			 mov ah, 1H
-   1290	04C4  CD 16			 int 16H
-   1291	04C6  74 0A			 jz END_SHIP_UPDATE
+   1271	04B4			     RENDER_SHIP proc
+   1272	04B4  56			 push si
+   1273	04B5  57			 push di
+   1274	04B6  53			 push bx
+   1275	04B7  50			 push ax
+   1276
+   1277	04B8  A1 1EA2r			 mov ax, ship_pos
+   1278	04BB  8B F8			 mov di, ax
+   1279	04BD  E8 FC33			 call CLEAR_SPRITE
+   1280
+   1281	04C0  BE 1E1Br			 mov si, offset	ship
+   1282	04C3  8A 1E 1EA4r		 mov bl, ship_color ; white
+   1283	04C7  E8 FC12			 call CHANGE_SPRITE_COLOR
+   1284	04CA  E8 FC46			 call RENDER_SPRITE
+   1285
+   1286	04CD  58			 pop ax
+   1287	04CE  5B			 pop bx
+   1288	04CF  5F			 pop di
+   1289	04D0  5E			 pop si
+   1290	04D1  C3			 ret
+   1291	04D2			     endp
    1292
-   1293	04C8  E8 FB5C			 call HANDLE_CONTROLS
-   1294	04CB  32 E4			 xor ah, ah
-   1295	04CD  CD 16			 int 16H
-   1296
-   1297	04CF  E8 FFCE			 call RENDER_SHIP
+   1293	04D2			     UPDATE_SHIP proc
+   1294	04D2  56			 push si
+   1295	04D3  57			 push di
+   1296	04D4  50			 push ax
+   1297	04D5  53			 push bx
    1298
-   1299	04D2			     END_SHIP_UPDATE:
-   1300
-   1301	04D2  5B			 pop bx
-   1302	04D3  58			 pop ax
-   1303	04D4  5F			 pop di
-   1304	04D5  5E			 pop si
-   1305	04D6  C3			 ret
-   1306	04D7			     endp
-   1307
-   1308				     ; AX = uint16 value to output
-   1309				     ; SI = offset of end off string buffer
-   1310				     ; CX = number of digits to	write
-   1311	04D7			     CONVERT_UINT16 proc
-Turbo Assembler	 Version 4.1	    12/12/24 00:48:44	    Page 24
+   1299	04D6  B4 01			 mov ah, 1H
+   1300	04D8  CD 16			 int 16H
+   1301	04DA  74 0A			 jz END_SHIP_UPDATE
+   1302
+   1303	04DC  E8 FB48			 call HANDLE_CONTROLS
+   1304	04DF  32 E4			 xor ah, ah
+   1305	04E1  CD 16			 int 16H
+   1306
+   1307	04E3  E8 FFCE			 call RENDER_SHIP
+   1308
+   1309	04E6			     END_SHIP_UPDATE:
+   1310
+   1311	04E6  5B			 pop bx
+Turbo Assembler	 Version 4.1	    12/12/24 01:04:49	    Page 24
 MAIN.ASM
 
 
 
-   1312	04D7  56			 push si
-   1313	04D8  50			 push ax
-   1314	04D9  53			 push bx
-   1315	04DA  51			 push cx
-   1316	04DB  52			 push dx
+   1312	04E7  58			 pop ax
+   1313	04E8  5F			 pop di
+   1314	04E9  5E			 pop si
+   1315	04EA  C3			 ret
+   1316	04EB			     endp
    1317
-   1318	04DC  BB 000A			 mov bx, 10
-   1319
-   1320	04DF			     LOOP_DIV:
-   1321	04DF  33 D2			 xor dx, dx
-   1322	04E1  F7 F3			 div bx
-   1323
-   1324	04E3  80 C2 30			 add dl, '0'
-   1325	04E6  88 14			 mov byte ptr ds:[si], dl
-   1326	04E8  4E			 dec si
+   1318				     ; AX = uint16 value to output
+   1319				     ; SI = offset of end off string buffer
+   1320				     ; CX = number of digits to	write
+   1321	04EB			     CONVERT_UINT16 proc
+   1322	04EB  56			 push si
+   1323	04EC  50			 push ax
+   1324	04ED  53			 push bx
+   1325	04EE  51			 push cx
+   1326	04EF  52			 push dx
    1327
-   1328	04E9  3D 0000			 cmp ax, 0
-   1329	04EC  49			 dec cx
-   1330	04ED  75 F0			 jnz LOOP_DIV
-   1331
-   1332	04EF  83 F9 00			 cmp cx, 0
-   1333	04F2  74 04			 je END_CONVERSION
-   1334
-   1335	04F4  B2 30			 mov dl, '0'
-   1336	04F6  88 14			 mov byte ptr ds:[si], dl
+   1328	04F0  BB 000A			 mov bx, 10
+   1329
+   1330	04F3			     LOOP_DIV:
+   1331	04F3  33 D2			 xor dx, dx
+   1332	04F5  F7 F3			 div bx
+   1333
+   1334	04F7  80 C2 30			 add dl, '0'
+   1335	04FA  88 14			 mov byte ptr ds:[si], dl
+   1336	04FC  4E			 dec si
    1337
-   1338	04F8			     END_CONVERSION:
-   1339	04F8  5A			 pop dx
-   1340	04F9  59			 pop cx
-   1341	04FA  5B			 pop bx
-   1342	04FB  58			 pop ax
-   1343	04FC  5E			 pop si
-   1344	04FD  C3			 ret
-   1345	04FE			     endp
-   1346
-   1347	04FE			     RENDER_SCORE proc
-   1348	04FE  56			 push si
-   1349	04FF  55			 push bp
-   1350	0500  50			 push ax
-   1351	0501  53			 push bx
-   1352	0502  51			 push cx
-   1353	0503  52			 push dx
-   1354
-   1355	0504  BD 0116r			 mov bp, offset	score_str
-   1356	0507  B9 0006			 mov cx, score_str_len
-   1357	050A  B3 0F			 mov bl, 0FH ; white
-   1358	050C  33 D2			 xor dx, dx
-   1359	050E  E8 FBB6			 call PRINT_STRING
-   1360
-   1361	0511  A1 0005r			 mov ax, score
-   1362	0514  BE 0007r			 mov si, offset	score_buffer
-   1363	0517  83 C6 04			 add si, score_buffer_len - 1
-   1364	051A  B9 0005			 mov cx, score_buffer_len
-   1365	051D  E8 FFB7			 call CONVERT_UINT16
-   1366
-   1367	0520  BD 0007r			 mov bp, offset	score_buffer
-   1368	0523  B3 02			 mov bl, 02H ; green
-Turbo Assembler	 Version 4.1	    12/12/24 00:48:44	    Page 25
+   1338	04FD  3D 0000			 cmp ax, 0
+   1339	0500  49			 dec cx
+   1340	0501  75 F0			 jnz LOOP_DIV
+   1341
+   1342	0503  83 F9 00			 cmp cx, 0
+   1343	0506  74 04			 je END_CONVERSION
+   1344
+   1345	0508  B2 30			 mov dl, '0'
+   1346	050A  88 14			 mov byte ptr ds:[si], dl
+   1347
+   1348	050C			     END_CONVERSION:
+   1349	050C  5A			 pop dx
+   1350	050D  59			 pop cx
+   1351	050E  5B			 pop bx
+   1352	050F  58			 pop ax
+   1353	0510  5E			 pop si
+   1354	0511  C3			 ret
+   1355	0512			     endp
+   1356
+   1357	0512			     RENDER_SCORE proc
+   1358	0512  56			 push si
+   1359	0513  55			 push bp
+   1360	0514  50			 push ax
+   1361	0515  53			 push bx
+   1362	0516  51			 push cx
+   1363	0517  52			 push dx
+   1364
+   1365	0518  BD 0116r			 mov bp, offset	score_str
+   1366	051B  B9 0006			 mov cx, score_str_len
+   1367	051E  B3 0F			 mov bl, 0FH ; white
+   1368	0520  33 D2			 xor dx, dx
+Turbo Assembler	 Version 4.1	    12/12/24 01:04:49	    Page 25
 MAIN.ASM
 
 
 
-   1369	0525  32 F6			 xor dh, dh
-   1370	0527  B2 08			 mov dl, 8
-   1371	0529  E8 FB9B			 call PRINT_STRING
-   1372
-   1373	052C  5A			 pop dx
-   1374	052D  59			 pop cx
-   1375	052E  5B			 pop bx
-   1376	052F  58			 pop ax
-   1377	0530  5D			 pop bp
-   1378	0531  5E			 pop si
-   1379
-   1380	0532  C3			 ret
-   1381	0533			     endp
+   1369	0522  E8 FBA2			 call PRINT_STRING
+   1370
+   1371	0525  A1 0005r			 mov ax, score
+   1372	0528  BE 0007r			 mov si, offset	score_buffer
+   1373	052B  83 C6 04			 add si, score_buffer_len - 1
+   1374	052E  B9 0005			 mov cx, score_buffer_len
+   1375	0531  E8 FFB7			 call CONVERT_UINT16
+   1376
+   1377	0534  BD 0007r			 mov bp, offset	score_buffer
+   1378	0537  B3 02			 mov bl, 02H ; green
+   1379	0539  32 F6			 xor dh, dh
+   1380	053B  B2 08			 mov dl, 8
+   1381	053D  E8 FB87			 call PRINT_STRING
    1382
-   1383	0533			     RENDER_TIME proc
-   1384	0533  55			 push bp
-   1385	0534  53			 push bx
-   1386	0535  51			 push cx
-   1387	0536  52			 push dx
-   1388
-   1389	0537  BD 011Cr			 mov bp, offset	time_str
-   1390	053A  B9 0006			 mov cx, time_str_len
-   1391	053D  B3 0F			 mov bl, 0FH ; white
-   1392	053F  32 F6			 xor dh, dh
-   1393	0541  B2 19			 mov dl, 25
-   1394	0543  E8 FB81			 call PRINT_STRING
-   1395
-   1396	0546  33 C0			 xor ax, ax
-   1397	0548  A0 0004r			 mov al, time
-   1398	054B  BE 000Cr			 mov si, offset	time_buffer
-   1399	054E  83 C6 01			 add si, time_buffer_len - 1
-   1400	0551  B9 0002			 mov cx, 2
-   1401	0554  E8 FF80			 call CONVERT_UINT16
-   1402
-   1403	0557  BD 000Cr			 mov bp, offset	time_buffer
-   1404	055A  B9 0002			 mov cx, time_buffer_len
-   1405	055D  B3 02			 mov bl, 02H ; green
-   1406	055F  32 F6			 xor dh, dh
-   1407	0561  B2 20			 mov dl, 32
-   1408	0563  E8 FB61			 call PRINT_STRING
-   1409
-   1410	0566  5A			 pop dx
-   1411	0567  59			 pop cx
-   1412	0568  5B			 pop bx
-   1413	0569  5D			 pop bp
-   1414
-   1415	056A  C3			 ret
-   1416	056B			     endp
-   1417
-   1418	056B			     UPDATE_TIME proc
-   1419	056B  50			 push ax
-   1420
-   1421	056C  8A 26 0003r		 mov ah, timeout
-   1422	0570  FE C4			 inc ah
-   1423	0572  80 FC 64			 cmp ah, 100
-   1424	0575  75 21			 jne SAVE_TIMEOUT
-   1425
-Turbo Assembler	 Version 4.1	    12/12/24 00:48:44	    Page 26
+   1383	0540  5A			 pop dx
+   1384	0541  59			 pop cx
+   1385	0542  5B			 pop bx
+   1386	0543  58			 pop ax
+   1387	0544  5D			 pop bp
+   1388	0545  5E			 pop si
+   1389
+   1390	0546  C3			 ret
+   1391	0547			     endp
+   1392
+   1393	0547			     RENDER_TIME proc
+   1394	0547  55			 push bp
+   1395	0548  53			 push bx
+   1396	0549  51			 push cx
+   1397	054A  52			 push dx
+   1398
+   1399	054B  BD 011Cr			 mov bp, offset	time_str
+   1400	054E  B9 0006			 mov cx, time_str_len
+   1401	0551  B3 0F			 mov bl, 0FH ; white
+   1402	0553  32 F6			 xor dh, dh
+   1403	0555  B2 19			 mov dl, 25
+   1404	0557  E8 FB6D			 call PRINT_STRING
+   1405
+   1406	055A  33 C0			 xor ax, ax
+   1407	055C  A0 0004r			 mov al, time
+   1408	055F  BE 000Cr			 mov si, offset	time_buffer
+   1409	0562  83 C6 01			 add si, time_buffer_len - 1
+   1410	0565  B9 0002			 mov cx, 2
+   1411	0568  E8 FF80			 call CONVERT_UINT16
+   1412
+   1413	056B  BD 000Cr			 mov bp, offset	time_buffer
+   1414	056E  B9 0002			 mov cx, time_buffer_len
+   1415	0571  B3 02			 mov bl, 02H ; green
+   1416	0573  32 F6			 xor dh, dh
+   1417	0575  B2 20			 mov dl, 32
+   1418	0577  E8 FB4D			 call PRINT_STRING
+   1419
+   1420	057A  5A			 pop dx
+   1421	057B  59			 pop cx
+   1422	057C  5B			 pop bx
+   1423	057D  5D			 pop bp
+   1424
+   1425	057E  C3			 ret
+Turbo Assembler	 Version 4.1	    12/12/24 01:04:49	    Page 26
 MAIN.ASM
 
 
 
-   1426	0577  8A 26 0004r		 mov ah, time
-   1427	057B  FE CC			 dec ah
-   1428	057D  75 13			 jnz SAVE_TIME
-   1429
-   1430	057F  8A 26 0002r		 mov ah, sector
-   1431	0583  FE C4			 inc ah
-   1432	0585  88 26 0002r		 mov sector, ah
-   1433
-   1434	0589  E8 FD77			 call RENDER_SECTOR
-   1435	058C  E8 00DE			 call RESET
-   1436
-   1437	058F  EB 0B 90			 jmp END_TIME
-   1438
-   1439	0592			     SAVE_TIME:
-   1440	0592  88 26 0004r		 mov time, ah
-   1441	0596  32 E4			 xor ah, ah
-   1442
-   1443	0598			     SAVE_TIMEOUT:
-   1444	0598  88 26 0003r		 mov timeout, ah
-   1445
-   1446	059C			     END_TIME:
-   1447	059C  58			 pop ax
-   1448	059D  C3			 ret
-   1449	059E			     endp
-   1450
-   1451	059E			     SHOOT proc
-   1452	059E  56			 push si
-   1453	059F  53			 push bx
-   1454	05A0  51			 push cx
+   1426	057F			     endp
+   1427
+   1428	057F			     UPDATE_TIME proc
+   1429	057F  50			 push ax
+   1430
+   1431	0580  8A 26 0003r		 mov ah, timeout
+   1432	0584  FE C4			 inc ah
+   1433	0586  80 FC 64			 cmp ah, 100
+   1434	0589  75 21			 jne SAVE_TIMEOUT
+   1435
+   1436	058B  8A 26 0004r		 mov ah, time
+   1437	058F  FE CC			 dec ah
+   1438	0591  75 13			 jnz SAVE_TIME
+   1439
+   1440	0593  8A 26 0002r		 mov ah, sector
+   1441	0597  FE C4			 inc ah
+   1442	0599  88 26 0002r		 mov sector, ah
+   1443
+   1444	059D  E8 FD63			 call RENDER_SECTOR
+   1445	05A0  E8 00DE			 call RESET
+   1446
+   1447	05A3  EB 0B 90			 jmp END_TIME
+   1448
+   1449	05A6			     SAVE_TIME:
+   1450	05A6  88 26 0004r		 mov time, ah
+   1451	05AA  32 E4			 xor ah, ah
+   1452
+   1453	05AC			     SAVE_TIMEOUT:
+   1454	05AC  88 26 0003r		 mov timeout, ah
    1455
-   1456					 ; Find	a shot that was	not fired yet
-   1457	05A1  33 C9			 xor cx, cx
-   1458	05A3  8A 0E 0010r		 mov cl, shot_count
-   1459	05A7  BE 0017r			 mov si, offset	shot_array_shoot
-   1460	05AA  03 F1			 add si, cx
-   1461	05AC  4E			 dec si
-   1462
-   1463	05AD			     FIND_SHOT:
-   1464	05AD  8A 1C			 mov bl, [si]
-   1465	05AF  80 FB 00			 cmp bl, 0
-   1466	05B2  74 08			 je FOUND_SHOT
-   1467	05B4  4E			 dec si
-   1468	05B5  E2 F6			 loop FIND_SHOT
-   1469
-   1470	05B7  83 F9 00			 cmp cx, 0
-   1471	05BA  74 06			 je END_SHOOT
+   1456	05B0			     END_TIME:
+   1457	05B0  58			 pop ax
+   1458	05B1  C3			 ret
+   1459	05B2			     endp
+   1460
+   1461	05B2			     SHOOT proc
+   1462	05B2  56			 push si
+   1463	05B3  53			 push bx
+   1464	05B4  51			 push cx
+   1465
+   1466					 ; Find	a shot that was	not fired yet
+   1467	05B5  33 C9			 xor cx, cx
+   1468	05B7  8A 0E 0010r		 mov cl, shot_count
+   1469	05BB  BE 0017r			 mov si, offset	shot_array_shoot
+   1470	05BE  03 F1			 add si, cx
+   1471	05C0  4E			 dec si
    1472
-   1473	05BC			     FOUND_SHOT:
-   1474	05BC  E8 0007			 call RESET_SHOT
-   1475	05BF  C6 04 01			 mov byte ptr [si], 1 ;	Set shot as fired
-   1476
-   1477	05C2			     END_SHOOT:
-   1478	05C2  59			 pop cx
-   1479	05C3  5B			 pop bx
-   1480	05C4  5E			 pop si
-   1481	05C5  C3			 ret
-   1482	05C6			     endp
-Turbo Assembler	 Version 4.1	    12/12/24 00:48:44	    Page 27
+   1473	05C1			     FIND_SHOT:
+   1474	05C1  8A 1C			 mov bl, [si]
+   1475	05C3  80 FB 00			 cmp bl, 0
+   1476	05C6  74 08			 je FOUND_SHOT
+   1477	05C8  4E			 dec si
+   1478	05C9  E2 F6			 loop FIND_SHOT
+   1479
+   1480	05CB  83 F9 00			 cmp cx, 0
+   1481	05CE  74 06			 je END_SHOOT
+   1482
+Turbo Assembler	 Version 4.1	    12/12/24 01:04:49	    Page 27
 MAIN.ASM
 
 
 
-   1483
-   1484				     ; CX = shot id
-   1485	05C6			     RESET_SHOT	proc
-   1486	05C6  51			 push cx
-   1487	05C7  56			 push si
-   1488	05C8  57			 push di
-   1489	05C9  53			 push bx
-   1490
-   1491	05CA  49			 dec cx	; Get shot index
-   1492	05CB  51			 push cx
-   1493	05CC  D1 E1			 shl cx, 1 ; Multiply index by 2 (for word)
-   1494	05CE  BE 0011r			 mov si, offset	shot_array_pos ; Get shot position array
-   1495	05D1  03 F1			 add si, cx ; Find shot	in array
-   1496
-   1497	05D3  8B 1E 1EA2r		 mov bx, ship_pos
-   1498	05D7  83 C3 0F			 add bx, 15
-   1499	05DA  89 1C			 mov [si], bx
+   1483	05D0			     FOUND_SHOT:
+   1484	05D0  E8 0007			 call RESET_SHOT
+   1485	05D3  C6 04 01			 mov byte ptr [si], 1 ;	Set shot as fired
+   1486
+   1487	05D6			     END_SHOOT:
+   1488	05D6  59			 pop cx
+   1489	05D7  5B			 pop bx
+   1490	05D8  5E			 pop si
+   1491	05D9  C3			 ret
+   1492	05DA			     endp
+   1493
+   1494				     ; CX = shot id
+   1495	05DA			     RESET_SHOT	proc
+   1496	05DA  51			 push cx
+   1497	05DB  56			 push si
+   1498	05DC  57			 push di
+   1499	05DD  53			 push bx
    1500
-   1501	05DC  8B FB			 mov di, bx ; Set DI to	shot position
-   1502	05DE  E8 FB12			 call CLEAR_SPRITE ; Clear shot
-   1503
-   1504	05E1  BE 0017r			 mov si, offset	shot_array_shoot ; Get shot fired array
-   1505	05E4  59			 pop cx
-   1506	05E5  03 F1			 add si, cx ; Find shot	in array
-   1507	05E7  C6 04 00			 mov byte ptr [si], 0 ;	Set shot as not	fired
-   1508
-   1509	05EA  5B			 pop bx
-   1510	05EB  5F			 pop di
-   1511	05EC  5E			 pop si
-   1512	05ED  59			 pop cx
-   1513	05EE  C3			 ret
-   1514	05EF			     endp
-   1515
-   1516	05EF			     UPDATE_SHOT proc
-   1517	05EF  57			 push di
-   1518	05F0  56			 push si
-   1519	05F1  50			 push ax
-   1520	05F2  53			 push bx
-   1521	05F3  51			 push cx
-   1522	05F4  52			 push dx
-   1523
-   1524	05F5  33 C9			 xor cx, cx
-   1525	05F7  8A 0E 0010r		 mov cl, shot_count
-   1526	05FB			     SINGLE_SHOT:
-   1527	05FB  8B EC			 mov bp, sp
-   1528	05FD  51			 push cx ; [bp - 2]
-   1529
-   1530					 ; Find	shot index
-   1531	05FE  49			 dec cx
-   1532	05FF  BE 0017r			 mov si, offset	shot_array_shoot
-   1533	0602  03 F1			 add si, cx
-   1534	0604  80 3C 01			 cmp byte ptr [si], 1
-   1535	0607  75 36			 jne NO_UPDATE
-   1536
-   1537					 ; Clear shot
-   1538	0609  D1 E1			 shl cx, 1 ; Multiply index by 2 (for word array)
-   1539	060B  BE 0011r			 mov si, offset	shot_array_pos
-Turbo Assembler	 Version 4.1	    12/12/24 00:48:44	    Page 28
+   1501	05DE  49			 dec cx	; Get shot index
+   1502	05DF  51			 push cx
+   1503	05E0  D1 E1			 shl cx, 1 ; Multiply index by 2 (for word)
+   1504	05E2  BE 0011r			 mov si, offset	shot_array_pos ; Get shot position array
+   1505	05E5  03 F1			 add si, cx ; Find shot	in array
+   1506
+   1507	05E7  8B 3C			 mov di, [si] ;	Set DI to shot position
+   1508	05E9  E8 FB07			 call CLEAR_SPRITE ; Clear shot
+   1509
+   1510	05EC  8B 1E 1EA2r		 mov bx, ship_pos
+   1511	05F0  83 C3 0F			 add bx, 15
+   1512	05F3  89 1C			 mov [si], bx
+   1513
+   1514	05F5  BE 0017r			 mov si, offset	shot_array_shoot ; Get shot fired array
+   1515	05F8  59			 pop cx
+   1516	05F9  03 F1			 add si, cx ; Find shot	in array
+   1517	05FB  C6 04 00			 mov byte ptr [si], 0 ;	Set shot as not	fired
+   1518
+   1519	05FE  5B			 pop bx
+   1520	05FF  5F			 pop di
+   1521	0600  5E			 pop si
+   1522	0601  59			 pop cx
+   1523	0602  C3			 ret
+   1524	0603			     endp
+   1525
+   1526	0603			     UPDATE_SHOT proc
+   1527	0603  57			 push di
+   1528	0604  56			 push si
+   1529	0605  50			 push ax
+   1530	0606  53			 push bx
+   1531	0607  51			 push cx
+   1532	0608  52			 push dx
+   1533
+   1534	0609  33 C9			 xor cx, cx
+   1535	060B  8A 0E 0010r		 mov cl, shot_count
+   1536	060F			     SINGLE_SHOT:
+   1537	060F  8B EC			 mov bp, sp
+   1538	0611  51			 push cx ; [bp - 2]
+   1539
+Turbo Assembler	 Version 4.1	    12/12/24 01:04:49	    Page 28
 MAIN.ASM
 
 
 
-   1540	060E  03 F1			 add si, cx
-   1541	0610  8B 3C			 mov di, [si]
-   1542	0612  E8 FADE			 call CLEAR_SPRITE
-   1543
-   1544					 ; Reset shot
-   1545	0615  33 D2			 xor dx, dx
-   1546	0617  8B C7			 mov ax, di
-   1547	0619  05 000F			 add ax, 15
-   1548	061C  BB 0140			 mov bx, 320
-   1549	061F  F7 F3			 div bx
-   1550	0621  83 FA 00			 cmp dx, 0
-   1551	0624  75 09			 jne MOVE_SHOT
-   1552	0626  8B 4E FE			 mov cx, [bp - 2]
-   1553	0629  E8 FF9A			 call RESET_SHOT
-   1554	062C  EB 11 90			 jmp NO_UPDATE
-   1555
-   1556	062F			     MOVE_SHOT:
-   1557					 ; Move	shot
-   1558	062F  33 C0			 xor ax, ax
-   1559	0631  BB 0003			 mov bx, 3
-   1560	0634  E8 FA69			 call MOVE_SPRITE
-   1561
-   1562					 ; Render shot
-   1563	0637  8B 04			 mov ax, [si]
-   1564	0639  BE 1F41r			 mov si, offset	shot
-   1565	063C  E8 FAD4			 call RENDER_SPRITE
-   1566
-   1567	063F			     NO_UPDATE:
-   1568	063F  59			 pop cx
-   1569	0640  E2 B9			 loop SINGLE_SHOT
-   1570
-   1571	0642  8B E5			 mov sp, bp
-   1572
-   1573	0644  5A			 pop dx
-   1574	0645  59			 pop cx
-   1575	0646  5B			 pop bx
-   1576	0647  58			 pop ax
-   1577	0648  5E			 pop si
-   1578	0649  5F			 pop di
-   1579	064A  C3			 ret
-   1580	064B			     endp
-   1581
-   1582	064B			     RESET_TIME	proc
-   1583	064B  50			 push ax
-   1584
-   1585	064C  32 E4			 xor ah, ah
-   1586	064E  88 26 0003r		 mov timeout, ah
-   1587	0652  B4 01			 mov ah, 1
-   1588	0654  88 26 0004r		 mov time, ah
-   1589
-   1590	0658  58			 pop ax
-   1591	0659			     endp
-   1592
-   1593	0659			     RESET_RERENDERS proc
-   1594	0659  50			 push ax
-   1595
-   1596	065A  B4 01			 mov ah, 1
-Turbo Assembler	 Version 4.1	    12/12/24 00:48:44	    Page 29
+   1540					 ; Find	shot index
+   1541	0612  49			 dec cx
+   1542	0613  BE 0017r			 mov si, offset	shot_array_shoot
+   1543	0616  03 F1			 add si, cx
+   1544	0618  80 3C 01			 cmp byte ptr [si], 1
+   1545	061B  75 36			 jne NO_UPDATE
+   1546
+   1547					 ; Clear shot
+   1548	061D  D1 E1			 shl cx, 1 ; Multiply index by 2 (for word array)
+   1549	061F  BE 0011r			 mov si, offset	shot_array_pos
+   1550	0622  03 F1			 add si, cx
+   1551	0624  8B 3C			 mov di, [si]
+   1552	0626  E8 FACA			 call CLEAR_SPRITE
+   1553
+   1554					 ; Reset shot
+   1555	0629  33 D2			 xor dx, dx
+   1556	062B  8B C7			 mov ax, di
+   1557	062D  05 000F			 add ax, 15
+   1558	0630  BB 0140			 mov bx, 320
+   1559	0633  F7 F3			 div bx
+   1560	0635  83 FA 00			 cmp dx, 0
+   1561	0638  75 09			 jne MOVE_SHOT
+   1562	063A  8B 4E FE			 mov cx, [bp - 2]
+   1563	063D  E8 FF9A			 call RESET_SHOT
+   1564	0640  EB 11 90			 jmp NO_UPDATE
+   1565
+   1566	0643			     MOVE_SHOT:
+   1567					 ; Move	shot
+   1568	0643  33 C0			 xor ax, ax
+   1569	0645  BB 0003			 mov bx, 3
+   1570	0648  E8 FA55			 call MOVE_SPRITE
+   1571
+   1572					 ; Render shot
+   1573	064B  8B 04			 mov ax, [si]
+   1574	064D  BE 1F41r			 mov si, offset	shot
+   1575	0650  E8 FAC0			 call RENDER_SPRITE
+   1576
+   1577	0653			     NO_UPDATE:
+   1578	0653  59			 pop cx
+   1579	0654  E2 B9			 loop SINGLE_SHOT
+   1580
+   1581	0656  8B E5			 mov sp, bp
+   1582
+   1583	0658  5A			 pop dx
+   1584	0659  59			 pop cx
+   1585	065A  5B			 pop bx
+   1586	065B  58			 pop ax
+   1587	065C  5E			 pop si
+   1588	065D  5F			 pop di
+   1589	065E  C3			 ret
+   1590	065F			     endp
+   1591
+   1592	065F			     RESET_TIME	proc
+   1593	065F  50			 push ax
+   1594
+   1595	0660  32 E4			 xor ah, ah
+   1596	0662  88 26 0003r		 mov timeout, ah
+Turbo Assembler	 Version 4.1	    12/12/24 01:04:49	    Page 29
 MAIN.ASM
 
 
 
-   1597	065C  C6 06 001Cr 01		 mov rerender_ship, 1
-   1598	0661  C6 06 001Dr 01		 mov rerender_allies, 1
-   1599	0666  C6 06 001Er 01		 mov rerender_score, 1
-   1600
-   1601	066B  58			 pop ax
-   1602	066C  C3			 ret
-   1603	066D			     endp
-   1604
-   1605	066D			     RESET proc	; Contains all procedures for reseting values
-   1606	066D  E8 FE29			 call RESET_SHIP
-   1607	0670  E8 FCEE			 call RESET_ENEMY
-   1608	0673  E8 FFD5			 call RESET_TIME
-   1609	0676  E8 FFE0			 call RESET_RERENDERS
-   1610	0679  C3			 ret
-   1611	067A			     endp
-   1612
-   1613	067A			     UPDATE proc ; Contains all	procedures for updating	game state
-   1614	067A  E8 FE41			 call UPDATE_SHIP
-   1615	067D  E8 FEEB			 call UPDATE_TIME
-   1616	0680  E8 FF6C			 call UPDATE_SHOT
-   1617	0683  E8 FD06			 call UPDATE_ENEMY
-   1618	0686  C3			 ret
-   1619	0687			     endp
-   1620
-   1621	0687			     RENDER proc ; Contains all	procedures for rendering game objects
-   1622	0687  50			 push ax
-   1623	0688  E8 FEA8			 call RENDER_TIME
-   1624	068B  E8 FDC6			 call RENDER_TERRAIN
-   1625
-   1626					 ; should re-render ship?
-   1627	068E  A0 001Cr			 mov al, rerender_ship
-   1628	0691  3C 00			 cmp al, 0
-   1629	0693  74 08			 je SKIP_2_ALLIES
-   1630	0695  E8 FE08			 call RENDER_SHIP
-   1631	0698  C6 06 001Cr 00		 mov rerender_ship, 0
-   1632
-   1633	069D			     SKIP_2_ALLIES:
-   1634					 ; should re-render allies?
-   1635	069D  A0 001Dr			 mov al, rerender_allies
-   1636	06A0  3C 01			 cmp al, 1
-   1637	06A2  75 08			 jne SKIP_2_SCORE
-   1638	06A4  E8 FB2C			 call RENDER_ALLY_SHIPS
-   1639	06A7  C6 06 001Dr 00		 mov rerender_allies, 0
-   1640
-   1641	06AC			     SKIP_2_SCORE:
-   1642					 ; should re-render score?
-   1643	06AC  A0 001Er			 mov al, rerender_score
-   1644	06AF  3C 01			 cmp al, 1
-   1645	06B1  75 08			 jne END_RENDER
-   1646	06B3  E8 FE48			 call RENDER_SCORE
-   1647	06B6  C6 06 001Er 00		 mov rerender_score, 0
-   1648
-   1649	06BB			     END_RENDER:
-   1650	06BB  58			 pop ax
-   1651	06BC  C3			 ret
-   1652	06BD			     endp
-   1653
-Turbo Assembler	 Version 4.1	    12/12/24 00:48:44	    Page 30
+   1597	0666  B4 3C			 mov ah, 60
+   1598	0668  88 26 0004r		 mov time, ah
+   1599
+   1600	066C  58			 pop ax
+   1601	066D			     endp
+   1602
+   1603	066D			     RESET_RERENDERS proc
+   1604	066D  50			 push ax
+   1605
+   1606	066E  B4 01			 mov ah, 1
+   1607	0670  C6 06 001Cr 01		 mov rerender_ship, 1
+   1608	0675  C6 06 001Dr 01		 mov rerender_allies, 1
+   1609	067A  C6 06 001Er 01		 mov rerender_score, 1
+   1610
+   1611	067F  58			 pop ax
+   1612	0680  C3			 ret
+   1613	0681			     endp
+   1614
+   1615	0681			     RESET proc	; Contains all procedures for reseting values
+   1616	0681  E8 FE29			 call RESET_SHIP
+   1617	0684  E8 FCDA			 call RESET_ENEMY
+   1618	0687  E8 FFD5			 call RESET_TIME
+   1619	068A  E8 FFE0			 call RESET_RERENDERS
+   1620	068D  C3			 ret
+   1621	068E			     endp
+   1622
+   1623	068E			     UPDATE proc ; Contains all	procedures for updating	game state
+   1624	068E  E8 FE41			 call UPDATE_SHIP
+   1625	0691  E8 FEEB			 call UPDATE_TIME
+   1626	0694  E8 FF6C			 call UPDATE_SHOT
+   1627	0697  E8 FCF2			 call UPDATE_ENEMY
+   1628	069A  C3			 ret
+   1629	069B			     endp
+   1630
+   1631	069B			     RENDER proc ; Contains all	procedures for rendering game objects
+   1632	069B  50			 push ax
+   1633	069C  E8 FEA8			 call RENDER_TIME
+   1634	069F  E8 FDC6			 call RENDER_TERRAIN
+   1635
+   1636					 ; should re-render ship?
+   1637	06A2  A0 001Cr			 mov al, rerender_ship
+   1638	06A5  3C 00			 cmp al, 0
+   1639	06A7  74 08			 je SKIP_2_ALLIES
+   1640	06A9  E8 FE08			 call RENDER_SHIP
+   1641	06AC  C6 06 001Cr 00		 mov rerender_ship, 0
+   1642
+   1643	06B1			     SKIP_2_ALLIES:
+   1644					 ; should re-render allies?
+   1645	06B1  A0 001Dr			 mov al, rerender_allies
+   1646	06B4  3C 01			 cmp al, 1
+   1647	06B6  75 08			 jne SKIP_2_SCORE
+   1648	06B8  E8 FB18			 call RENDER_ALLY_SHIPS
+   1649	06BB  C6 06 001Dr 00		 mov rerender_allies, 0
+   1650
+   1651	06C0			     SKIP_2_SCORE:
+   1652					 ; should re-render score?
+   1653	06C0  A0 001Er			 mov al, rerender_score
+Turbo Assembler	 Version 4.1	    12/12/24 01:04:49	    Page 30
 MAIN.ASM
 
 
 
-   1654	06BD			     END_GAME proc
-   1655					 ; Back	to text	mode
-   1656	06BD  32 E4			 xor ah, ah
-   1657	06BF  B0 03			 mov al, 3h
-   1658	06C1  CD 10			 int 10h
-   1659
-   1660					 ; Ends	program
-   1661	06C3  B4 4C			 mov ah, 4ch
-   1662	06C5  32 C0			 xor al, al
-   1663	06C7  CD 21			 int 21h
-   1664	06C9  C3			 ret
-   1665	06CA			     endp
-   1666
-   1667	06CA			     THROTTLE proc
-   1668	06CA  50			 push ax
-   1669	06CB  51			 push cx
-   1670	06CC  52			 push dx
-   1671
-   1672	06CD  33 C9			 xor cx, cx
-   1673	06CF  BA 2710			 mov dx, 2710H
-   1674	06D2  B4 86			 mov ah, 86H
-   1675	06D4  CD 15			 int 15h
+   1654	06C3  3C 01			 cmp al, 1
+   1655	06C5  75 08			 jne END_RENDER
+   1656	06C7  E8 FE48			 call RENDER_SCORE
+   1657	06CA  C6 06 001Er 00		 mov rerender_score, 0
+   1658
+   1659	06CF			     END_RENDER:
+   1660	06CF  58			 pop ax
+   1661	06D0  C3			 ret
+   1662	06D1			     endp
+   1663
+   1664	06D1			     END_GAME proc
+   1665					 ; Back	to text	mode
+   1666	06D1  32 E4			 xor ah, ah
+   1667	06D3  B0 03			 mov al, 3h
+   1668	06D5  CD 10			 int 10h
+   1669
+   1670					 ; Ends	program
+   1671	06D7  B4 4C			 mov ah, 4ch
+   1672	06D9  32 C0			 xor al, al
+   1673	06DB  CD 21			 int 21h
+   1674	06DD  C3			 ret
+   1675	06DE			     endp
    1676
-   1677	06D6  5A			 pop dx
-   1678	06D7  59			 pop cx
-   1679	06D8  58			 pop ax
-   1680	06D9  C3			 ret
-   1681	06DA			     endp
-   1682
-   1683	06DA			     SYSTIME_SEED proc
-   1684	06DA  50			 push ax
-   1685	06DB  51			 push cx
-   1686	06DC  52			 push dx
-   1687
-   1688	06DD  33 C0			 xor ax, ax
-   1689	06DF  CD 1A			 int 1AH
-   1690	06E1  89 16 001Fr		 mov seed, dx
-   1691
-   1692	06E5  5A			 pop dx
-   1693	06E6  59			 pop cx
-   1694	06E7  58			 pop ax
-   1695	06E8  C3			 ret
-   1696	06E9			     endp
+   1677	06DE			     THROTTLE proc
+   1678	06DE  50			 push ax
+   1679	06DF  51			 push cx
+   1680	06E0  52			 push dx
+   1681
+   1682	06E1  33 C9			 xor cx, cx
+   1683	06E3  BA 2710			 mov dx, 2710H
+   1684	06E6  B4 86			 mov ah, 86H
+   1685	06E8  CD 15			 int 15h
+   1686
+   1687	06EA  5A			 pop dx
+   1688	06EB  59			 pop cx
+   1689	06EC  58			 pop ax
+   1690	06ED  C3			 ret
+   1691	06EE			     endp
+   1692
+   1693	06EE			     SYSTIME_SEED proc
+   1694	06EE  50			 push ax
+   1695	06EF  51			 push cx
+   1696	06F0  52			 push dx
    1697
-   1698	06E9			     MAIN proc
-   1699	06E9  B8 0000s			 mov AX, @data
-   1700	06EC  8E D8			 mov DS, AX
-   1701	06EE  B8 A000			 mov AX, 0A000H
-   1702	06F1  8E C0			 mov ES, AX
-   1703	06F3  33 FF			 xor DI, DI
-   1704
-   1705	06F5  E8 FFE2			 call SYSTIME_SEED
-   1706
-   1707					 ; Define o modo de video
-   1708	06F8  32 E4			 xor ah, ah
-   1709	06FA  32 FF			 xor bh, bh
-   1710	06FC  B0 13			 mov al, 13h
-Turbo Assembler	 Version 4.1	    12/12/24 00:48:44	    Page 31
+   1698	06F1  33 C0			 xor ax, ax
+   1699	06F3  CD 1A			 int 1AH
+   1700	06F5  89 16 001Fr		 mov seed, dx
+   1701
+   1702	06F9  5A			 pop dx
+   1703	06FA  59			 pop cx
+   1704	06FB  58			 pop ax
+   1705	06FC  C3			 ret
+   1706	06FD			     endp
+   1707
+   1708	06FD			     MAIN proc
+   1709	06FD  B8 0000s			 mov AX, @data
+   1710	0700  8E D8			 mov DS, AX
+Turbo Assembler	 Version 4.1	    12/12/24 01:04:49	    Page 31
 MAIN.ASM
 
 
 
-   1711	06FE  CD 10			 int 10h
-   1712
-   1713					 ; Exibe título e botões do menu
-   1714	0700  E8 F98B			 call PRINT_TITLE_MENU
-   1715	0703  E8 FA39			 call PRINT_BUTTONS
-   1716	0706  E8 FA6D			 call RESET_CROSS_SHIP_POS
-   1717
-   1718	0709			     MENU_LOOP:
-   1719	0709  E8 FA79			 call CROSS_SHIPS
-   1720
-   1721					 ; Recebe entrada do usuário
-   1722	070C  B4 01			 mov ah, 1H
-   1723	070E  CD 16			 int 16H
-   1724	0710  74 F7			 jz MENU_LOOP
-   1725
-   1726					 ; Chama a função de navegação
-   1727	0712  E8 F8EB			 call HANDLE_INPUT
-   1728
-   1729					 ; Condição para iniciar o jogo
-   1730	0715  80 FC 1C			 cmp ah, 1CH
-   1731	0718  74 06			 je SELECT_OPTION
-   1732
-   1733					 ; Retorno ao loop do menu
-   1734	071A  32 E4			 xor ah, ah
-   1735	071C  CD 16			 int 16H
-   1736	071E  EB E9			 jmp MENU_LOOP
-   1737
-   1738	0720			     SELECT_OPTION:
-   1739	0720  32 E4			 xor ah, ah
-   1740	0722  CD 16			 int 16H
-   1741
-   1742	0724  8A 26 0000r		 mov ah, menu
-   1743	0728  80 FC 01			 cmp ah, 1
-   1744	072B  74 14			 je FINISH
-   1745
-   1746	072D  E8 FBD3			 call RENDER_SECTOR
+   1711	0702  B8 A000			 mov AX, 0A000H
+   1712	0705  8E C0			 mov ES, AX
+   1713	0707  33 FF			 xor DI, DI
+   1714
+   1715	0709  E8 FFE2			 call SYSTIME_SEED
+   1716
+   1717					 ; Define o modo de video
+   1718	070C  32 E4			 xor ah, ah
+   1719	070E  32 FF			 xor bh, bh
+   1720	0710  B0 13			 mov al, 13h
+   1721	0712  CD 10			 int 10h
+   1722
+   1723					 ; Exibe título e botões do menu
+   1724	0714  E8 F977			 call PRINT_TITLE_MENU
+   1725	0717  E8 FA25			 call PRINT_BUTTONS
+   1726	071A  E8 FA59			 call RESET_CROSS_SHIP_POS
+   1727
+   1728	071D			     MENU_LOOP:
+   1729	071D  E8 FA65			 call CROSS_SHIPS
+   1730
+   1731					 ; Recebe entrada do usuário
+   1732	0720  B4 01			 mov ah, 1H
+   1733	0722  CD 16			 int 16H
+   1734	0724  74 F7			 jz MENU_LOOP
+   1735
+   1736					 ; Chama a função de navegação
+   1737	0726  E8 F8D7			 call HANDLE_INPUT
+   1738
+   1739					 ; Condição para iniciar o jogo
+   1740	0729  80 FC 1C			 cmp ah, 1CH
+   1741	072C  74 06			 je SELECT_OPTION
+   1742
+   1743					 ; Retorno ao loop do menu
+   1744	072E  32 E4			 xor ah, ah
+   1745	0730  CD 16			 int 16H
+   1746	0732  EB E9			 jmp MENU_LOOP
    1747
-   1748	0730  E8 FF3A			 call RESET
-   1749	0733  E8 FD6A			 call RENDER_SHIP
-   1750
-   1751	0736			     GAME_LOOP:
-   1752	0736  E8 FF91			 call THROTTLE
-   1753	0739  E8 FF3E			 call UPDATE
-   1754	073C  E8 FF48			 call RENDER
+   1748	0734			     SELECT_OPTION:
+   1749	0734  32 E4			 xor ah, ah
+   1750	0736  CD 16			 int 16H
+   1751
+   1752	0738  8A 26 0000r		 mov ah, menu
+   1753	073C  80 FC 01			 cmp ah, 1
+   1754	073F  74 14			 je FINISH
    1755
-   1756	073F  EB F5			 jmp GAME_LOOP
+   1756	0741  E8 FBBF			 call RENDER_SECTOR
    1757
-   1758	0741			     FINISH:
-   1759	0741  E8 FF79			 CALL END_GAME
+   1758	0744  E8 FF3A			 call RESET
+   1759	0747  E8 FD6A			 call RENDER_SHIP
    1760
-   1761	0744  C3			 ret
-   1762	0745			     endp
-   1763
-   1764				     end MAIN
-Turbo Assembler	 Version 4.1	    12/12/24 00:48:44	    Page 32
+   1761	074A			     GAME_LOOP:
+   1762	074A  E8 FF91			 call THROTTLE
+   1763	074D  E8 FF3E			 call UPDATE
+   1764	0750  E8 FF48			 call RENDER
+   1765
+   1766	0753  EB F5			 jmp GAME_LOOP
+   1767
+Turbo Assembler	 Version 4.1	    12/12/24 01:04:49	    Page 32
+MAIN.ASM
+
+
+
+   1768	0755			     FINISH:
+   1769	0755  E8 FF79			 CALL END_GAME
+   1770
+   1771	0758  C3			 ret
+   1772	0759			     endp
+   1773
+   1774				     end MAIN
+Turbo Assembler	 Version 4.1	    12/12/24 01:04:49	    Page 33
 Symbol Table
 
 
@@ -1927,7 +1942,7 @@ Symbol Name			  Type	 Value
 
 ??DATE				  Text	 "12/12/24"
 ??FILENAME			  Text	 "MAIN	  "
-??TIME				  Text	 "00:48:43"
+??TIME				  Text	 "01:04:48"
 ??VERSION			  Number 040A
 @32BIT				  Text	 0
 @CODE				  Text	 _TEXT
@@ -1956,92 +1971,92 @@ BTN_SAIR_LENGTH			  Number 0051
 CHANGE_SPRITE_COLOR		  Near	 _TEXT:00DC
 CHECK_COLLISION			  Near	 _TEXT:02A7
 CHECK_DIRECTION			  Near	 _TEXT:00B5
-CHECK_EOS			  Near	 _TEXT:041D
-CHECK_SHIP_COLLISION		  Near	 _TEXT:03D2
-CHECK_SHOTS_COLLISION		  Near	 _TEXT:03A8
+CHECK_EOS			  Near	 _TEXT:0431
+CHECK_SHIP_COLLISION		  Near	 _TEXT:03E6
+CHECK_SHOTS_COLLISION		  Near	 _TEXT:03AA
 CHECK_X_IN_RANGE		  Near	 _TEXT:02DD
 CHECK_Y_IN_RANGE		  Near	 _TEXT:02C3
 CLEAR_LINE			  Near	 _TEXT:00FF
 CLEAR_SCREEN			  Near	 _TEXT:0217
 CLEAR_SPRITE			  Near	 _TEXT:00F3
-CONTINUE_COLLISION		  Near	 _TEXT:03F1
-CONVERT_UINT16			  Near	 _TEXT:04D7
+CONTINUE_COLLISION		  Near	 _TEXT:0405
+CONVERT_UINT16			  Near	 _TEXT:04EB
 CROSS_SHIPS			  Near	 _TEXT:0185
 DRAW_LINE			  Near	 _TEXT:012B
 END_COLLISION			  Near	 _TEXT:02FC
 END_CONTROLS			  Near	 _TEXT:0088
-END_CONVERSION			  Near	 _TEXT:04F8
-END_ENEMY_UPDATE		  Near	 _TEXT:044F
-END_GAME			  Near	 _TEXT:06BD
+END_CONVERSION			  Near	 _TEXT:050C
+END_ENEMY_UPDATE		  Near	 _TEXT:0463
+END_GAME			  Near	 _TEXT:06D1
 END_HANDLE			  Near	 _TEXT:0026
 END_POS_UPDATE			  Near	 _TEXT:01D2
-END_RENDER			  Near	 _TEXT:06BB
-END_SHIP_UPDATE			  Near	 _TEXT:04D2
-END_SHOOT			  Near	 _TEXT:05C2
-END_TIME			  Near	 _TEXT:059C
-Turbo Assembler	 Version 4.1	    12/12/24 00:48:44	    Page 33
+END_RENDER			  Near	 _TEXT:06CF
+END_SHIP_UPDATE			  Near	 _TEXT:04E6
+END_SHOOT			  Near	 _TEXT:05D6
+END_TIME			  Near	 _TEXT:05B0
+Turbo Assembler	 Version 4.1	    12/12/24 01:04:49	    Page 34
 Symbol Table
 
 
 
 ENEMY_POS			  Word	 DGROUP:001A
 EXIT_BTN			  Near	 _TEXT:0167
-FIND_SHOT			  Near	 _TEXT:05AD
-FINISH				  Near	 _TEXT:0741
+FIND_SHOT			  Near	 _TEXT:05C1
+FINISH				  Near	 _TEXT:0755
 FIRE				  Near	 _TEXT:0085
-FOUND_SHOT			  Near	 _TEXT:05BC
-GAME_LOOP			  Near	 _TEXT:0736
+FOUND_SHOT			  Near	 _TEXT:05D0
+GAME_LOOP			  Near	 _TEXT:074A
 GAME_OVER			  Byte	 DGROUP:02EA
 GAME_OVER_LEN			  Number 00E7
 HANDLE_CONTROLS			  Near	 _TEXT:0027
 HANDLE_INPUT			  Near	 _TEXT:0000
 IS_SHIP_COLLIDING		  Byte	 DGROUP:1EA5
-LOOP_DIV			  Near	 _TEXT:04DF
-MAIN				  Near	 _TEXT:06E9
+LOOP_DIV			  Near	 _TEXT:04F3
+MAIN				  Near	 _TEXT:06FD
 MENU				  Byte	 DGROUP:0000
-MENU_LOOP			  Near	 _TEXT:0709
+MENU_LOOP			  Near	 _TEXT:071D
 MOVE_ALIEN_SHIP			  Near	 _TEXT:01A9
 MOVE_DOWN			  Near	 _TEXT:0068
 MOVE_NEGATIVE			  Near	 _TEXT:00BF
-MOVE_SHOT			  Near	 _TEXT:062F
+MOVE_SHOT			  Near	 _TEXT:0643
 MOVE_SPRITE			  Near	 _TEXT:00A0
 MOVE_UP				  Near	 _TEXT:004B
 MOVE_Y_AXIS			  Near	 _TEXT:00AC
 NO_CLEAR			  Near	 _TEXT:0203
-NO_UPDATE			  Near	 _TEXT:063F
+NO_UPDATE			  Near	 _TEXT:0653
 PIXEL_LOOP			  Near	 _TEXT:00E3
 PRINT_BUTTONS			  Near	 _TEXT:013F
 PRINT_STRING			  Near	 _TEXT:00C7
 PRINT_TITLE_MENU		  Near	 _TEXT:008E
 RANDOM_UINT16			  Near	 _TEXT:0265
 RANDOM_UINT8_RANGE		  Near	 _TEXT:0275
-RENDER				  Near	 _TEXT:0687
+RENDER				  Near	 _TEXT:069B
 RENDER_ALLY_SHIPS		  Near	 _TEXT:01D3
 RENDER_BUTTONS			  Near	 _TEXT:001C
-RENDER_ENEMY			  Near	 _TEXT:048B
-RENDER_SCORE			  Near	 _TEXT:04FE
+RENDER_ENEMY			  Near	 _TEXT:049F
+RENDER_SCORE			  Near	 _TEXT:0512
 RENDER_SECTOR			  Near	 _TEXT:0303
-RENDER_SHIP			  Near	 _TEXT:04A0
+RENDER_SHIP			  Near	 _TEXT:04B4
 RENDER_SINGLE			  Near	 _TEXT:01E3
 RENDER_SPRITE			  Near	 _TEXT:0113
-RENDER_TERRAIN			  Near	 _TEXT:0454
-RENDER_TIME			  Near	 _TEXT:0533
+RENDER_TERRAIN			  Near	 _TEXT:0468
+RENDER_TIME			  Near	 _TEXT:0547
 RERENDER_ALLIES			  Byte	 DGROUP:001D
 RERENDER_SCORE			  Byte	 DGROUP:001E
 RERENDER_SHIP			  Byte	 DGROUP:001C
-RESET				  Near	 _TEXT:066D
+RESET				  Near	 _TEXT:0681
 RESET_CROSS_SHIP_POS		  Near	 _TEXT:0176
 RESET_ENEMY			  Near	 _TEXT:0361
 RESET_POS			  Near	 _TEXT:01CF
-RESET_RERENDERS			  Near	 _TEXT:0659
-RESET_SHIP			  Near	 _TEXT:0499
-RESET_SHIP_COLLISION		  Near	 _TEXT:0418
-RESET_SHOT			  Near	 _TEXT:05C6
-RESET_TIME			  Near	 _TEXT:064B
+RESET_RERENDERS			  Near	 _TEXT:066D
+RESET_SHIP			  Near	 _TEXT:04AD
+RESET_SHIP_COLLISION		  Near	 _TEXT:042C
+RESET_SHOT			  Near	 _TEXT:05DA
+RESET_TIME			  Near	 _TEXT:065F
 SAVE_POS			  Near	 _TEXT:00C1
-SAVE_TIME			  Near	 _TEXT:0592
-SAVE_TIMEOUT			  Near	 _TEXT:0598
-Turbo Assembler	 Version 4.1	    12/12/24 00:48:44	    Page 34
+SAVE_TIME			  Near	 _TEXT:05A6
+SAVE_TIMEOUT			  Near	 _TEXT:05AC
+Turbo Assembler	 Version 4.1	    12/12/24 01:04:49	    Page 35
 Symbol Table
 
 
@@ -2059,24 +2074,24 @@ SECTOR_THREE			  Byte	 DGROUP:0252
 SECTOR_TWO			  Byte	 DGROUP:01BA
 SECTOR_VEC			  Word	 DGROUP:0471
 SEED				  Word	 DGROUP:001F
-SELECT_OPTION			  Near	 _TEXT:0720
+SELECT_OPTION			  Near	 _TEXT:0734
 SHIP				  Byte	 DGROUP:1E1B
 SHIP_COLOR			  Byte	 DGROUP:1EA4
 SHIP_POS			  Word	 DGROUP:1EA2
 SHIP_SPEED			  Word	 DGROUP:000E
-SHOOT				  Near	 _TEXT:059E
+SHOOT				  Near	 _TEXT:05B2
 SHOT				  Byte	 DGROUP:1F41
 SHOT_ARRAY_POS			  Word	 DGROUP:0011
 SHOT_ARRAY_SHOOT		  Byte	 DGROUP:0017
 SHOT_COUNT			  Byte	 DGROUP:0010
 SHOW_GAME_OVER			  Near	 _TEXT:028D
 SHOW_YOU_WIN			  Near	 _TEXT:022F
-SINGLE_SHOT			  Near	 _TEXT:05FB
-SKIP_2_ALLIES			  Near	 _TEXT:069D
-SKIP_2_SCORE			  Near	 _TEXT:06AC
-SKIP_POS_UPDATE			  Near	 _TEXT:047E
+SINGLE_SHOT			  Near	 _TEXT:060F
+SKIP_2_ALLIES			  Near	 _TEXT:06B1
+SKIP_2_SCORE			  Near	 _TEXT:06C0
+SKIP_POS_UPDATE			  Near	 _TEXT:0492
 SKIP_REPLACE			  Near	 _TEXT:00EB
-SKIP_SHOT			  Near	 _TEXT:03D0
+SKIP_SHOT			  Near	 _TEXT:03E4
 SKIP_X_MAX			  Near	 _TEXT:02E8
 SKIP_X_MIN			  Near	 _TEXT:02F6
 SKIP_Y_MAX			  Near	 _TEXT:02CB
@@ -2085,24 +2100,24 @@ START_BTN			  Near	 _TEXT:014D
 STRING				  Byte	 DGROUP:0021
 STRING_LENGTH			  Number 00F5
 SUM_POINTS			  Near	 _TEXT:0317
-SYSTIME_SEED			  Near	 _TEXT:06DA
+SYSTIME_SEED			  Near	 _TEXT:06EE
 TERRAIN				  Byte	 DGROUP:0519
 TERRAIN_POS			  Word	 DGROUP:1E19
-THROTTLE			  Near	 _TEXT:06CA
+THROTTLE			  Near	 _TEXT:06DE
 TIME				  Byte	 DGROUP:0004
 TIMEOUT				  Byte	 DGROUP:0003
 TIME_BUFFER			  Byte	 DGROUP:000C
 TIME_BUFFER_LEN			  Number 0002
 TIME_STR			  Byte	 DGROUP:011C
 TIME_STR_LEN			  Number 0006
-UPDATE				  Near	 _TEXT:067A
+UPDATE				  Near	 _TEXT:068E
 UPDATE_ENEMY			  Near	 _TEXT:038C
-UPDATE_SHIP			  Near	 _TEXT:04BE
-UPDATE_SHOT			  Near	 _TEXT:05EF
-UPDATE_TIME			  Near	 _TEXT:056B
+UPDATE_SHIP			  Near	 _TEXT:04D2
+UPDATE_SHOT			  Near	 _TEXT:0603
+UPDATE_TIME			  Near	 _TEXT:057F
 YOU_WIN				  Byte	 DGROUP:03D1
 YOU_WIN_LEN			  Number 00A0
-Turbo Assembler	 Version 4.1	    12/12/24 00:48:44	    Page 35
+Turbo Assembler	 Version 4.1	    12/12/24 01:04:49	    Page 36
 Symbol Table
 
 
@@ -2113,5 +2128,5 @@ Groups & Segments		  Bit Size Align  Combine Class
 DGROUP				  Group
   STACK				  16  0400 Para	  Stack	  STACK
   _DATA				  16  1FC8 Word	  Public  DATA
-_TEXT				  16  0745 Word	  Public  CODE
+_TEXT				  16  0759 Word	  Public  CODE
 

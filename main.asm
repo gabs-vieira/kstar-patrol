@@ -875,21 +875,31 @@ UPDATE_ENEMY proc
     call MOVE_SPRITE
     call RENDER_ENEMY
 
-    ; cmp shot_count, 0
-    je CHECK_SHIP_COLLISION
-
     xor cx, cx
-    ; mov cl, shot_count
+    mov cl, shot_count
 
 CHECK_SHOTS_COLLISION:
+    push cx
+    dec cx
+    mov si, offset shot_array_shoot
+    add si, cx
+    mov bh, [si]
+    cmp bh, 0
+    pop cx
+    je SKIP_SHOT
+
+    push cx
+    dec cx
+    shl cx, 1
     mov si, offset shot_array_pos
     add si, cx
     mov si, [si]
     mov di, enemy_pos
-    push cx
+
     call CHECK_COLLISION
     cmp cl, 1
     pop cx
+
     jne SKIP_SHOT
     mov rerender_score, 1
     add score, 100
@@ -1247,12 +1257,12 @@ RESET_SHOT proc
     mov si, offset shot_array_pos ; Get shot position array
     add si, cx ; Find shot in array
 
+    mov di, [si] ; Set DI to shot position
+    call CLEAR_SPRITE ; Clear shot
+
     mov bx, ship_pos
     add bx, 15
     mov [si], bx
-
-    mov di, bx ; Set DI to shot position
-    call CLEAR_SPRITE ; Clear shot
 
     mov si, offset shot_array_shoot ; Get shot fired array
     pop cx
