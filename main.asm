@@ -9,7 +9,6 @@
     ; 3 - Game Over
     screen db 0
     sector db 1
-    did_shoot db 0
     timeout db 0
     time db 60
     score dw 0
@@ -22,7 +21,9 @@
 
     ship_speed dw 5
     
-    shot_pos dw 305*30
+    shot_count db 3
+    shot_array_pos dw 305*30,305*30,305*30
+    shot_array_shoot db 0,0,0
     enemy_pos dw 305*30
 
     ; Re-renders
@@ -201,6 +202,7 @@ HANDLE_CONTROLS proc
     push di
     push ax
     push bx
+    push cx
 
     mov si, offset ship_pos
     mov di, [si]
@@ -212,7 +214,7 @@ HANDLE_CONTROLS proc
     je MOVE_DOWN
     
     cmp ah, 39H
-    je SHOOT
+    je FIRE
     
     cmp al, 'q'
     jne END_CONTROLS
@@ -249,15 +251,11 @@ MOVE_DOWN:
     call MOVE_SPRITE
     jmp END_CONTROLS
 
-SHOOT:
-    mov ah, did_shoot
-    cmp ah, 1
-    je END_CONTROLS
-
-    call RESET_SHOT
-    mov did_shoot, 1
+FIRE:
+    call SHOOT
 
 END_CONTROLS:
+    pop cx
     pop bx
     pop ax
     pop di
@@ -877,20 +875,41 @@ UPDATE_ENEMY proc
     call MOVE_SPRITE
     call RENDER_ENEMY
 
-    mov bh, did_shoot
-    cmp bh, 1
-    jne CHECK_SHIP_COLLISION
+    xor cx, cx
+    mov cl, shot_count
 
-    mov si, shot_pos
+CHECK_SHOTS_COLLISION:
+    push cx
+    dec cx
+    mov si, offset shot_array_shoot
+    add si, cx
+    mov bh, [si]
+    cmp bh, 0
+    pop cx
+    je SKIP_SHOT
+
+    push cx
+    dec cx
+    shl cx, 1
+    mov si, offset shot_array_pos
+    add si, cx
+    mov si, [si]
     mov di, enemy_pos
+
     call CHECK_COLLISION
     cmp cl, 1
-    jne CHECK_SHIP_COLLISION
+    pop cx
+
+    jne SKIP_SHOT
     mov rerender_score, 1
     add score, 100
     call CLEAR_SPRITE
     call RESET_SHOT
     call RESET_ENEMY
+
+SKIP_SHOT:
+    loop CHECK_SHOTS_COLLISION
+
 
 CHECK_SHIP_COLLISION:
     mov si, ship_pos
@@ -1192,20 +1211,68 @@ END_TIME:
     ret
 endp
 
+SHOOT proc
+    push si
+    push bx
+    push cx
+
+    ; Find a shot that was not fired yet
+    xor cx, cx
+    mov cl, shot_count
+    mov si, offset shot_array_shoot
+    add si, cx
+    dec si
+
+FIND_SHOT:
+    mov bl, [si]
+    cmp bl, 0
+    je FOUND_SHOT
+    dec si
+    loop FIND_SHOT
+
+    cmp cx, 0
+    je END_SHOOT
+
+FOUND_SHOT:
+    call RESET_SHOT
+    mov byte ptr [si], 1 ; Set shot as fired
+
+END_SHOOT:
+    pop cx
+    pop bx
+    pop si
+    ret
+endp
+
+; CX = shot id
 RESET_SHOT proc
+    push cx
+    push si
     push di
     push bx
-    
-    mov di, shot_pos
-    call CLEAR_SPRITE
+
+    dec cx ; Get shot index
+    push cx
+    shl cx, 1 ; Multiply index by 2 (for word)
+    mov si, offset shot_array_pos ; Get shot position array
+    add si, cx ; Find shot in array
+
+    mov di, [si] ; Set DI to shot position
+    call CLEAR_SPRITE ; Clear shot
 
     mov bx, ship_pos
     add bx, 15
-    mov shot_pos, bx
-    mov did_shoot, 0
-    
+    mov [si], bx
+
+    mov si, offset shot_array_shoot ; Get shot fired array
+    pop cx
+    add si, cx ; Find shot in array
+    mov byte ptr [si], 0 ; Set shot as not fired    
+
     pop bx
     pop di
+    pop si
+    pop cx
     ret
 endp
 
@@ -1214,38 +1281,60 @@ UPDATE_SHOT proc
     push si
     push ax
     push bx
+    push cx
     push dx
 
-    mov bl, did_shoot
-    cmp bl, 1
-    jne END_SHOT
+    xor cx, cx
+    mov cl, shot_count
+SINGLE_SHOT:
+    mov bp, sp
+    push cx ; [bp - 2]
 
+    ; Find shot index
+    dec cx
+    mov si, offset shot_array_shoot
+    add si, cx
+    cmp byte ptr [si], 1
+    jne NO_UPDATE
+
+    ; Clear shot
+    shl cx, 1 ; Multiply index by 2 (for word array)
+    mov si, offset shot_array_pos
+    add si, cx
+    mov di, [si]
+    call CLEAR_SPRITE
+
+    ; Reset shot
     xor dx, dx
-    mov ax, shot_pos
+    mov ax, di
     add ax, 15
     mov bx, 320
     div bx
     cmp dx, 0
     jne MOVE_SHOT
-
+    mov cx, [bp - 2]
     call RESET_SHOT
-    jmp END_SHOT
+    jmp NO_UPDATE
 
 MOVE_SHOT:
-    mov di, shot_pos
-    call CLEAR_SPRITE
-
-    mov bx, 3 ; TODO: change to `shot_speed`
+    ; Move shot
     xor ax, ax
-    mov si, offset shot_pos
+    mov bx, 3
     call MOVE_SPRITE
 
-    mov ax, shot_pos
+    ; Render shot
+    mov ax, [si]
     mov si, offset shot
     call RENDER_SPRITE
 
-END_SHOT:
+NO_UPDATE:
+    pop cx
+    loop SINGLE_SHOT
+
+    mov sp, bp
+
     pop dx
+    pop cx
     pop bx
     pop ax
     pop si
