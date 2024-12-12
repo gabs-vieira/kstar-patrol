@@ -629,7 +629,7 @@ SHOW_YOU_WIN proc
 
     xor ax, ax
     int 16h
-    call END_GAME
+    call MAIN
 
     ret
 endp
@@ -687,7 +687,7 @@ SHOW_GAME_OVER proc
 
     xor ax, ax
     int 16h
-    call END_GAME
+    call MAIN
     ret
 endp
 
@@ -827,6 +827,14 @@ SUM_POINTS:
     pop bx
     pop ax
     ret
+endp
+
+RESET_ALLIES proc
+    mov allies_db, 0FFH
+endp 
+
+RESET_SECTOR proc
+    mov sector, 1
 endp
 
 ; CX = enemy id
@@ -1059,8 +1067,28 @@ RENDER_ENEMY proc
     ret
 endp
 
+RESET_SHIP_COLOR proc
+    push si
+    push bx
+
+    mov bx, 0FH
+    mov ship_color, bl
+    mov si, offset ship
+    call CHANGE_SPRITE_COLOR
+
+    pop bx
+    pop si
+    ret
+endp
+
 RESET_SHIP proc
+    push si
+    push bx
+
     mov ship_pos, 320 * 95 + 41 ; Ship stating position
+    
+    pop bx
+    pop si
     ret
 endp
 
@@ -1535,6 +1563,10 @@ MAIN proc
     call PRINT_TITLE_MENU
     call PRINT_BUTTONS
     call RESET_CROSS_SHIP_POS
+    call RESET_ALLIES
+    call RESET_SHIP_COLOR
+    call RESET_SHIP
+    call RESET_SECTOR
 
 MENU_LOOP:
     call CROSS_SHIPS
@@ -1567,7 +1599,6 @@ SELECT_OPTION:
     call RENDER_SECTOR
 
     call RESET
-    call RENDER_SHIP
 
 GAME_LOOP:
     call THROTTLE
